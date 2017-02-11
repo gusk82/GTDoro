@@ -1,0 +1,20 @@
+﻿@model GTDoro.ViewModels.SettingsViewModel
+@{
+    ViewBag.Title = "My Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">   
+        <div id="user-settdings">
+            @Html.Action("UserSettings", "Manage")
+        </div>
+    </div>
+    <div class="col-md-6">    
+        <div id="change-password">
+            @Html.Action("ChangePassword", "Manage")
+        </div>  
+
+    </div>
+</div>
+@Scripts.Render("~/bundles/jqueryval")

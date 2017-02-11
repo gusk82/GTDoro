@@ -1,0 +1,18 @@
+﻿@model GTDoro.Models.ActionContainer
+
+@{
+    ViewBag.Title = Model.PathItemName;
+    ViewBag.Operation = GTDoro.Models.Operation.ActionList;
+    switch (Model.Type)
+    {
+        case GTDoro.Models.PomodoroContainerType.Project:
+            Layout = "~/Views/Project/_ProjectLayout.cshtml";
+            break;
+
+        case GTDoro.Models.PomodoroContainerType.Task:
+            Layout = "~/Views/Task/_TaskLayout.cshtml";
+            break;
+    }
+}
+
+@Html.Partial("Collections/_Actions", Model.GetActions()

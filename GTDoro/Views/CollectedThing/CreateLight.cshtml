@@ -1,0 +1,104 @@
+﻿@model GTDoro.Models.CollectedThing
+@using GTDoro.Models;
+@using GTDoro.ExtensionMethods;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Collect</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("UrlReferrer", Request.GetReferrerUrlOrCurrent())
+    <div id="collecting-wrapper" class="cbox-wrapper">
+        <div class="form-horizontal">
+            <h2><i class="fa fa-fw fa-plus-circle"></i> Collect</h2>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-xs-2" })
+                <div class="col-xs-10">
+                    @Html.TextBoxFor(model => model.Name, new { id = "collected_thing", @maxlength = CollectedThing.NAME_MAX_LENGTH})
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary" name="submitButton" value="Save">
+                        <i class="fa fa-fw fa-save">&nbsp;</i>Save
+                    </button>
+                    <span class="separator">&nbsp;</span>
+                    <button type="submit" class="btn btn-primary" name="submitButton" value="Create more">
+                        <i class="fa fa-save"></i>
+                        <i class="fa fa-fw fa-plus">&nbsp;</i>Create more
+                    </button>
+                    <span class="separator">&nbsp;</span>
+                    <a class="select btn btn-info" onclick="createItem('project')">
+                        <i class="fa fa-fw fa-bullseye">&nbsp;</i>Project
+                    </a>
+                    <span class="separator">&nbsp;</span>
+                    <a class="select btn btn-info" onclick="createItem('task')">
+                        <i class="fa fa-fw fa-dot-circle-o">&nbsp;</i>Task
+                    </a>
+                    <span class="separator">&nbsp;</span>
+                    <a class="select btn btn-info" onclick="createItem('action')">
+                        <i class="fa fa-fw fa-circle">&nbsp;</i>Action
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $('#collected_thing').focus();
+                }, 500);
+            });
+            function getProjectLink() {
+                return '@Html.Raw(Url.Action("Index", "Workspace"))';
+            }
+            function getTaskLink() {
+                return '@Html.Raw(Url.Action("ItemSelector", "Search",
+                        new
+                        {
+                            type = PomodoroContainerType.Project,
+                            target = ItemSelectorTarget.CreateItemFromCollectedThing
+                        }))';
+            }
+            function getActionLink() {
+                return '@Html.Raw(Url.Action("ItemSelector", "Search",
+                        new
+                        {
+                            type = PomodoroContainerType.Task,
+                            target = ItemSelectorTarget.CreateItemFromCollectedThing
+                        }))';
+                    }
+            function createItem(type) {
+                var text = encodeURI($('#collected_thing').val());
+                switch(type)
+                {
+                    case 'project':
+                        location.href = getProjectLink() + "?text=" + text;
+                        break;
+                    case 'task':
+                        $.colorbox({ width: "80%", height: "80%", href: getTaskLink() + '&defaultItemName=' + text });
+                        break;
+                    case 'action':
+                        $.colorbox({ width: "80%", height: "80%", href: getActionLink() + '&defaultItemName=' + text });
+                        break;
+                }
+            }
+        </script>
+    }
+    </body>
+</html>

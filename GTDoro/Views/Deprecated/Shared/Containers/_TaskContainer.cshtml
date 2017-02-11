@@ -1,0 +1,15 @@
+﻿@model GTDoro.Models.TaskContainer
+
+@{
+    ViewBag.Title = Model.PathItemName;
+    ViewBag.Operation = GTDoro.Models.Operation.TaskList;
+    switch (Model.Type)
+    {
+        case GTDoro.Models.PomodoroContainerType.Project:
+            Layout = "~/Views/Project/_ProjectLayout.cshtml";
+            break;
+    }
+}
+
+@Html.Partial("Collections/_Tasks", Model.GetTasks().OrderByDescending(a => a.LastPomodoroDateTimeOrNull)
+

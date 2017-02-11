@@ -1,0 +1,27 @@
+﻿@model PagedList.IPagedList<GTDoro.Models.CollectedThing>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@Html.Partial("Collections/_CollectedThings")
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+@*<script type="text/javascript">
+    $.urlParam = function (name) {
+        var results = new RegExp('[\\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+        return (results != undefined && results.length > 0 && results[1]) || 0;
+    }
+    if ($.urlParam('collecting') == 1) {
+        $.colorbox({ scrolling: false, href: "/CollectedThing/CreateLight" });
+    }
+    </script>*@

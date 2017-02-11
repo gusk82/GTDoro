@@ -1,0 +1,211 @@
+﻿@model IEnumerable<GTDoro.ViewModels.PomodoroSet>
+@using GTDoro.Models;
+@using GTDoro.ExtensionMethods;
+
+@{
+    PomodoroContainerType containerType = PomodoroContainerType.Unspecified;
+    if (ViewBag.ContainerType != null)
+    {
+        containerType = ViewBag.ContainerType;
+    }
+}
+
+<table id="work-history" class="table table-hover gt-datatables">
+    <thead>
+        <tr>
+            <th></th>
+            @if (containerType > PomodoroContainerType.Project)
+            {
+                <th class="hidden-xs">Project</th>
+            }
+            @if (containerType > PomodoroContainerType.Task)
+            {
+                <th class="hidden-xxs">Task</th>
+            }
+            @if (containerType > PomodoroContainerType.Action)
+            {
+                <th>Action</th>
+            }
+            <th class="hidden-3xs">Start</th>
+            <th class="col-3xs">Start</th>
+            <th class="hidden-xxs">Count</th>
+            <th><i class="fa fa-spinner" title="Status"></i></th>
+            <th class="hidden-3xs"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var set in Model.OrderByDescending(p => p.StartLocal))
+        {
+            if (set.Count > 1)
+            {
+                @*<!--PomodoroSet-->*@
+                <tr class="expa-@set[0].ID">
+                    <td>
+                        <a class="expa-@set[0].ID" href="javascript:void(0)" onclick="$('.expa-@set[0].ID').toggle();$('.setcont-@set[0].ID').parent().after($('.setcont-@set[0].ID tr'));"><i class="fa fa-fw fa-plus-square-o"></i></a>
+                    </td>
+                    @if (containerType > PomodoroContainerType.Project)
+                    {
+                        <td class="hidden-xs">
+                            <span class="@(set.Action.Task.Project.CssClass)">@Html.ActionLink(set.Action.Task.Project.Code, "Details", "Project", new { id = set.Action.Task.Project.ID }, null)</span>
+                        </td>
+                    }
+                    @if (containerType > PomodoroContainerType.Task)
+                    {
+                        <td class="hidden-xxs">
+                            <span class="@(set.Action.Task.CssClass)">@Html.ActionLink(set.Action.Task.Code, "Details", "Task", new { id = set.Action.Task.ID }, null)</span>
+                        </td>
+                    }
+                    @if (containerType > PomodoroContainerType.Action)
+                    {
+                        <td>
+                            <span class="limited-size-column @(set.Action.CssClass)">@Html.ActionLink(set.Action.Name, "Details", "Action", new { id = set.Action.ID, @title = set.Action.Name }, null)</span>
+                        </td>
+                    }
+                    <td class="col-3xs" data-order="@(set[0].Start.HasValue ? set[0].StartLocal.Value.Ticks.ToString() : string.Empty)">
+                        @(set[0].ToDateRelativeShortString())
+                    </td>
+                    <td class="hidden-3xs" data-order="@(set[0].Start.HasValue ? set[0].StartLocal.Value.Ticks.ToString() : string.Empty)">
+                        @Html.DisplayFor(modelItem => set.StartLocal)
+                    </td>
+                    <td class="hidden-xxs">
+                        @Html.DisplayFor(modelItem => set.Count)
+                    </td>
+                    <td>
+                        @Html.Raw(set[0].CalculatedStatus.GetIconHtmlTag())
+                    </td>
+                    <td class="hidden-3xs setcont-@set[0].ID">
+                        <table style="display:none">
+                            @*<!--Pomodoros-->*@
+                            @foreach (var pomo in set.OrderByDescending(p => p.StartLocal))
+                            {
+                                <tr class="coll-@set[0].ID">
+                                    <td>
+                                        <a class="coll-@set[0].ID" href="javascript:void(0)" onclick="$('.expa-@set[0].ID').toggle();$('.setcont-@set[0].ID tbody').append($('tr.coll-@set[0].ID'));"><i class="fa fa-fw fa-minus-square-o"></i></a>
+                                    </td>
+                                    @if (containerType > PomodoroContainerType.Project)
+                                    {
+                                        <td class="hidden-xs">
+                                            <span class="@(set.Action.Task.Project.CssClass)">@Html.ActionLink(set.Action.Task.Project.Code, "Details", "Project", new { id = set.Action.Task.Project.ID }, null)</span>
+                                        </td>
+                                    }
+                                    @if (containerType > PomodoroContainerType.Task)
+                                    {
+                                        <td class="hidden-xxs">
+                                            <span class="@(set.Action.Task.CssClass)">@Html.ActionLink(pomo.Action.Task.Code, "Details", "Task", new { id = pomo.Action.Task.ID }, null)</span>
+                                        </td>
+                                    }
+                                    @if (containerType > PomodoroContainerType.Action)
+                                    {
+                                        <td>
+                                            <span class="limited-size-column @(set.Action.CssClass)">@Html.ActionLink(pomo.Action.Name, "Details", "Action", new { id = pomo.Action.ID, @title = pomo.Action.Name }, null)</span>
+                                        </td>
+                                    }
+                                    <td class="col-3xs" data-order="@(pomo.Start.HasValue ? pomo.StartLocal.Value.Ticks.ToString() : string.Empty)">
+                                        @(pomo.ToDateRelativeShortString())
+                                    </td>
+                                    <td class="hidden-3xs" data-order="@(pomo.Start.HasValue ? pomo.StartLocal.Value.Ticks.ToString() : string.Empty)">
+                                        @Html.DisplayFor(modelItem => pomo.StartLocal)
+                                    </td>
+                                    <td class="hidden-xxs"></td>
+                                    <td>
+                                        @Html.Raw(pomo.CalculatedStatus.GetIconHtmlTag())
+                                    </td>
+                                    <td class="hidden-3xs operations-cell">
+                                        <a href="@Url.Action("Delete", "Pomodoro", new { id = pomo.ID })" onclick="return confirm('Are you sure?')"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                                        <a class="select" href="@Url.Action("ItemSelector", "Search",
+                                            new { type = PomodoroContainerType.Action, target = ItemSelectorTarget.ChangeParentItem, SourceItemID = pomo.ID })">
+                                            <i class="fa fa-fw fa-circle gt-operation" title="Move to Another Action"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
+            }
+            else
+            {
+                foreach (var pomo in set.OrderByDescending(p => p.StartLocal))
+                {
+                    <tr class="coll-@set[0].ID">
+                        <td>
+                            <a class="coll-@set[0].ID" style="display:none;" href="javascript:void(0)" onclick="$('.expa-@set[0].ID').toggle();$('.coll-@set[0].ID').toggle();">-</a>
+                        </td>
+                        @if (containerType > PomodoroContainerType.Project)
+                        {
+                            <td class="hidden-xs">
+                                <span class="@(set.Action.Task.Project.CssClass)">@Html.ActionLink(set.Action.Task.Project.Code, "Details", "Project", new { id = set.Action.Task.Project.ID }, null)</span>
+                            </td>
+                        }
+                        @if (containerType > PomodoroContainerType.Task)
+                        {
+                            <td class="hidden-xxs">
+                                <span class="@(set.Action.Task.CssClass)">@Html.ActionLink(pomo.Action.Task.Code, "Details", "Task", new { id = pomo.Action.Task.ID }, null)</span>
+                            </td>
+                        }
+                        @if (containerType > PomodoroContainerType.Action)
+                        {
+                            <td>
+                                <span class="limited-size-column @(set.Action.CssClass)">@Html.ActionLink(pomo.Action.Name, "Details", "Action", new { id = pomo.Action.ID, @title = pomo.Action.Name }, null)</span>
+                            </td>
+                        }
+                        <td class="col-3xs" data-order="@(pomo.Start.HasValue ? pomo.StartLocal.Value.Ticks.ToString() : string.Empty)">
+                            @(pomo.ToDateRelativeShortString())
+                        </td>
+                        <td class="hidden-3xs" data-order="@(pomo.Start.HasValue ? pomo.StartLocal.Value.Ticks.ToString() : string.Empty)">
+                            @Html.DisplayFor(modelItem => pomo.StartLocal)
+                        </td>
+                        <td class="hidden-xxs"></td>
+                        <td>
+                            @Html.Raw(pomo.CalculatedStatus.GetIconHtmlTag())
+                        </td>
+                        <td class="hidden-3xs operations-cell">
+                            <a href="@Url.Action("Delete", "Pomodoro", new { id = pomo.ID })" onclick="return confirm('Are you sure?')"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                            <a class="select" href="@Url.Action("ItemSelector", "Search",
+                                new { type = PomodoroContainerType.Action, target = ItemSelectorTarget.ChangeParentItem, SourceItemID = pomo.ID })">
+                                <i class="fa fa-fw fa-circle gt-operation" title="Move to Another Action"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th></th>
+            @if (containerType > PomodoroContainerType.Project)
+            {
+                <th class="hidden-xs"></th>
+            }
+            @if (containerType > PomodoroContainerType.Task)
+            {
+                <th class="hidden-xxs"></th>
+            }
+            @if (containerType > PomodoroContainerType.Action)
+            {
+                <th></th>
+            }
+            <th class="col-3xs"></th>
+            <th class="hidden-3xs"></th>
+            <th class="hidden-xxs"></th>
+            <th id="col-status"></th>
+            <th class="hidden-3xs"></th>
+        </tr>
+    </tfoot>
+</table>
+
+@Styles.Render("~/Content/dataTables")
+@Scripts.Render("~/Scripts/dataTables")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#work-history").dataTable({
+            "dom": '<"dti"lf>rt<"dti"p>',
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [0, $("#work-history thead th").length - 2, $("#work-history thead th").length - 1] }
+            ]
+        });
+        $("#work-history").show();
+    });
+</script>

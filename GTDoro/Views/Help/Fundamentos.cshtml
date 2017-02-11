@@ -1,0 +1,66 @@
+﻿@{
+    ViewBag.Title = "Help";
+    ViewBag.SubNavTitle = "Basics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.BreadcrumbList = new List<string> 
+    { 
+        Html.ActionLink("Basics", "Basics").ToHtmlString(),
+    };
+}
+
+<style>
+</style>
+<div class="help-container">
+
+    <div class="box box-info">
+        <div class="box-header">
+            <h2 class="box-title"><i class="fa fa-fw fa-info"></i> Fundamentos</h2>
+            <div class="pull-right">
+                <a title="Spanish version" href="/Help/Basics">Go to English version</a>
+            </div>
+        </div>
+    </div>
+    <section class="box">
+
+        <div class="box-header"><h3 class="box-title">Introducci&oacute;n</h3></div>
+        <div class="box-body">
+            <p>
+                GTDoro es una aplicaci&oacute;n Web para la gesti&oacute;n de proyectos <strong>personales</strong>.
+                El usuario, una vez registrado e identificado en el sistema, podr&aacute; consultar e introducir informaci&oacute;n sobre sus proyectos, sin posibilidad de acceder a los del resto de usuarios ni de que &eacute;stos accedan a los suyos.</p>
+
+            <p>La aplicaci&oacute;n permite contabilizar el tiempo dedicado al trabajo para su posterior consulta, con el fin de poder convertir esos datos en informaci&oacute;n &uacute;til, de cara a la mejora de la organizaci&oacute;n y productividad en los proyectos del usuario.</p>
+
+            <p>Para ello utiliza un sistema basado en varias t&eacute;cnicas existentes de productividad como son Pomodoro y GTD.</p>
+        </div>
+    </section>
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Organizaci&oacute;n del trabajo</h3></div>
+        <div class="box-body">
+            <p>El trabajo se mide en unidades indivisibles de <strong>25 minutos</strong>, que normalmente vienen acompa&ntilde;adas por un posterior descanso de 5 minutos. Por tanto a la hora de contabilizar el tiempo de trabajo a la manera tradicional podremos simplificar multiplicando este n&uacute;mero por dos y obtendremos el n&uacute;mero de horas.</p>
+
+            <p>Existen tres niveles jer&aacute;rquicos en esta t&eacute;cnica: <strong>Proyectos, Tareas y Acciones</strong>.</p>
+            <p>Un proyecto puede contener tantas tareas como sea necesario, y cada tarea tantas acciones como requiera para ser finalizada.</p>
+            <p>Finalmente, las <strong>acciones</strong> son los &uacute;nicos elementos a los que se puede <strong>imputar directamente el trabajo</strong>. Por tanto cada vez que nos dispongamos a trabajar tendremos que seleccionar una acci&oacute;n activa (perteneciente a una tarea, que a su vez pertenecer&aacute; a un proyecto).</p>
+        </div>
+    </section>
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Herramientas</h3></div>
+        <div class="box-body">
+            <p>
+                La aplicaci&oacute;n ofrece varias herramientas para implementar esta t&eacute;cnica:
+                <ul>
+                    <li><strong>Reloj</strong>: Una vez seleccionada una acci&oacute;n, se puede comenzar a trabajar pulsando un bot&oacute;n, que activa la cuenta atr&aacute;s de 25 minutos. Una vez terminada, el usuario deber&aacute; confirmar el trabajo para que &eacute;ste sea contabilizado.</li>
+                    <li>
+                        <strong>Captura de elementos</strong>: Existe en la parte superior de la pantalla un bot&oacute;n que permite la captura r&aacute;pida de ideas. Mediante esta funcionalidad (sugerida por GTD) se consigue liberar a la mente de tener que recordar lo que hay que hacer sin necesidad de tener que dedicar tiempo a detallar la informaci&oacute;n.<br />
+                        Algunos ejemplos ser&iacute;an notas como “comprar billetes para madrid” o “crear calendario semanal”, que podr&aacute;n ser almacenadas para su posterior procesamiento (es decir conversi&oacute;n a proyectos, tareas o acciones con ubicaci&oacute;n y detalles).
+                    </li>
+                    <li><strong>Gr&aacute;ficos</strong>: La informaci&oacute;n no es f&aacute;cil de interpretar cuando se trata de un mont&oacute;n de cantidades o descripciones. Los gr&aacute;ficos ayudan a conseguir este fin y la hacen m&aacute;s &uacute;til para el usuario, que podr&aacute; de un vistazo descubrir c&oacute;mo, cu&aacute;ndo y d&oacute;nde est&aacute; concentrando su trabajo.</li>
+                    <li>
+                        <strong>Tablas</strong>: De manera similar a los gr&aacute;ficos, las tablas ayudan notablemente al usuario a interpretar los datos registrados de su trabajo. Mediante su uso, podremos consultar las propiedades de los proyecto y sus elementos, as&iacute; como los detalles del trabajo dedicado a cada uno de ellos.<br />
+                        Para mejorar la experiencia del usuario, estas tablas incluyen ordenaci&oacute;n, paginaci&oacute;n y filtros, consiguiendo que el acceso a la informaci&oacute;n sea m&aacute;s r&aacute;pido y sencillo.
+                    </li>
+                </ul>
+            </p>
+        </div>
+</section>
+</div>

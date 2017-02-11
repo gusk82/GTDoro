@@ -1,0 +1,71 @@
+﻿<style>
+    .header a.logo, .header a.logo:hover {
+        /*background: #C4D4E4;*/
+        background: #f4f4f4;
+    }
+
+    .header a.logo > div {
+        margin: auto;
+        /*width: 150px;*/ /*without beta*/
+        width: 175px;
+        height: 50px;
+        position: relative;
+        /* text-shadow: 1px 1px 0px rgb(0, 0, 0); */
+        /*text-shadow: -1px -1px 0.5px #666;*/
+    }
+
+    .header a.logo #logo-container {
+        font-size: 38px;
+        color: #c00;
+        font-family: arial;
+        letter-spacing: -2px;
+        text-shadow: 2px 2px 1px #422;
+        font-weight: bold;
+    }
+
+
+        .header a.logo #letters {
+            width: 150px;
+        }
+
+    .header a.logo div i.fa-check {
+        position: absolute;
+        font-size: 23px;
+        top: 10px;
+        color: green;
+        z-index: 999
+    }
+
+    .header a.logo div i.fa-check#first-check {
+        left: 81px;
+    }
+
+    .header a.logo div i.fa-check#second-check {
+        left: 115px;
+    }
+
+    .header a.logo .version { /*remove this rule when beta is gone*/
+        top: 8px;
+        left: 143px;
+        position: absolute;
+        color: black;
+        font-size: 0.7em;
+    }
+
+    .header a.logo div span#first-letter {
+        letter-spacing: -5px;
+    }
+</style>
+
+<a href="/" class="logo">
+    <div>
+        <div id="logo-container">
+            <i id="first-check" class="fa fa-fw fa-check"></i>
+            <i id="second-check" class="fa fa-fw fa-check"></i>
+            <div id="letters">
+                <span id="first-letter">G</span><span>TDoro</span>
+            </div>
+        </div>
+        <span class="version">beta</span>
+    </div>
+</a>

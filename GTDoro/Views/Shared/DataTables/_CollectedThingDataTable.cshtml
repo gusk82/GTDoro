@@ -1,0 +1,75 @@
+﻿@model GTDoro.ViewModels.CollectedThingDateViewModel
+@using GTDoro.ExtensionMethods
+@using GTDoro.Models
+
+<div class="box">
+    <div class="box-header">
+        <!-- tools box -->        
+        <h3 class="box-title"><i class="fa fa-fw @Model.IconCssClass"></i> @Model.HeaderTitle</h3>
+    </div>
+    <div class="box-body no-padding">
+        <div class="table-responsive">
+            <!-- .table -->
+            <table id="@Model.TableId" class="table table-striped gt-datatables">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Created</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td width="65%">
+                                <span class="limited-size-column">@(item.Name)</span>
+                            </td>
+                            <td title="@(item.CreationDateLocal.ToString())">
+                                <i class="fa fa-clock-o"></i> @(((DateTime?)item.CreationDate).ToRelativeShortString())
+                            </td>
+                            <td class="operations-cell">
+
+                                <a href="@Url.Action("Index", "Workspace", new { ct = item.ID })"><i class="fa fa-fw fa-bullseye gt-operation" title="Create Project"></i></a>
+                                <a class="dt-select" href="@Url.Action("ItemSelector", "Search",
+                                new { type = PomodoroContainerType.Project, target = ItemSelectorTarget.CreateItemFromCollectedThing, collectedThingID = item.ID })">
+                                    <i class="fa fa-fw fa-dot-circle-o gt-operation" title="Create Task"></i>
+                                </a>
+                                <a class="dt-select" href="@Url.Action("ItemSelector", "Search",
+                                new { type = PomodoroContainerType.Task, target = ItemSelectorTarget.CreateItemFromCollectedThing, collectedThingID = item.ID })">
+                                    <i class="fa fa-fw fa-circle gt-operation" title="Create Action"></i>
+                                </a>
+                                <span class="separator">&nbsp;</span>
+                                @*<a href="@Url.Action("Edit", "CollectedThing", new { id = item.ID })"><i class="fa fa-fw fa-edit gt-operation" title="Edit"></i></a>*@
+                                <a href="@Url.Action("Delete", "CollectedThing", new { id = item.ID })" onclick="return confirm('Are you sure?')"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table><!-- /.table -->
+        </div>
+    </div><!-- /.box-body-->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        updateColorbox();
+        $("#@(Model.TableId)")
+            .on( 'order.dt',  function () { updateColorbox(); } )
+            .on( 'search.dt', function () { updateColorbox(); } )
+            .on( 'page.dt',   function () { updateColorbox(); } ).dataTable({
+            "ordering": false,
+            "info": false,
+            "filter": false,
+            "pagingType": "simple_numbers",
+            "dom": 't<p>',
+            "iDisplayLength": @(Model.RowsPerPage)
+        });
+        $("#@(Model.TableId)").show();
+    });
+    function updateColorbox(){
+        $(".dt-select")
+            .removeClass('dt-select')
+            .colorbox({ width: "100%", maxWidth: "900px", height: "100%" });
+    }
+</script>

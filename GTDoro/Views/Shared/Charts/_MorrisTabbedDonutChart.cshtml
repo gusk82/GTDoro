@@ -1,0 +1,49 @@
+﻿@model IEnumerable<GTDoro.ViewModels.MorrisDonutChartViewModel>
+
+<!-- /.box -->
+<div class="box-header">
+    <!-- tools box -->
+    @*<div class="pull-right box-tools">
+        <button class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="Date range"><i class="fa fa-calendar"></i></button>
+    </div>*@<!-- /. tools -->
+    @*<i class="fa fa-map-marker"></i>
+        <h3 class="box-title">
+            Visitors
+        </h3>*@
+    <!-- Custom tabs (Charts with tabs)-->
+    <div class="nav-tabs-custom">
+        <!-- Tabs within a box -->
+        <ul class="nav nav-tabs pull-right">
+            @{bool firstTab = true;}
+            @foreach (GTDoro.ViewModels.MorrisDonutChartViewModel item in Model)
+            { 
+                <li class=@(firstTab ? "active" : String.Empty)><a href="#@(item.HtmlElementId)" data-toggle="tab" data-identifier="donut">@(item.HeaderTitle)</a></li>
+                if (firstTab) { firstTab = false; }
+            }
+            <li class="pull-left header"><i class="fa fa-fw fa-adjust"></i> Work Division</li>
+        </ul>
+        <div class="tab-content no-padding">
+            @{firstTab = true;}
+            @foreach (GTDoro.ViewModels.MorrisDonutChartViewModel item in Model)
+            {
+                <div class="chart tab-pane @(firstTab ? "active" : String.Empty)" id="@(item.HtmlElementId)" style="position: relative; height: 300px;"></div>
+                if (firstTab) { firstTab = false; }
+            }
+        </div>
+    </div><!-- /.nav-tabs-custom -->
+</div>
+
+@foreach (GTDoro.ViewModels.MorrisDonutChartViewModel item in Model)
+{ 
+    @Html.Raw(item.Script)
+}
+
+<script>
+    $('.chart-responsive .nav-tabs-custom a').on('shown.bs.tab', function (e) {
+        var types = $(this).attr("data-identifier");
+        var typesArray = types.split(",");
+        $.each(typesArray, function (key, value) {
+            eval(value + ".redraw()");
+        })
+    });
+</script>

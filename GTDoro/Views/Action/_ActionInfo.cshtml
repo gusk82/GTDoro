@@ -1,0 +1,130 @@
+﻿@model GTDoro.Models.Action
+@using GTDoro.ExtensionMethods;
+
+<div class="gt-form-data">
+    <div class="gt-form-group">
+        <label class="gt-lbl gt-lbl-title">
+            Name
+        </label>
+        <span>
+            <span class="@(Model.CssClass)">@Html.ActionLink(Model.Name, "Details", "Action", new { id = Model.ID }, null)</span>
+        </span>
+    </div>
+    <hr />
+    @if (string.IsNullOrWhiteSpace(Model.Description) == false)
+    {
+        <div class="gt-form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "gt-lbl" })
+            <span class="multiline">@Model.Description.RemoveDuplicateLineBreaks()</span>
+        </div>
+    }
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                <label class="gt-lbl">
+                    Task (@Html.DisplayNameFor(model => model.Task.Code))
+                </label>
+
+                <span>
+                    <span class="@(Model.Task.CssClass)">@Html.ActionLink(Model.Task.Code, "Details", "Task", new { id = Model.Task.ID }, null)</span>
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.CalculatedStatus, new { @class = "gt-lbl" })
+                <span>
+                    @Html.Raw(Model.StatusIconHtml)
+                    @Html.DisplayFor(model => model.CalculatedStatus) 
+                </span>
+            </div>
+            @if (Model.IsPersistent)
+            {
+                <div class="gt-form-group">
+                    @Html.LabelFor(model => model.IsPersistent, new { @class = "gt-lbl" })
+                    <span>
+                        <i class="fa fa-fw fa-refresh"></i> Yes
+                    </span>
+                </div>
+            }
+            else
+            {
+                <div class="gt-form-group">
+                    @Html.LabelFor(model => model.Estimate, new { @class = "gt-lbl" })
+                    <span>
+                        <i class="fa fa-fw fa fa-question"></i>
+                        @Html.DisplayFor(model => model.Estimate)
+                    </span>
+                </div>
+            }
+        </div>
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                <label class="gt-lbl">
+                    Project (@Html.DisplayNameFor(model => model.Task.Project.Code))
+                </label>
+                <span>
+                    <span class="@(Model.Task.Project.CssClass)">@Html.ActionLink(Model.Task.Project.Code, "Details", "Project", new { id = Model.Task.Project.ID }, null)</span>
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.Priority, new { @class = "gt-lbl" })
+                <span>
+                    @Html.Raw(Model.Priority.GetIconHtmlTag())
+                    @Html.DisplayFor(model => model.Priority)
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.Deadline, new { @class = "gt-lbl" })
+                <span class="@(!Model.Deadline.HasValue ? "null-value" : "")">
+                    <i class="fa fa-fw fa-clock-o"></i>
+                    @Model.Deadline.ToDateStringOrDefault()
+                </span>
+            </div>            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.Pomodoros, new { @class = "gt-lbl" })
+                <span>
+                    <i class="fa fa-fw fa-wrench"></i>
+                    @Model.CompletedPomodorosCount
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.CreationDateLocal, new { @class = "gt-lbl" })
+                <span title="@(Model.CreationDateLocal.ToStringOrEmpty())" class="@(!Model.CreationDate.HasValue ? "null-value" : "")">
+                    <i class="fa fa-fw fa-clock-o"></i>
+                    @Model.CreationDateLocal.ToRelativeString()
+                </span>
+            </div>
+            @if(Model.IsPersistent == false)
+            { 
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.Effort, new { @class = "gt-lbl" })
+                <span title="@(Model.EffortInfo)" class="badge @(Model.EffortGroup.GetAttributeIconCssClass())">
+                    @(String.IsNullOrWhiteSpace(Model.Effort.ToIntegerPercentageString()) ?
+                            Model.CompletedPomodorosCount.ToString() : Model.Effort.ToIntegerPercentageString())
+                </span>
+            </div>
+            }
+        </div>
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                <label class="gt-lbl" for="CompletedPomodorosCount">Last Work</label>
+                <span title="@(Model.LastPomodoro.ToDateStringOrEmpty())">
+                    <i class="fa fa-fw fa-clock-o"></i>
+                    @(Model.LastPomodoro.ToDateRelativeString())
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.EndDateLocal, new { @class = "gt-lbl" })
+                <span class="@(!Model.EndDateLocal.HasValue ? "null-value" : "")">
+                    <i class="fa fa-fw fa-clock-o"></i>
+                    @Model.EndDateLocal.ToDateStringOrDefault()
+                </span>
+            </div>
+        </div>
+    </div>   
+    @Html.Partial("Panels/Tags/_TagsRowList")
+</div>
+

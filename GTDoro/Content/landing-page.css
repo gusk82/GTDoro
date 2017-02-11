@@ -1,0 +1,316 @@
+﻿body, html {
+	height: 100%;
+	width: 100%;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 700;
+}
+
+.lead {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+.intro-header {
+	padding: 50px 0;
+	color: #f8f8f8;
+	background: url(../admin-lte/img/landing-page/intro-bg-tran.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	text-align: center;
+    
+    min-height: 100%;
+    min-width: 100%;
+}
+.intro-message {
+	position: relative;
+	/*padding: 10% 0;*/
+    padding: 5% 0;
+    color: #e8e8e8;
+}
+
+.intro-message > h1 {
+	margin: 0;
+	font-size: 5em;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+    color: #FFF;
+}
+
+.intro-message .gtdoro {
+    color: #FA6A6A;
+    margin-right: 20px;
+}
+
+.intro-message .free {
+    color: #45E78B;
+    margin-left: 12px;
+    text-transform: uppercase;
+}
+
+.intro-divider {
+	width: 400px;
+	border-top: 1px solid #f8f8f8;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.intro-message > h3 {
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+#screenshot-carousel {
+    background: #e8e8e8;
+    border: 5px solid #3d9970;
+    border-radius: 30px;
+}
+#screenshot-carousel .slide-image-container{
+    max-width: 750px;
+    margin: auto;
+    padding: 10px 70px;
+}
+
+#screenshot-carousel .carousel-control {
+    border-radius: 25px;
+}
+#screenshot-carousel .carousel-inner{
+    border-radius: 30px;
+}
+
+#screenshot-carousel .carousel-indicators{
+    bottom: 0;
+}
+#screenshot-carousel .carousel-indicators li{
+    border-color: #000;
+}
+#screenshot-carousel .carousel-indicators .active{
+    background-color: #DA2929;
+}
+#screenshot-carousel ul.app-features {
+    padding-bottom: 25px;
+}
+#screenshot-carousel ul.app-features li:before {
+  
+    content: "\f046"; /* FontAwesome char code inside the '' */
+    font-family: FontAwesome; /* FontAwesome or whatever */
+    display: inline-block;
+    width: 1.2em; /* same as padding-left set on li */
+    margin-left: -1.2em; /* same as padding-left set on li */
+    color: #3d9970;
+}
+#screenshot-carousel ul.app-features li {    
+  color:#000;
+  font-weight: normal;
+  font-size: 1.5em;
+  padding-left: 1.2em;
+  margin-right: 10px;
+}
+#screenshot-carousel ul.app-features li:last-child {
+  margin-right: 0;
+}
+
+#social-buttons{
+    margin-top: 20px; 
+}
+#social-buttons a{
+    margin: auto 7px; 
+}
+ 
+@media (max-width: 767px) {
+
+	ul.intro-social-buttons > li {
+		display: block;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	ul.intro-social-buttons > li:last-child {
+		margin-bottom: 0;
+	}
+
+	.intro-divider {
+		width: 100%;
+	}
+
+    #screenshot-carousel ul.app-features li {
+        font-size: 1.2em;
+    }
+    .intro-header .form-box#login-box {
+        margin-top: 25px !important;
+    }
+}
+
+@media (max-height: 720px) {
+    #screenshot-carousel .slide-image-container {
+        max-width: 600px;
+    }	
+    
+    .intro-message {
+		padding: 5% 0 2%;
+	}
+    
+    .intro-header .form-box#login-box {
+        margin-top: 70px;
+    }
+    /*.intro-message {
+        padding: 3% 0;
+    }*/
+}
+
+.network-name {
+	text-transform: uppercase;
+	font-size: 14px;
+	font-weight: 400;
+	letter-spacing: 2px;
+}
+
+.content-section-a {
+	background-color: #f8f8f8;
+	padding: 50px 0;
+}
+
+.content-section-b {
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+	padding: 50px 0;
+}
+
+.section-heading {
+	margin-bottom: 30px;
+}
+
+.section-heading-spacer {
+	border-top: 3px solid #e7e7e7;
+	width: 200px;
+	float: left;
+}
+
+.banner {
+	padding: 100px 0;
+	color: #f8f8f8;
+	background: url(../admin-lte/img/landing-page/banner-bg.jpg) no-repeat center center;
+	background-size: cover;
+}
+
+.banner h2 {
+	margin: 0;
+	text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+	font-size: 3em;
+}
+
+.banner ul {
+	margin-bottom: 0;
+}
+
+.banner-social-buttons {
+	float: right;
+	margin-top: 0;
+}
+
+@media (max-width: 1199px) {
+	ul.banner-social-buttons {
+		float: left;
+		margin-top: 15px;
+	}	
+}
+
+@media (max-width: 767px) {
+	.banner h2 {
+		margin: 0;
+		text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+		font-size: 3em;
+	}
+
+	ul.banner-social-buttons > li {
+		display: block;
+		margin-bottom: 20px;
+		padding: 0;
+	}
+
+	ul.banner-social-buttons > li:last-child {
+		margin-bottom: 0;
+	}	
+}
+
+footer {
+	background-color: #f8f8f8;
+	padding: 10px 0;
+}
+
+p.copyright {
+	margin: 15px 0 0;
+}
+
+/* Custom styling */
+
+@font-face {
+    font-family: 'arial';
+    src: url('font/arialbd.eot') format('eot'), /* IE9 Compat Modes */
+         url('font/arialbd.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('font/arialbd.woff') format('woff'), /* Modern Browsers */
+         url('font/arialbd.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('font/arialbd.svg#svgFontName') format('svg'); /* Legacy iOS */
+    font-weight: bold;
+    font-style: normal;
+}
+#loginForm input {
+    background: rgb(234, 255, 238);
+}
+.intro-header .form-box {
+    width: 100%;
+    margin-top: 180px;
+}
+.form-box .header {
+    padding: 15px 10px;
+}
+.form-group {
+    margin-bottom: 5px;
+}
+.form-box .body > .form-group {
+    margin-top: 10px;
+}
+.form-group .body {
+    padding: 5px 20px;
+}
+.header a.logo div#letters {
+    top: -2px;
+    position: absolute;
+    left: 11px;
+}
+.header a.logo .version {
+    display: none;
+}
+.header a.logo > div {
+    width:150px !important;
+}
+.control-label.text-danger{        
+    white-space: pre-wrap;
+}
+div.form-box.bg-black{
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px white solid;
+}
+@media (max-width: 992px){
+    .header{
+        width: 100%;
+    }
+	.intro-message > h1 {
+		font-size: 3em;
+	}
+    #loginForm .form-horizontal {
+        clear: both;
+    }
+    #loginForm #remember {
+        margin-left: 20px;
+    }
+    /** overwrite bootstrap for navbar**/
+    .navbar-toggle{
+        display: block !important;
+    }
+    .navbar-collapse.collapse{
+        display: none !important;
+    }
+}

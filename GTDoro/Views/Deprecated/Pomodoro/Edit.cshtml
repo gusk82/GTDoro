@@ -1,0 +1,73 @@
+﻿@model GTDoro.Models.Pomodoro
+
+@{
+    ViewBag.Operation = GTDoro.Models.Operation.Edit;
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Pomodoro</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Project @Html.DisplayNameFor(model => model.Action.Task.Project.Code)
+            </dt>
+
+            <dd>
+                @Html.ActionLink(Model.Action.Task.Project.Code, "Details", "Project", new { id = Model.Action.Task.Project.ID }, null)
+            </dd>
+
+            <dt>
+                Task @Html.DisplayNameFor(model => model.Action.Task.Code)
+            </dt>
+
+            <dd>                
+                @Html.ActionLink(Model.Action.Task.Code, "Details", "Task", new { id = Model.Action.Task.ID }, null)
+            </dd>
+        </dl>
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartLocal, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartLocal)
+                @Html.ValidationMessageFor(model => model.StartLocal)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ActionID, "ActionID", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ActionID", String.Empty)
+                @Html.ValidationMessageFor(model => model.ActionID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreationDateLocal, "Creation Date", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.CreationDate)
+                @Model.CreationDateLocal
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

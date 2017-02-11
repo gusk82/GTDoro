@@ -1,0 +1,30 @@
+﻿@model GTDoro.ViewModels.ItemSelectorViewModel
+
+<div id="item-search-selector">
+    <div>
+        @using (Html.BeginForm(Model.FormAction, Model.FormController, FormMethod.Get))
+        {
+            <div>
+                <span>
+                    @Html.Action("Autocomplete", "Search", new { itemType = Model.ItemType, target = Model.Target})
+                </span>
+                <span>
+
+                    <button type="submit" class="btn btn-sm btn-primary">Select</button>
+                </span>
+            </div>
+            if (Model.CollectedThingID.HasValue)
+            {
+                @Html.Hidden("ct", Model.CollectedThingID.Value)
+            }
+            else if (Model.SourceItemID.HasValue)
+            {
+                @Html.Hidden("id", Model.SourceItemID.Value)
+            }
+            else if (!string.IsNullOrWhiteSpace(Model.DefaultItemName))
+            {
+                @Html.Hidden("text", Model.DefaultItemName)
+            }
+        }
+    </div>
+</div>

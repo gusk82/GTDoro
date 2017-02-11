@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Help";
+    ViewBag.SubNavTitle = "Basics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.BreadcrumbList = new List<string> 
+    { 
+        Html.ActionLink("Basics", "Basics").ToHtmlString(),
+    };
+}
+
+<style>
+</style>
+<div class="help-container">
+
+    <div class="box box-info">
+        <div class="box-header">
+            <h2 class="box-title"><i class="fa fa-fw fa-info"></i> Basics</h2>
+            <div class="pull-right">
+                <a title="Spanish version" href="/Help/Fundamentos">Ver versi&oacute;n en Espa&ntilde;ol</a>
+            </div>
+        </div>
+    </div>
+    <section class="box">
+
+        <div class="box-header"><h3 class="box-title">Introduction</h3></div>
+        <div class="box-body">
+            <p>
+                GTDoro is a web application for managing <strong>personal</strong> projects.
+                The user, once registered and logged into the system, will be able to view and enter information about their projects, having no access to the rest.
+            </p>
+
+            <p>The application lets you count the time spent working for future reference, in order to convert that data into useful information and to improve the organization and productivity of the user projects.</p>
+
+            <p>It uses a system based on several existing productivity techniques such as Pomodoro and GTD system.</p>
+        </div>
+    </section>
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Work organization</h3></div>
+        <div class="box-body">
+            <p>Work is measured in indivisible <strong>25-minute</strong> units, which usually are followed by a subsequent 5-minute break. Therefore when measuring work time in the traditional way we can simplify by multiplying this number by two, getting the number of hours.</p>
+
+            <p>There are three hierarchical levels in this technique: <strong>projects, tasks and actions</strong>.</p>
+            <p>A project can contain as many tasks as needed, and each task as many actions as required to be completed.</p>
+            <p>Finally, <strong>actions</strong> are the only elements able to <strong>directly include work</strong>. Therefore every time we prepare to work we have to select an active action (belonging to a task, which also belongs to a project).</p>
+        </div>
+    </section>
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Tools</h3></div>
+        <div class="box-body">
+            <p>
+                The application provides several tools to implement this technique, which are listed below.
+                <ul>
+                    <li><strong>Timer</strong>: Once an action is selected the user can start working just by clicking a button, which will start the 25-minute countdown. Once completed, the user must confirm that this work be counted.</li>
+                    <li>
+                        <strong>Element collection</strong>: There is a button at the top of the screen that allows the quick collecting of ideas. By using this functionality (suggested by GTD) the user is able to release their mind from having to remember what to do and they do not need to spend time entering detailed information.<br />
+                        Examples include notes such as "tickets to Madrid" or "create weekly calendar" which may be stored for further processing (i.e.: conversion into new projects, tasks or actions with location and details).
+                    </li>
+                    <li><strong>Charts</strong>: Information is not easy to interpret when it comes in the form of a group of numbers or descriptions. Charts help make information easier to interpret, making it more useful to the user, so they can at a glance find out how, when and where they are concentrating their work.</li>
+                    <li>
+                        <strong>Tables</strong>: Similar to charts, tables significantly help the user interpret the data recorded during their work. By using tables, we can check the properties of the project and its elements, as well as details of the amount of work devoted to each.<br />
+                        In order to improve the user experience, these tables include sorting, pagination and filters, providing faster and easier access to the information.
+                    </li>
+                </ul>
+            </p>
+        </div>
+</section>
+</div>

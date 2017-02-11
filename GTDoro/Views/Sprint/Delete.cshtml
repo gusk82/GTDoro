@@ -1,0 +1,39 @@
+﻿@model GTDoro.Models.Sprint
+@using GTDoro.ExtensionMethods;
+@using GTDoro.Models;
+
+@{
+    ViewBag.Operation = GTDoro.Models.Operation.DeleteSprint;
+}
+
+<div>
+    @if (Model.ContainsSelectedAction && Model.Owner.WorkingPanelAvailable == false) //not working nor pending confirmation
+    {
+        //cannot perform change
+        <div class="alert alert-warning alert-dismissable">
+            <i class="fa fa-exclamation-triangle"></i>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <b>Warning!</b> @(Settings.MSG_UNSUCCESSFUL_BECAUSE_WORKING)
+        </div>
+    }
+    else
+    {      
+        <div class="callout callout-danger">
+            <h4>Delete confirmation</h4>
+            <p>Are you sure you want to delete this element and its descendant items? This action cannot be undone.</p>
+            @using (Html.BeginForm("Delete","Sprint"))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("id", Model.ID)
+                @Html.Hidden("UrlReferrer", Request.GetReferrerUrlOrCurrent())
+
+                <div class="form-actions no-color">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-fw fa-times">&nbsp;</i>Delete
+                    </button>
+                </div>
+            }
+        </div>
+    }
+    @Html.Partial("_SprintInfo")
+</div>

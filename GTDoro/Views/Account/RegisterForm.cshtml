@@ -1,0 +1,62 @@
+﻿@model GTDoro.Models.Identity.RegisterViewModel
+
+@{
+    Layout = "";
+    string RegisterError = string.Empty;
+    if (TempData["RegisterError"] != null && !string.IsNullOrWhiteSpace(TempData["RegisterError"] as string))
+    {
+        RegisterError = TempData["RegisterError"] as string;
+        TempData["RegisterError"] = string.Empty;
+    }
+    Layout = "~/Views/Shared/Layouts/_Landing.cshtml";
+}
+
+<div class="form-box" id="login-box">
+    <div class="header">Free Registration</div>
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="body bg-gray">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <!-- This two fake fields are here due to a known Chrome issue-->
+            <!-- More info at https://code.google.com/p/chromium/issues/detail?id=393482 -->
+            <input type="email" name="fake-email" style="display:none"/>
+            <input type="password" name="fake-password" style="display:none" />           
+            <!---->
+
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Full name" autocomplete="off"/>
+            </div>
+            @*<div class="form-group">
+                <input type="text" name="country" class="form-control" placeholder="Country" autocomplete="off" />
+            </div>*@
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email Address", autocomplete = "off" })
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", autocomplete = "off" })
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Retype password", autocomplete = "off" })
+            </div>
+            <div class="form-group">
+                @Html.DropDownListFor(m => m.TimeZoneId, GTDoro.Models.Settings.TimeZoneList, "Time zone", new { @class = "form-control", autocomplete = "off" })
+            </div>
+        </div>
+        <div class="footer">
+            <button type="submit" class="btn bg-olive btn-block">Sign me up</button>
+            @*<a href="login.html" class="text-center">I already have a membership</a>*@
+            <div>
+                <span class="control-label text-danger">@Html.Raw(RegisterError)</span>
+            </div>
+        </div>
+    }
+    @*<div class="margin text-center">
+        <span>Register using social networks</span>
+        <br />
+        <button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>
+        <button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>
+        <button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>
+    </div>*@
+</div>

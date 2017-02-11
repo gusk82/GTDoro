@@ -1,0 +1,21 @@
+﻿@model GTDoro.Models.Sprint
+
+<div class="box-title pull-right">
+    <a title="Go to Project" href="@Url.Action("Details", "Project", new { id = Model.ProjectID })">
+        <i class="gt-project fa fa-fw fa-arrow-up"></i>
+    </a>
+    @if (Model.NextSibling != null)
+    {
+        <a title="Go to Next Task" href="@Url.Action("Details", "Sprint", new { id = ((GTDoro.Models.Sprint)Model.NextSibling).ID })">
+            <i class="fa fa-fw fa-arrow-right"></i>
+        </a>
+    }
+    @if (Model.GetActions().Count() > 0)
+    {
+        <a title="Go to Action List" href="#tab-action-list" data-toggle="tab" onclick="jump('bottom'); selectChildrenTab();">
+            <i class="gt-action fa fa-fw fa-arrow-down"></i>
+        </a>
+    }
+</div>
+
+

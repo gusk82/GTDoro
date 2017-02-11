@@ -1,0 +1,25 @@
+﻿@model ICollection<GTDoro.ViewModels.PomodoroSet>
+
+<div class="panel-container tall">
+    <table class="table">
+        @foreach (var set in Model)
+        {
+            <!--PomodoroSet-->
+            <tr>
+                <td>
+                        
+                </td>
+                <td>
+                    <span class="gt-action">@Html.ActionLink(set.Action.PathItemName, "Details", "Action", new { id = set.Action.ID }, null)</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => set.StartLocal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => set.Count)
+                </td>
+                <td></td>
+            </tr>
+        }
+    </table>
+</div>

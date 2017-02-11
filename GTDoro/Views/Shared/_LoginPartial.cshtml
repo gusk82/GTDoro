@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "hidden" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+
+    <li class="dropdown user user-menu">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-user"></i>
+            <span><span id="logged-user-name">@User.Identity.GetUserName() </span><i class="caret"></i></span>
+        </a>
+        <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+                <p>
+                    @User.Identity.GetUserName()
+                    @*<small>Member since Nov. 2012</small>*@
+                </p>
+            </li>
+            <!-- Menu Body -->
+            @*<li class="user-body">
+                <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                </div>
+            </li>*@
+            <!-- Menu Footer-->
+            <li class="user-footer">
+                <div class="pull-left">
+                    @Html.ActionLink("Settings", "MyAccount", "Layout", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-flat" })
+                </div>
+                <div class="pull-right">
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+            </li>
+        </ul>
+    </li>    
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

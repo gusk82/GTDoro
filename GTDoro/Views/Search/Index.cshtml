@@ -1,0 +1,84 @@
+﻿@model GTDoro.Models.SearchResults
+
+@{
+    ViewBag.Title = "Search";
+    ViewBag.ShowParentColumns = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}   
+    
+
+<div class="box box-solid">
+    <div class="box-header">
+        <h3 class="box-title">Search Results for "@(Model.SearchTerm)"</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="box-group" id="accordion">
+            <div class="panel box box-danger">
+                <div class="box-header">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <h3 class="box-title">
+                            <i class="fa fa-fw fa-bullseye" title="Actions"></i> Projects (@Model.ProjectResults.Count() matches found)
+                        </h3>
+                    </a>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                    @Html.Partial("Collections/_Projects", Model.ProjectResults)
+                </div>
+            </div>
+            <div class="panel box box-primary">
+                <div class="box-header">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                        <h3 class="box-title">
+                            <i class="fa fa-fw fa-dot-circle-o" title="Actions"></i> Tasks (@Model.TaskResults.Count() matches found)
+                        </h3>
+                    </a>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    @Html.Partial("Collections/_Tasks", Model.TaskResults)
+                </div>
+            </div>
+            <div class="panel box box-success">
+                <div class="box-header">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                        <h3 class="box-title">
+                            <i class="fa fa-fw fa-circle" title="Actions"></i> Actions (@Model.ActionResults.Count() matches found)
+                        </h3>
+                    </a>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    @Html.Partial("Collections/_Actions", Model.ActionResults)
+                </div>
+            </div>
+        </div>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+@Styles.Render("~/Content/dataTables")
+@Scripts.Render("~/Scripts/dataTables")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#project-results").dataTable({
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [$("#project-results th").length - 1] },
+            ],
+            "dom": 't<"dti"ip>'
+        });
+
+        $("#task-results").dataTable({
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [$("#task-results th").length - 1] }
+            ],
+            "dom": 't<"dti"ip>'
+        });
+
+        $("#action-results").dataTable({
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [$("#action-results th").length - 1] }
+            ],
+            "dom": 't<"dti"ip>'
+        });
+
+        $(".gt-datatables").show();
+    });
+</script>

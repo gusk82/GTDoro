@@ -1,0 +1,53 @@
+﻿@model GTDoro.ViewModels.ItemSelectorViewModel
+@using GTDoro.Models;
+<div class="cbox-wrapper">
+    <h2><i class="fa fa-fw fa-hand-o-right"></i> Select @(Model.Target == ItemSelectorTarget.Navigate ? "Item" : Model.ItemType.ToString())</h2>
+    <hr>
+    <h4>@Model.Title</h4>
+    @*@if (Model.Target != ItemSelectorTarget.Navigate)*@
+    
+        <div class="row">
+            <div class="col-sm-12">
+                <h5>Search bar</h5>
+                @Html.Partial("Panels/ItemSelector/_ItemSearchSelector")
+            </div>
+        </div>
+    
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <h5>Navigator</h5>
+            <div class="visible-xs visible-sm">
+                @Html.Action("ItemNavSelector", "Search",
+            new
+            {
+                type = Model.ItemType,
+                target = Model.Target,
+                selectorType = ItemSelectorType.AccordionNav,
+                collectedThingID = Model.CollectedThingID,
+                defaultItemName = Model.DefaultItemName
+            })
+            </div>
+            <div class="hidden-xs hidden-sm">
+                @Html.Action("ItemNavSelector", "Search",
+            new
+            {
+                type = Model.ItemType,
+                target = Model.Target,
+                selectorType = ItemSelectorType.DropDownNav,
+                collectedThingID = Model.CollectedThingID,
+                defaultItemName = Model.DefaultItemName
+            })
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#autocomplete-container input')[0].focus();
+        }, 750);
+    });
+</script>
+@Scripts.Render("~/Scripts/toggle-menu")
+@Styles.Render("~/Content/toggle-menu")

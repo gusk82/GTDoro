@@ -1,0 +1,41 @@
+﻿@model GTDoro.ViewModels.ReviewViewModel
+
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6">        
+
+        <!--Collected Things-->
+        <div class="gt-dt-container">
+            @Html.Partial("DataTables/_CollectedThingDataTable", Model.CollectedThings)
+        </div>
+
+        <!--Inactive Actions-->
+        <div class="gt-dt-container">
+            @Html.Partial("DataTables/_PomodoroContainerDataTable", Model.InactiveActions)
+        </div>
+    </div>
+    <div class="col-lg-6">
+        
+        <!--Expired Actions-->
+        <div class="gt-dt-container">
+            @Html.Partial("DataTables/_PomodoroContainerDataTable", Model.ExpiredActions)
+        </div>
+
+        <!--Task with No Active Actions-->
+        <div class="gt-dt-container">
+            @Html.Partial("DataTables/_PomodoroContainerDataTable", Model.TaskWithNoActiveActions)
+        </div>
+
+        <!--Projects with No Active Tasks-->
+        <div class="gt-dt-container">
+            @Html.Partial("DataTables/_PomodoroContainerDataTable", Model.ProjectsWithNoActiveTasks)
+        </div>
+    </div>
+</div>
+
+@Styles.Render("~/Content/dataTables")
+@Scripts.Render("~/Scripts/dataTables")

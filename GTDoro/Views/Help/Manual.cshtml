@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Help";
+    ViewBag.SubNavTitle = "Manual";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.BreadcrumbList = new List<string> 
+    { 
+        Html.ActionLink("Manual", "Manual").ToHtmlString(),
+    };
+}
+<div class="help-container">
+
+    <div class="box box-info">
+        <div class="box-header">
+            <h2 class="box-title"><i class="fa fa-fw fa-book"></i> User Manual</h2>
+            <div class="pull-right">
+                <a title="Spanish version" href="/Help/ManualBasico">Ver versi&oacute;n en Espa&ntilde;ol</a>
+            </div>
+        </div>
+    </div>
+    <section class="box">
+        <div class="box-header">
+            <h3 class="box-title">Screen Layout</h3>
+        </div>
+        <div class="box-body">
+            <p>
+                The window is composed of three distinct areas:
+                <ul>
+                    <li><strong>Top panel</strong>: The logo is in the upper left area of the screen. You can also find the button to show / hide the left panel, the button "collect" and the drop down button with the username.</li>
+                    <li><strong>Left panel</strong>: Here are three elements: the work panel, the search bar and the main menu of the application.</li>
+                    <li><strong>Main panel</strong>: This displays the content requested by the user. Obviously, the structure of this content is highly variable but most of the pages will show the title of the section or subsection and breadcrumb (path to get to the current page on the site).</li>
+                </ul>
+            </p>
+        </div>
+</section>
+
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Left panel</h3></div>
+        <div class="box-body">
+            <p><i class="fa fa-fw fa-bars"></i> <strong>Show / hide left panel</strong>: This button allows you to show and hide the left panel. This is particularly useful for small screen devices where this panel will initially appear hidden, leaving space for the other elements of the main panel.</p>
+
+            <p><span class="fa-stack"><i class="fa fa-circle fa-stack-2x text-danger"></i><i style="color: rgba(255, 255, 255, 0.8);" class="fa fa-plus fa-stack-1x"></i></span> <strong>Collect things</strong>: This button makes it easier to add ideas or tasks to the system quickly whitout having to think what type of item (project, task, action) should be created and where to place it. This will be helpful to remember items so the user does not have to keep anything in mind until these ideas are processed (converted or deleted) in the review section.</p>
+
+            <p><i class="glyphicon glyphicon-user fa-fw"></i> <strong>Logged user</strong>: Here the user ID (email address) is displayed. By clicking this button you will find other options like logging out or changing the password.</p>
+
+            <p><i class="fa fa-fw fa-search"></i> <strong>Search bar</strong>: This tool comes in handy when searching through the collection of items created by the user. After submitting text, search results will be displayed in a new page.</p>
+        </div>
+</section>
+
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Work panel</h3></div>  
+        <div class="box-body">
+            <p>
+                This is located at the top of the left panel and displays the current working status, regardless of which section of the site the user is. This status can be any of the following:
+                <ul style="list-style:none">
+                    <li><i class="fa fa-fw fa-circle text-muted"></i> <strong>No action selected</strong>: If the previously selected action is no longer active (it has been canceled or completed, for example) or has been deleted, there will be no action selected so the only possibility is to select a new one.</li>
+                    <li><i class="fa fa-fw fa-circle text-success"></i> <strong>Ready</strong>: The selected action and information about the work is displayed. The user can click the button in order to start the work and the countdown.</li>
+                    <li><i class="fa fa-fw fa-circle text-red"></i> <strong>Working</strong>: The remaining time until the next break decreases and will be displayed in both this panel and the browser's window title. An alarm will sound just before the end of the time to let you know that the time is over and it's time for a break.</li>
+                    <li><i class="fa fa-fw fa-circle text-orange"></i> <strong>Pending confirmation</strong>: Sometimes you can start your work but there may be interruptions, or maybe it was started unintentionally.<br />That's why you should confirm your work once the time is over, in order it can be recorded. The user will not be able to continue working with the same or another action until the previous work period is confirmed or discarded.<br/>For the first five minutes a countdown will be displayed showing the recommended rest period for the user before starting work again.</li>
+                </ul>
+            </p>
+        </div>
+</section>
+    
+    <article class="box">
+        <div class="box-header"><h3 class="box-title">Main menu</h3></div>            
+        <div class="box-body">
+            <p>Displays link to the sections of the application, allowing the user to navigate through the entire site.</p>
+            <section>
+                <h4><i class="fa fa-fw fa-dashboard"></i>Dashboard</h4>
+                <p>This is the initial screen for the main panel of the application. When the users log in, the system will access this page and they will find graphical and textual information about the amount and distribution of the work done so far.</p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-calendar"></i> Calendar</h4>
+                <p>
+                    The calendar displays all the work completed by the user who is logged into the system.
+                    This way we can see the start and end times of each work period. Each calendar item displays work information, including the action name, a background color depending on the project and a border color depending on the task.
+                    Additionally, you can click on the calendar items to show information about the action in a popup window, or open a new window with this info including links to its task and project.
+                </p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-check"></i> Review</h4>
+                <p>
+                    This includes lists of items that may need attention from the user.
+                    The user should go to this section to process the collected ideas or do an overall review including items exceeding some limits or in an inactive status.
+                </p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-bar-chart-o"></i> Reports</h4>
+                <p>
+                    This section shows reports as data queries that may be useful and can not be included in other existing sections. 
+                    The reports list displays information in tables or charts and will be completed according to the needs that may arise in the future. 
+                    One of the available reports shows a work table that can be sorted or filtered with all the historical work data.
+                </p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-gears"></i> Workspace</h4>
+                <p>
+                    From this section you can browse through the workspace elements (projects, tasks or actions) added by the user, including pages for the following operations: list, create, detail, edit, and delete.
+                    When accessing an element you will also find an option menu (e.g. to change the status), a calendar, and charts and tables, including a list of dependant tasks or actions if they are at a lower level in the hierarchy. 
+                    The names of the main elements (projects, tasks and actions) always appear in the pages of the application and contain quick links to the specific item.
+                </p>
+                <p>Some tables also include quick links to go directly to the specific page of the selected operation.
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-question-circle"></i> Help</h4>
+                <p>
+                    This section.
+                </p>
+            </section>
+        </div>
+</article>
+</div>

@@ -1,0 +1,109 @@
+﻿@model GTDoro.Models.Task
+@using GTDoro.Models
+@using Action = GTDoro.Models.Action
+
+@{
+    ViewBag.Operation = GTDoro.Models.Operation.CreateAction;
+    Layout = "~/Views/Task/_TaskLayout.cshtml";
+    Action newAction = ViewBag.NewAction;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">        
+        @Html.ValidationSummary(true)
+        @Html.Hidden("newAction.TaskID", newAction.TaskID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => newAction.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => newAction.Name, new { @class = "form-control", @maxlength = Settings.PTA_NAME_MAX_LENGTH })
+                @Html.ValidationMessageFor(model => newAction.Name)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => newAction.Description, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => newAction.Description, new { @class = "form-control item-description", @maxlength = Settings.PTA_DESCRIPTION_MAX_LENGTH })
+                @Html.ValidationMessageFor(model => newAction.Description)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => newAction.Estimate, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => newAction.Estimate, new { type = "number", @class = "form-control", min = "0", max = "12" })
+                        @Html.ValidationMessageFor(model => newAction.Estimate)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => newAction.IsPersistent, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => newAction.IsPersistent)
+                        @Html.ValidationMessageFor(model => newAction.IsPersistent)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => newAction.Deadline, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => newAction.Deadline)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group last-form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary" name="submitButton" value="Save">
+                    <i class="fa fa-fw fa-save">&nbsp;</i>Save
+                </button>
+                <span class="separator">&nbsp;</span>
+                <button type="submit" class="btn btn-primary" name="submitButton" value="Create more">
+                    <i class="fa fa-save"></i>
+                    <i class="fa fa-fw fa-plus">&nbsp;</i>Create more
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    if (ViewBag.collectedThingID != null)
+    {
+        @Html.Hidden("collectedThingID", ((int)ViewBag.collectedThingID).ToString())
+    }
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/dates")
+}
+@Styles.Render("~/Content/jqueryui")
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($('#IsPersistent').is(':checked')) {
+            $('#@Html.IdFor(model => newAction.Estimate)').attr("disabled", "disabled");
+        }
+        $('#@Html.IdFor(model => newAction.IsPersistent)').on('ifChecked', function (event) {
+            $('#@Html.IdFor(model => newAction.Estimate)').attr("disabled", "disabled");
+        })
+        $('#@Html.IdFor(model => newAction.IsPersistent)').on('ifUnchecked', function (event) {
+            $('#@Html.IdFor(model => newAction.Estimate)').removeAttr("disabled");
+        })
+
+        $('#newAction_Name').focus();
+
+        sortSelectListByValue($('#Priority'))
+    });
+</script>

@@ -1,0 +1,25 @@
+﻿@{
+    const string PREFIX = "status-";
+    Status[] allStatus = (Status[])Enum.GetValues(typeof(Status));
+    if(allStatus == null || allStatus.Length == 0)
+    {
+        return;
+    }
+    IEnumerable<string> statusFilter = ViewBag.StatusFilter;
+    string statusStr = "";
+}
+@using GTDoro.ExtensionMethods;
+@using GTDoro.Models;
+
+<div id="status-filter" class="box box-body filter-bar form-horizontal">
+    <h5><i class="fa fa-fw fa-spinner"></i> Status filter</h5>
+    <hr class="small" />
+    @foreach (Status status in allStatus)
+    {
+        statusStr = status.ToString().ToLower();
+        <span class="inline-checkbox" title="@(status.GetAttributeDisplayName())">
+            <input type="checkbox" id="@(PREFIX + statusStr)" name="@(PREFIX + statusStr)" value="1" @(statusFilter.Contains(statusStr) ? "checked " : "") />
+            <label for="@(PREFIX + statusStr)"><i class="fa fa-fw gt-status @(status.GetAttributeIconCssClass())"></i> <span class="filter-name"> @(status.GetAttributeDisplayName())</span></label>
+        </span>
+    }
+</div>

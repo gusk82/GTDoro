@@ -1,0 +1,22 @@
+﻿@model ICollection<GTDoro.Models.CollectedThing>
+
+<div class="panel-container tall">
+    <table class="table">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td></td>
+                <td>
+                    @Html.ActionLink(item.Name, "Details", "CollectedThing", new { id = item.ID }, null)
+                </td>
+                <td>                    
+                    <span class="gt-action">@Html.ActionLink("Action", "Create", "Action", new { id = item.ID, name = item.Name }, null)</span> |
+                    <span class="gt-task">@Html.ActionLink("Task", "Create", "Task", new { id = item.ID, name = item.Name }, null)</span> |
+                    <span class="gt-project">@Html.ActionLink("Project", "Create", "Project", new { id = item.ID, name = item.Name }, null)</span>
+                </td>
+                <td></td>
+            </tr>
+        }
+    </table>
+</div>
+

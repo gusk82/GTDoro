@@ -1,0 +1,43 @@
+﻿@model GTDoro.Models.PomodoroContainer
+@*@model PagedList.IPagedList<GTDoro.Models.Pomodoro>
+@using PagedList.Mvc;*@
+
+<table class="table">
+    <tr>
+    @if (Model is GTDoro.Models.TaskContainer) 
+    { 
+        <th>Task</th>
+    }
+    @if (Model is GTDoro.Models.ActionContainer) 
+    { 
+        <th>Action</th>
+    }
+        <th>Start</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.GetPomodoros().OrderByDescending(p=>p.StartLocal))
+    {
+        <tr>
+         @if (Model is GTDoro.Models.TaskContainer)
+        {              
+            <td>
+                <span class="gt-task">@Html.ActionLink(item.Action.Task.Code, "Details", "Task", new { id = item.Action.Task.ID }, null)</span>
+            </td>
+        }
+        @if (Model is GTDoro.Models.ActionContainer) 
+        {            
+            <td>            
+                <span class="gt-action">@Html.ActionLink(item.Action.Name, "Details", "Action", new { id = item.Action.ID }, null)</span>
+            </td>
+        }
+            <td>
+                @Html.DisplayFor(modelItem => item.StartLocal)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Action", new { id = item.ID }, null) |
+                @Html.ActionLink("Details", "Details", "Action", new { id = item.ID }, null) |
+                @Html.ActionLink("Delete", "Delete", "Action", new { id = item.ID }, null)
+            </td>
+        </tr>
+        }
+</table>

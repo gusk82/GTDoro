@@ -1,0 +1,68 @@
+﻿@model IEnumerable<GTDoro.Models.Project>
+@using GTDoro.ExtensionMethods;
+
+<table id="project-results" class="table table-striped gt-datatables">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th class="hidden-xs hidden-sm hidden-md">Name</th>
+            <th class="hidden-xxs">Last Work</th>
+            <th>Progress</th>
+            <th><i class="fa fa-spinner" title="Status"></i></th>
+            <th class="hidden-xs"><i class="fa fa-dot-circle-o" title="Tasks"></i></th>
+            <th class="hidden-xs"><i class="fa fa-circle" title="Actions"></i></th>
+            <th><i class="fa fa-wrench" title="Pomodoros"></i></th>
+            <th class="hidden-xxs">Effort</th>
+            <th class="hidden-xs hidden-sm hidden-md">Creation Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Code, "Details", "Project", new { id = item.ID }, new { @class = item.CssClass })
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md">
+                    <span class="limited-size-column">@Html.DisplayFor(modelItem => item.Name)</span>
+                </td>
+                <td class="hidden-xxs" data-order="@(item.LastPomodoro.ToDateTicksOrZero())" title="@(item.LastPomodoro.ToDateStringOrEmpty())">
+                    <i class="fa fa-clock-o"></i> @(item.LastPomodoro.ToDateRelativeString())
+                </td>
+                <td title="@(item.ProgressInfo)">
+                    <span class="badge @(item.ProgressGroup.GetAttributeIconCssClass())">
+                        @(String.IsNullOrWhiteSpace(item.Progress.ToIntegerPercentageString()) ?
+                                    item.CompletedPomodorosCount.ToString() : item.Progress.ToIntegerPercentageString())
+                    </span>
+                </td>
+                <td>
+                    @Html.Raw(item.StatusIconHtml)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.Tasks.Count)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.GetActions().Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedPomodorosCount)
+                </td>
+                <td class="hidden-xxs" title="@(item.EffortInfo)">
+                    <span class="badge @(item.EffortGroup.GetAttributeIconCssClass())">
+                        @(String.IsNullOrWhiteSpace(item.Effort.ToIntegerPercentageString()) ?
+                            item.CompletedPomodorosCount.ToString() : item.Effort.ToIntegerPercentageString())
+                    </span>
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md" data-order="@(item.CreationDateLocal.ToTicksOrZero())">
+                    @Html.DisplayFor(modelItem => item.CreationDateLocal)
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Project", new { id = item.ID })"><i class="fa fa-fw fa-edit gt-operation" title="Edit"></i></a>
+                    <a href="@Url.Action("Delete", "Project", new { id = item.ID })"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                    @*<a href="@Url.Action("TaskList", "Project", new { id = item.ID })"><i class="fa fa-fw fa-sitemap gt-operation" title="Task List"></i></a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

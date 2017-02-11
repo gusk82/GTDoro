@@ -1,0 +1,266 @@
+﻿@model GTDoro.ViewModels.WorkingPanelViewModel
+@using GTDoro.Models;
+@using GTDoro.ExtensionMethods;
+
+<div id="top" class="info">
+    @if (Model.action != null)
+    {
+        <ul id="current-work-item">
+            <li>
+                @Html.ActionLink(Model.action.Task.Project.Code, "Details", "Project", new { id = Model.action.Task.Project.ID }, new { @class = Model.action.Task.Project.CssClass })
+            </li>
+            <li>
+                @Html.ActionLink(Model.action.Task.Code, "Details", "Task", new { id = Model.action.Task.ID }, new { @class = Model.action.Task.CssClass })
+            </li>
+            <li>
+                @Html.ActionLink(Model.action.Name, "Details", "Action", new { id = Model.action.ID }, new { @class = Model.action.CssClass })
+            </li>
+        </ul>
+        <ul id="current-work-info">
+            <li>
+                <i class="fa fa-wrench" title="Work units"></i>
+                @Html.DisplayFor(model => model.action.CompletedPomodorosCount)
+            </li>
+            @if (Model.action.IsPersistent)
+            {
+                <li>
+                    <i class="fa fa-fw fa-repeat" title="Recurrent Action"></i>
+                </li>
+            }
+            else if (Model.action.Estimate.HasValue)
+            {
+                <li>
+                    <i class="fa fa-question" title="Estimate"></i>
+                    @Html.DisplayFor(model => model.action.Estimate)
+                </li>
+            }
+            @if (Model.pomodoro != null && Model.pomodoro.Start.HasValue)
+            {
+                <li title="@(Model.pomodoro.ToDateStringOrEmpty())">
+                    <i class="fa fa-clock-o" title="Start time"></i>
+                    @(Model.pomodoro.StartLocal.Value.ToString("HH:mm"))
+                </li>
+            }
+            @switch (Model.Status)
+            {
+                case WorkingStatus.Working:
+                case WorkingStatus.BreakTime:
+                {
+                    <li data-status="off" class="pull-right">
+                        <span id="alert-mode-off" class="alert-mode" data-mode="off" style="display:none" onclick="switchAlertMode(this)">
+                            <i class="fa fa-fw fa-volume-off gt-operation" title="Volume"></i>
+                        </span>
+                        <span id="alert-mode-on" class="alert-mode" data-mode="on" style="display:none" onclick="switchAlertMode(this)">
+                            <i class="fa fa-fw fa-volume-up gt-operation" title="Volume"></i>
+                        </span>
+                    </li>
+                }
+                    break;
+                case WorkingStatus.ActionSelected:
+                {
+                    if (Model.action.Effort.HasValue && Model.action.Effort.Value >= 50)
+                    { 
+                        <li>
+                            <a href="@Url.Action("ChangeStatus", "Action", new { id = Model.action.ID, status = Status.Completed })" 
+                                class="btn btn-default btn-sm"><i class="fa fa-fw fa-check gt-status" title="Complete"></i> Complete</a>
+                        </li>
+                    }
+                }
+                    break;
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="text-center">No Action Selected</div>
+    }
+</div>
+
+<div id="center" class="pull-left info">
+    <div id="countdown-container" class="pull-left info">
+        @switch (Model.Status)
+        {
+            case WorkingStatus.PendingConfirmation:
+                <h2 id="countdown">00:00</h2>
+                break;
+            @*case WorkingStatus.Working:
+                var remainingTime = Model.TargetTime - DateTime.UtcNow;
+                <h2 id="countdown">@(remainingTime.Value.Minutes.ToString()):@(remainingTime.Value.Seconds.ToString())</h2>
+                break;*@
+            default:
+                <h2 id="countdown">- - : - -</h2>
+                break;
+        }
+    </div>
+    <div id="working-status" class="pull-right info">
+        @switch (Model.Status)
+        {
+            case WorkingStatus.ActionSelected:
+                <span class="work-status"><i class="fa fa-fw fa-circle text-success"></i> Ready</span>
+                break;
+            case WorkingStatus.NoActionSelected:
+            <span class="work-status"><i class="fa fa-fw fa-circle text-muted"></i> Inactive</span>
+                break;
+            case WorkingStatus.PendingConfirmation:
+            <span class="work-status"><i class="fa fa-fw fa-circle text-orange"></i> Pending</span>
+                break;
+            case WorkingStatus.BreakTime:
+            <span class="work-status"><i class="fa fa-fw fa-circle text-orange"></i> Break time</span>
+                break;
+            case WorkingStatus.Working:
+            <span class="work-status"><i class="fa fa-fw fa-circle text-red"></i> Working</span>
+                break;
+        }
+    </div>
+</div>
+<br />
+@if (Model.Status == WorkingStatus.ActionSelected || Model.Status == WorkingStatus.NoActionSelected)
+{
+    <div class="btnbar" id="btnbar-stopped">
+        <a class="btn btn-app select" href="@Url.Action("ItemSelector", "Search",
+                new { type = PomodoroContainerType.Action, target = ItemSelectorTarget.SelectActiveAction })">
+            <i class=" fa fa-hand-o-right"></i> @(Model.Status == WorkingStatus.ActionSelected ? "Change" : "Select")
+        </a>
+
+        @if (Model.Status == WorkingStatus.ActionSelected)
+        {
+            <a class="btn btn-app" href="@Url.Action("Start", "Work")">
+                <i class="fa fa-play"></i> Start
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-app" href="@Url.Action("AutoSelect", "Work")">
+                <i class="fa fa-magic"></i> Auto select
+            </a>
+        }
+    </div>
+    <script type="text/javascript">
+        $(".select").colorbox({ width: "100%", maxWidth: "900px", height: "100%" });
+    </script>
+}
+@if (Model.Status == WorkingStatus.Working)
+{
+    <div class="btnbar" id="btnbar-working">
+        <a class="btn btn-app" href="@Url.Action("RestartWork", "Work")">
+            <i class="fa fa-repeat"></i> Restart
+        </a>
+        <a class="btn btn-app" style="display:none">
+            <i class="fa fa-pause"></i> Pause
+        </a>
+        <a class="btn btn-app" href="@Url.Action("CancelWorking", "Work")">
+            <i class="fa fa-times-circle"></i> Cancel
+        </a>
+    </div>
+}
+@if (Model.Status == WorkingStatus.PendingConfirmation || Model.Status == WorkingStatus.BreakTime)
+{
+    <div class="btnbar" id="btnbar-unconfirmed">
+        <a class="btn btn-app" href="@Url.Action("CancelUnconfirmed", "Work", new { id = Model.pomodoro.ID })">
+            <i class="fa fa-times-circle"></i> Discard
+        </a>
+
+        <a class="btn btn-app" href="@Url.Action("Confirm", "Work", new { id = Model.pomodoro.ID })">
+            <i class="fa fa-check"></i> Confirm
+        </a>
+    </div>
+}
+@if (Model.Status == WorkingStatus.Working || Model.Status == WorkingStatus.BreakTime)
+{ 
+    <script type="text/javascript">
+        
+        function getAlertModeFromSessionStorage() {
+            if (!sessionStorage.getItem("alarm_mode")) {
+                sessionStorage.setItem("alarm_mode", 'off');
+            }
+            return sessionStorage.getItem("alarm_mode");
+        }
+
+        function refreshAlertMode() {
+            $('span.alert-mode').hide();
+            $('span.alert-mode[data-mode=' + getAlertModeFromSessionStorage() + ']').show();
+        }
+
+        function switchAlertMode(elem) {
+            var newMode = ($(elem).data('mode') === 'off' ? 'on' : 'off');
+            sessionStorage.setItem("alarm_mode", newMode);
+            refreshAlertMode();
+        }
+        function playSound(){
+            var sounds = new Array();
+            sounds[0] = '/Content/sounds/alarm.mp3';
+            sounds[1] = '/Content/sounds/alarm.ogg';
+            sounds[2] = '/Content/sounds/alarm.wav';
+
+            var alarm = new Howl({
+                urls: sounds
+            });
+            alarm.play();
+        }
+        function startCountdown(target_date, delay_ms) {
+            var str_time = "";
+            // variables for time units
+            var minutes, seconds;
+            // get tag element
+            var countdown = document.getElementById("countdown");
+            
+                // update the tag with id "countdown" every 1 second
+            intervalID = setInterval(function () {
+                timerFired = true;
+                // find the amount of "seconds" between now and target
+                var now = new Date();
+                // GTM time
+                var gmtNow = now.valueOf() + (now.getTimezoneOffset() * 60 * 1000) - delay_ms;
+                var gmtTargetDate = new Date(target_date).valueOf() + (new Date(target_date).getTimezoneOffset() * 60 * 1000);
+                var seconds_left = (gmtTargetDate - gmtNow) / 1000;
+
+                if (getAlertModeFromSessionStorage() === 'on') {
+                    if (seconds_left < 7 && seconds_left >= 6) {
+                        playSound();
+                    }
+                }
+
+                //if (seconds_left > 0 && Math.floor(seconds_left) % 60 == 0) {
+                //    renderWorkingPanel();
+                //}
+                // check if the time is over
+                if (seconds_left <= -1) {
+                    clearInterval(intervalID);
+                    countdown.innerHTML = "00:00";
+                    renderWorkingPanel();
+                }
+                else {
+                    // do some time calculations
+                    seconds_left = seconds_left % 86400;
+                    seconds_left = seconds_left % 3600;
+                    // do some time calculations
+                    minutes = parseInt(seconds_left / 60);
+                    seconds = parseInt(seconds_left % 60);
+                    // format countdown string + set tag value
+                    str_time = ((minutes <= 9) ? "0" : "") + minutes + ":" + ((seconds <= 9) ? "0" : "") + seconds;
+                    countdown.innerHTML = str_time;
+                    // add the time to the window title
+                    var regex = /\(\d{2,}:\d{2}\)/
+                    document.title = "@(Model.Status == WorkingStatus.BreakTime ? "Break " : "")(" + str_time + ") "
+                        + document.title.replace(regex, "").replace("Break ", "");
+                }
+            }, 1000);
+            sessionStorage.setItem("currentIntervalID", intervalID);
+        }
+
+            $(document).ready(function () {
+                var intervalID = -1;
+                refreshAlertMode();
+                @{
+                    DateTime date = (Model.Status == WorkingStatus.Working ? 
+                        Model.TargetTime.Value : Model.BreakTargetTime.Value);
+                    string statement = ("startCountdown(Date.parse(\"" + (date.ToString("yyyy-MM-ddTHH:mm:ssZ")) + "\")," +
+                        "2000 - " + (DateTime.UtcNow.AddYears(-1969).AddDays(1).Ticks / TimeSpan.TicksPerMillisecond) + " +  new Date().valueOf());");
+                
+                }
+                @Html.Raw(statement);
+            });
+
+        </script>
+}
+

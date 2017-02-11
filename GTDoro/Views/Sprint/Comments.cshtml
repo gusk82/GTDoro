@@ -1,0 +1,25 @@
+﻿@model GTDoro.Models.Sprint
+@using GTDoro.ExtensionMethods;
+@using GTDoro.Models;
+
+<div class="gt-form-data">
+    <div class="gt-form-group">
+        <div class="row">
+            @if (string.IsNullOrWhiteSpace(Model.InitialComment) == false)
+            {
+                <div class="gt-form-group">
+                    @Html.LabelFor(model => model.InitialComment, new { @class = "gt-lbl" })
+                    <span class="multiline">@Model.InitialComment.RemoveDuplicateLineBreaks()</span>
+                </div>
+            }
+            @if (string.IsNullOrWhiteSpace(Model.FinalComment) == false)
+            {
+                <div class="gt-form-group">
+                    @Html.LabelFor(model => model.FinalComment, new { @class = "gt-lbl" })
+                    <span class="multiline">@Model.FinalComment.RemoveDuplicateLineBreaks()</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

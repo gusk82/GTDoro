@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Help";
+    ViewBag.SubNavTitle = "Manual";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.BreadcrumbList = new List<string> 
+    { 
+        Html.ActionLink("Manual", "Manual").ToHtmlString(),
+    };
+}
+<div class="help-container">
+
+    <div class="box box-info">
+        <div class="box-header">
+            <h2 class="box-title"><i class="fa fa-fw fa-book"></i> Manual de usuario</h2>
+            <div class="pull-right">
+                <a title="Spanish version" href="/Help/Manual">Go to English version</a>
+            </div>
+        </div>
+    </div>
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Distribuci&oacute;n de la pantalla</h3></div>
+        <div class="box-body">
+            <p>
+                La pantalla se compone de tres zonas diferenciadas:
+                <ul>
+                    <li><strong>Panel superior</strong>: Se encuentran el logo, el bot&oacute;n para mostrar/ocultar el panel de la izquierda, el bot&oacute;n de Captura de ideas y el bot&oacute;n desplegable con el nombre de usuario.</li>
+                    <li><strong>Panel de la izquierda</strong>: Se pueden distinguir tres elementos: el panel de trabajo, la barra de b&uacute;squeda y el men&uacute; principal de la aplicaci&oacute;n.</li>
+                    <li><strong>Panel principal</strong>: Muestra el contenido solicitado por el usuario. Obviamente la estructura de este contenido ser&aacute; muy variable pero la gran mayor&iacute;a de las p&aacute;ginas mostrar&aacute;n el t&iacute;tulo de la secci&oacute;n o subsecci&oacute;n y un breadcrumb (camino para llegar a la p&aacute;gina actual, relativo al sitio).</li>
+                </ul>
+            </p>
+        </div>
+</section>
+
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Panel izquierdo</h3></div>
+        <div class="box-body">
+            <p><i class="fa fa-fw fa-bars"></i> <strong>Mostrar / Ocultar panel de la izquierda</strong>: Este bot&oacute;n permite mostrar y ocultar el panel de la izquierda. Esto es &uacute;til sobre todo para dispositivos con pantalla peque&ntilde;a, en los que este panel aparecer&aacute; inicialmente oculto dejando su espacio para el resto de elementos del panel principal.</p>
+
+            <p><span class="fa-stack"><i class="fa fa-circle fa-stack-2x text-danger"></i><i style="color: rgba(255, 255, 255, 0.8);" class="fa fa-plus fa-stack-1x"></i></span> <strong>Capturar ideas</strong>: Este bot&oacute;n facilita la labor de a&ntilde;adir ideas o tareas por hacer r&aacute;pidamente al sistema, evitando tener que pensar qu&eacute; tipo de elemento (proyecto, tarea, acci&oacute;n) se debe crear y d&oacute;nde ubicarlo. Esto permitir&aacute; no olvidarlo ni tener que mantenerlo en la cabeza hasta que estas ideas sean procesadas (convertidas o eliminadas) en la secci&oacute;n Revisi&oacute;n.</p>
+
+            <p><i class="glyphicon glyphicon-user fa-fw"></i> <strong>Usuario logueado</strong>: Aqu&iacute; aparece el identificador del usuario (su email). Pulsando este bot&oacute;n podremos encontrar otras opciones como finalizar la sesi&oacute;n o cambiar la contrase&ntilde;a.</p>
+
+            <p><i class="fa fa-fw fa-search"></i> <strong>Barra de b&uacute;squeda</strong>: Esta herramienta es &uacute;til para buscar entre la colecci&oacute;n de elementos creados por el usuario. Tras introducir un texto se mostrar&aacute;n los resultados de la b&uacute;squeda.</p>
+        </div>
+</section>
+
+    <section class="box">
+        <div class="box-header"><h3 class="box-title">Panel de trabajo</h3></div>  
+        <div class="box-body">
+            <p>
+                Estar&aacute; situado en la parte de arriba del panel izquierdo. Mostrar&aacute; el estado actual de trabajo del usuario, independientemente de en qu&eacute; secci&oacute;n del sitio se encuentre el usuario. Dicho estado podr&aacute; variar entre:
+                <ul style="list-style:none">
+                    <li><i class="fa fa-fw fa-circle text-muted"></i> <strong>Sin acci&oacute;n seleccionada</strong>: Si la acci&oacute;n anteriormente seleccionada ya no est&aacute; activa (se ha cancelado o completado por ejemplo) o se ha eliminado, no existir&aacute; una acci&oacute;n seleccionada por lo que la &uacute;nica posibilidad ser&aacute; seleccionar una nueva.</li>
+                    <li><i class="fa fa-fw fa-circle text-success"></i> <strong>Preparado</strong>: Existe una acci&oacute;n seleccionada. Se muestra informaci&oacute;n acerca de la misma. El usuario puede pulsar el bot&oacute;n cuando vaya a comenzar el trabajo para activar la cuenta atr&aacute;s.</li>
+                    <li><i class="fa fa-fw fa-circle text-red"></i> <strong>Trabajando</strong>: El tiempo restante de trabajo hasta el pr&oacute;ximo descanso est&aacute; decrementando. El usuario podr&aacute; comprobar el tiempo que resta para finalizar mirando este panel y en el t&iacute;tulo de la ventana del explorador. Una alarma sonar&aacute; justo antes de finalizar el tiempo para indicar que se debe parar.</li>
+                    <li><i class="fa fa-fw fa-circle text-orange"></i> <strong>Pendiente de confirmaci&oacute;n</strong>: No siempre el trabajo iniciado se lleva a cabo ya que puede haber interrupciones. O quiz&aacute;s fue iniciado por error.<br />Por este motivo se debe confirmar el trabajo una vez finalizado el tiempo, para que sea registrado. El usuario no podr&aacute; proseguir con su trabajo hasta que confirme o descarte el periodo anterior.<br />Los primeros cinco minutos se mostrar&aacute; una cuenta atr&aacute;s indicando el periodo de descanso recomendado para el usuario antes de iniciar el trabajo de nuevo.</li>
+                </ul>
+            </p>
+        </div>
+</section>
+    
+    <article class="box">
+        <div class="box-header"><h3 class="box-title">Men&uacute; principal</h3></div>            
+        <div class="box-body">
+            <p>Muestra los enlaces de las secciones de la aplicaci&oacute;n, permitiendo navegar por las todo el sitio Web.</p>
+            <section>
+                <h4><i class="fa fa-fw fa-dashboard"></i>Dashboard (Control de mandos)</h4>
+                <p>Pantalla inicial para el panel principal de la aplicaci&oacute;n. Cuando el usuario entra en el sistema acceder&aacute; a esta p&aacute;gina donde encontrar&aacute; informaci&oacute;n gr&aacute;fica y textual acerca de la cantidad y distribuci&oacute;n del trabajo realizado hasta el momento.</p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-calendar"></i> Calendar (Calendario)</h4>
+                <p>
+                    El calendario mostrar&aacute; todo el trabajo completado por el usuario y registrado en la aplicaci&oacute;n.
+                    De esta manera podremos comprobar los momentos de inicio y fin de cada periodo de trabajo. Cada cuadro dentro del calendario muestra el nombre de la acci&oacute;n en la que se trabaj&oacute;, un color de fondo en funci&oacute;n de su proyecto y otro color de borde dependiendo de su tarea.
+                    Adicionalmente se puede pulsar en el trabajo del calendario para mostrar informaci&oacute;n de la acci&oacute;n en una ventana emergente, o incluso abrir en ventana nueva para navegar hasta la acci&oacute;n, tarea o proyecto en el que se trabaj&oacute;.
+                </p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-check"></i> Review (Revisi&oacute;n)</h4>
+                <p>
+                    Incluye listas de elementos que podr&iacute;an requerir atenci&oacute;n por parte del usuario.
+                    El usuario deber&iacute;a dirigirse a esta secci&oacute;n para procesar las ideas capturadas o hacer una revisi&oacute;n global incluyendo elementos inactivos o que superen ciertos l&iacute;mites en la planificaci&oacute;n.
+                </p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-bar-chart-o"></i> Reports (Informes)</h4>
+                <p>
+                    En esta secci&oacute;n se incluir&aacute;n informes en forma de consultas de datos que puedan resultar &uacute;tiles y que no puedan ser incluidos en el resto de secciones existentes.
+                    Esta lista de informes que, mostrar&aacute; informaci&oacute;n principalmente en tablas o gr&aacute;ficas, se ir&aacute; ampliando en funci&oacute;n de las necesidades que puedan surgir en el futuro.
+                    Uno de los informes disponibles es el de trabajo que muestra una tabla que podr&aacute; ser ordenada o filtrada con todos los datos hist&oacute;ricos del usuario.
+                </p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-gears"></i> Workspace (Espacio de trabajo)</h4>
+                <p>
+                    A partir de esta secci&oacute;n se puede navegar por los contenedores de trabajo (proyectos, tareas o acciones) registrados por el usuario, incluyendo los listados de todas ellas y sus p&aacute;ginas de creaci&oacute;n, detalle, edici&oacute;n y eliminaci&oacute;n.
+                    Cuando se accede a un contenedor de trabajo, adem&aacute;s del formulario espec&iacute;fico de la operaci&oacute;n a realizar (Ver, Editar, Eliminar, Crear), se incluye un men&uacute; con opciones (p. ej. cambiar estado o contenedor). Tambi&eacute;n se muestra un calendario, gr&aacute;ficos y tablas con informaci&oacute;n del trabajo y el listado de los elementos dependientes del contenedor.
+                    Los nombres de los elementos principales (proyectos, tareas y acciones) aparecen constantemente por las p&aacute;ginas de la aplicaci&oacute;n y contienen enlaces de acceso r&aacute;pido al elemento concreto.
+                </p>
+                <p>En algunas de las tablas existen enlaces r&aacute;pidos para acceder directamente a la p&aacute;gina espec&iacute;fica de la operaci&oacute;n seleccionada.</p>
+            </section>
+
+            <section>
+                <h4><i class="fa fa-fw fa-question-circle"></i> Help (Ayuda)</h4>
+                <p>
+                    Esta secci&oacute;n.
+                </p>
+            </section>
+        </div>
+</article>
+</div>

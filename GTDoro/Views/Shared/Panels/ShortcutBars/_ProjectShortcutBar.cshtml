@@ -1,0 +1,20 @@
+﻿@model GTDoro.Models.Project
+
+<div class="box-title pull-right">
+    <a title="Go to Workspace" href="@Url.Action("Index", "Project")">
+        <i class="fa fa-fw fa-arrow-up"></i>
+    </a>    
+    @if (Model.NextSibling != null)
+    {
+        <a title="Go to Next Project" href="@Url.Action("Details", "Project", new { id = ((GTDoro.Models.Project)Model.NextSibling).ID })">
+            <i class="fa fa-fw fa-arrow-right"></i>
+        </a>
+    }
+    @if (Model.Tasks.Count() > 0)
+    {
+        <a title="Go to Task List" href="#tab-task-list" data-toggle="tab" onclick="jump('bottom'); selectChildrenTab();">
+            <i class="gt-task fa fa-fw fa-arrow-down"></i>
+        </a>
+    }
+</div>
+

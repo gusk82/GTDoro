@@ -1,0 +1,87 @@
+﻿@model IEnumerable<GTDoro.Models.Sprint>
+@using GTDoro.ExtensionMethods;
+@{
+    bool showParentColumns = ViewBag.ShowParentColumns ?? false;
+}
+<table id="sprints" class="table table-striped gt-datatables">
+    <thead>
+        <tr>     
+            <th>Code</th>       
+            <th class="hidden-xs">Name</th>            
+            @if (showParentColumns)
+            {
+                <th class="hidden-xs">Project</th>
+            }
+            <th class="hidden-xs" title="Start date"><i class="fa fa-clock-o"></i></th>
+            <th class="hidden-xs" title="End date"><i class="fa fa-clock-o"></i></th>
+            <th class="hidden-3xs"><i class="fa fa-circle" title="Actions"></i></th>
+            <th><i class="fa fa-wrench" title="Work units"></i></th>
+            <th class="hidden-xxs">Effort</th>
+            <th class="hidden-xxs" title="Progress">Prog.</th>
+            <th class="hidden-3xs"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>               
+                <td>
+                    @Html.ActionLink(item.Code, "Details", "Sprint", new { id = item.ID }, new { @class = item.CssClass })
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>                
+                @if (showParentColumns)
+                {
+                    <td class="hidden-xs">
+                        @Html.ActionLink(item.Project.Code, "Details", "Project", new { id = item.Project.ID }, new { @class = item.Project.CssClass })
+                    </td>
+                }
+                <td class="hidden-xs" data-order="@(item.StartDate.Ticks.ToString())" title="@(item.StartDate.ToRelativeString())">
+                    @(item.StartDate.ToDateString())
+                </td>
+                <td class="hidden-xs" data-order="@(item.EndDate.HasValue ? item.EndDate.Value.Ticks.ToString() : string.Empty)" title="@(item.EndDate.ToRelativeString())">
+                    @(item.EndDate.ToDateStringOrEmpty())
+                </td>
+                <td class="hidden-3xs">
+                    @Html.DisplayFor(modelItem => item.GetActions().Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedPomodorosCount)
+                </td>
+                <td class="hidden-xxs" title="@(item.EffortInfo)">
+                    <span class="badge @(item.EffortGroup.GetAttributeIconCssClass())">
+                        @(String.IsNullOrWhiteSpace(item.Effort.ToIntegerPercentageString()) ?
+                        item.CompletedPomodorosCount.ToString() : item.Effort.ToIntegerPercentageString())
+                    </span>
+                </td>
+                <td class="hidden-xxs" title="@(item.ProgressInfo)">
+                    <span class="badge @(item.ProgressGroup.GetAttributeIconCssClass())">
+                        @(item.Progress.ToIntegerPercentageString())
+                    </span>
+                </td>
+                <td class="hidden-3xs operations-cell">
+                    <a href="@Url.Action("Edit", "Sprint", new { id = item.ID })"><i class="fa fa-fw fa-edit gt-operation" title="Edit"></i></a>
+                    <a href="@Url.Action("Delete", "Sprint", new { id = item.ID })"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Styles.Render("~/Content/dataTables")
+@Scripts.Render("~/Scripts/dataTables")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sprints").dataTable({
+            "iDisplayLength": 20,
+            "dom": '<"dti"if>t<"dti"p>',
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [$("#sprints th").length - 1] }
+            ],
+            "order": [[6, "desc"]]
+        });
+        $("#sprints").show();
+    });
+</script>

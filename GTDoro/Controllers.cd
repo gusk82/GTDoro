@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GTDoro.Controllers.ActionController">
+    <Position X="12" Y="8" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+      <Property Name="endTimeSelectList" Hidden="true" />
+      <Property Name="startTimeSelectList" Hidden="true" />
+      <Property Name="timesSelectList" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AggAJCAAACARgAmACgAAAAAABAUEAECCAAFIQAAEAAA=</HashCode>
+      <FileName>Controllers\ActionController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.BaseController" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAQgAAAAAAAAIAGAAAAAhAAAAAAAAAgA=</HashCode>
+      <FileName>Controllers\BaseController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.CollectedThingController">
+    <Position X="14.25" Y="7.25" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+    </Members>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.543" />
+        <Point X="12.83" Y="1.543" />
+        <Point X="12.83" Y="3.308" />
+        <Point X="15" Y="3.308" />
+        <Point X="15" Y="7.25" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACARAACAAAAAAAAAAAGAAEACAAEAAQAAAAA=</HashCode>
+      <FileName>Controllers\CollectedThingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.HomeController">
+    <Position X="19.25" Y="7.5" Width="1.5" />
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="21.171" Y="1.566" />
+        <Point X="21.171" Y="5.849" />
+        <Point X="20" Y="5.849" />
+        <Point X="20" Y="7.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAEACAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.AccountController">
+    <Position X="25.5" Y="5.5" Width="1.5" />
+    <Members>
+      <Field Name="_helper" Hidden="true" />
+      <Field Name="_userManager" Hidden="true" />
+      <Property Name="AuthenticationManager" Hidden="true" />
+      <Field Name="db" Hidden="true" />
+      <Property Name="SignInHelper" Hidden="true" />
+      <Property Name="UserManager" Hidden="true" />
+      <Field Name="XsrfKey" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Class Name="GTDoro.Controllers.AccountController.ChallengeResult" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Controllers\Identity\AccountController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="24.217" Y="1.566" />
+        <Point X="24.217" Y="3.553" />
+        <Point X="26.25" Y="3.553" />
+        <Point X="26.25" Y="5.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>gAAABAChACAQAAAAAAEAEgAABAABMKIAIAMxCAQgCAA=</HashCode>
+      <FileName>Controllers\Identity\AccountController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.RolesAdminController">
+    <Position X="23.5" Y="8.5" Width="1.5" />
+    <Members>
+      <Field Name="_roleManager" Hidden="true" />
+      <Field Name="_userManager" Hidden="true" />
+      <Property Name="RoleManager" Hidden="true" />
+      <Property Name="UserManager" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAABACAACABAACAAAAAAAAgAAEAAEACAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\Identity\RolesAdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.UsersAdminController">
+    <Position X="22.5" Y="4.75" Width="1.5" />
+    <Members>
+      <Field Name="_roleManager" Hidden="true" />
+      <Field Name="_userManager" Hidden="true" />
+      <Property Name="RoleManager" Hidden="true" />
+      <Property Name="UserManager" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="24.249" Y="1.566" />
+        <Point X="24.249" Y="3.647" />
+        <Point X="23.25" Y="3.647" />
+        <Point X="23.25" Y="4.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAABACAACABAACAAAAAAAAgAAEAAEACAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\Identity\UserAdminController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.LayoutController">
+    <Position X="21.25" Y="9" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+      <Field Name="manager" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="21.217" Y="1.566" />
+        <Point X="21.217" Y="5.877" />
+        <Point X="22" Y="5.877" />
+        <Point X="22" Y="9" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAACAAcEAAAAAAAAQAEAgAAAAAEAAGAAAAAAAA=</HashCode>
+      <FileName>Controllers\LayoutController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.PomodoroController">
+    <Position X="13.25" Y="4.75" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="12.806" Y="1.566" />
+        <Point X="12.806" Y="3.347" />
+        <Point X="14" Y="3.347" />
+        <Point X="14" Y="4.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAACARAACAAAAAAAAAAAEAAEBCAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\PomodoroController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.ProjectController">
+    <Position X="8.5" Y="8.75" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="12.756" Y="1.566" />
+        <Point X="12.756" Y="3.359" />
+        <Point X="9.25" Y="3.359" />
+        <Point X="9.25" Y="8.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AggAICAAACARgAGACAAAAAAAAAUAACDCAAEAAAAEgAA=</HashCode>
+      <FileName>Controllers\ProjectController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.ReportController">
+    <Position X="18.5" Y="3.5" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAQAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\ReportController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.SearchController">
+    <Position X="16" Y="3.75" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+    </Members>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="3.03" />
+        <Point X="16.75" Y="3.03" />
+        <Point X="16.75" Y="3.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAABAAAECAAQAAAAAAAIAAAAAAAAAAAAAgFBAAAAAAA=</HashCode>
+      <FileName>Controllers\SearchController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.TaskController">
+    <Position X="10.25" Y="4" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+    </Members>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="12.765" Y="1.566" />
+        <Point X="12.765" Y="3.364" />
+        <Point X="11" Y="3.364" />
+        <Point X="11" Y="4" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AgoAIChAACARgAGECAAAAAAAAAUACECCAAEAAQCEAAA=</HashCode>
+      <FileName>Controllers\TaskController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.WorkController">
+    <Position X="17.25" Y="8.75" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+      <Field Name="manager" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="3.036" />
+        <Point X="18" Y="3.036" />
+        <Point X="18" Y="8.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAQAACAAAACAAAEAAAAAgAAAAQIAQAAAAA=</HashCode>
+      <FileName>Controllers\WorkController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Controllers.WorkspaceController">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <Members>
+      <Field Name="db" Hidden="true" />
+    </Members>
+    <InheritanceLine Type="GTDoro.Controllers.BaseController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.5" Y="1.191" />
+        <Point X="18.5" Y="1.566" />
+        <Point X="12.772" Y="1.566" />
+        <Point X="12.772" Y="3.379" />
+        <Point X="8.25" Y="3.379" />
+        <Point X="8.25" Y="4.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAABAAAAAAAAAAAAAAAAEAAAAACAA=</HashCode>
+      <FileName>Controllers\WorkspaceController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

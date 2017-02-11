@@ -1,0 +1,68 @@
+﻿@model GTDoro.Models.Pomodoro
+<div>
+    <h4>Pomodoro</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Action.Name)
+        </dt>
+
+        <dd>
+            <span class="gt-action">@Html.DisplayFor(model => model.Action.Name)</span>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartLocal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartLocal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            Remaining Time
+        </dt>
+
+        <dd>
+            <span id="countdown"></span>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+</p>
+<script type="text/javascript">
+    function startCountdown(target_date) {
+        // variables for time units
+        var minutes, seconds;
+        // get tag element
+        var countdown = document.getElementById("countdown");
+        // update the tag with id "countdown" every 1 second
+        setInterval(function () {
+            // find the amount of "seconds" between now and target
+            var current_date = new Date().getTime();
+            var seconds_left = (target_date - current_date) / 1000;
+            // check if the time is over
+            if (Math.floor(seconds_left) == 0) {
+                window.location.reload(true);
+            }
+            // do some time calculations
+            seconds_left = seconds_left % 86400;
+            seconds_left = seconds_left % 3600;
+            // do some time calculations
+            minutes = parseInt(seconds_left / 60);
+            seconds = parseInt(seconds_left % 60);
+            // format countdown string + set tag value
+            countdown.innerHTML = ((minutes <= 9) ? "0" : "") + minutes + ":" + ((seconds <= 9) ? "0": "") + seconds;
+        }, 1000);
+    }
+    startCountdown(Date.parse("@ViewBag.TargetTime.ToString("yyyy-MM-dd HH:mm:ss")"));
+</script>

@@ -1,0 +1,91 @@
+﻿@model GTDoro.Models.Action
+@using GTDoro.Models;
+@using GTDoro.ExtensionMethods;
+@using Action = GTDoro.Models.Action;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Action";
+    ViewBag.ItemDesc = Model.ItemName;
+    ViewBag.BreadcrumbList = new List<string>
+    {
+        Html.ActionLink(Model.Task.Project.ItemName, "Details", "Project", new { id = Model.Task.ProjectID }, null).ToHtmlString(),
+        Html.ActionLink(Model.Task.ItemName, "Details", "Task", new { id = Model.TaskID }, null).ToHtmlString(),
+        Html.ActionLink(Model.ItemName, "Details", "Action", new { id = Model.ID }, null).ToHtmlString()
+    };
+}
+@Styles.Render("~/Content/morris")
+@Scripts.Render("~/Scripts/morris")
+<div id="action-layout">
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+        <section id="top-left" class="col-lg-7">
+            @RenderBody()
+        </section>
+        <section id="top-right" class="col-lg-5">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab-calendar" data-toggle="tab">
+                            <i class="fa fa-fw @(Operation.Calendar.GetAttributeIconCssClass())"></i> @(Operation.Calendar.GetAttributeDisplayName())
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#tab-work-amount-chart" class="chart-tab-link" data-identifier="line" data-toggle="tab">
+                            <i class="fa fa-fw @(Operation.WorkAmount.GetAttributeIconCssClass())"></i> @(Operation.WorkAmount.GetAttributeDisplayName())
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-calendar">
+                        @Html.Partial("Calendars/_CalendarMini", Model.CalendarViewModel)
+                    </div>
+                    <div class="tab-pane" id="tab-work-amount-chart">
+                        @Html.Partial("Containers/_ChartWorkAmount")
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <section id="bottom">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#tab-work-history" data-toggle="tab">
+                        <i class="fa fa-fw @(Operation.WorkHistory.GetAttributeIconCssClass())"></i> @(Operation.WorkHistory.GetAttributeDisplayName())
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-work-history">
+                    <div class="tab-pane active" id="tab-work-history">
+                        <div class="box box-warning">
+                            <div class="box-header">
+                                <div class="box-title"><i class="fa fa-fw @(Operation.WorkHistory.GetAttributeIconCssClass())"></i> @(Operation.WorkHistory.GetAttributeDisplayName())</div>
+                            </div><!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                @*@{ViewBag.ContainerType = PomodoroContainerType.Project;}*@
+                                @Html.Partial("Collections/_PomodoroSets", Model.PomodoroSets)
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    $('#top-right ul.nav a.chart-tab-link').on('shown.bs.tab', function (e) {
+        var types = $(this).attr("data-identifier");
+        var typesArray = types.split(",");
+        $.each(typesArray, function (key, value) {
+            eval(value + ".redraw()");
+        })
+    });
+</script>
+
+@RenderSection("scripts", required: false)

@@ -1,0 +1,10 @@
+﻿@model DateTime?
+
+@if (Model.HasValue)
+{
+    @Html.TextBox(string.Empty, Model.Value.Date.ToString("dd/MM/yyyy"), new { @class = "form-control datefield", placeholder = "dd/mm/yyyy" })
+}
+else
+{
+    @Html.TextBoxFor(m => m, new { @class = "form-control datefield", placeholder = "dd/mm/yyyy" })
+}

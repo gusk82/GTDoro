@@ -1,0 +1,36 @@
+﻿@model IEnumerable<GTDoro.Models.Pomodoro>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Action.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartLocal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <span class="gt-action">@Html.DisplayFor(modelItem => item.Action.Name)</span>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartLocal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Confirm", "Confirm", "Work", new { id = item.ID }, null) |
+            @Html.ActionLink("Cancel", "CancelUnconfirmed", "Work", new { id = item.ID }, null) |
+            @Html.ActionLink("Delete", "Delete", "Work", new { id = item.ID }, null)
+        </td>
+    </tr>
+}
+
+</table>

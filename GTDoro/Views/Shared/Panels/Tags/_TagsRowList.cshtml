@@ -1,0 +1,31 @@
+﻿@model GTDoro.Models.PomodoroContainer
+@using GTDoro.Models;
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="gt-form-group">
+            <label class="gt-lbl">
+                Tags
+            </label>
+            <ul class="list-inline">
+                @{
+                    IEnumerable<Tag> tags = Model.OwnAndInheritedTags;
+                    if (tags.Count() > 0)
+                    { 
+                        foreach (Tag tag in Model.OwnAndInheritedTags)
+                        {
+                            <li>                                
+                                <a href="/@(Model.Type.ToString())/Index?tag-@(tag.Code)=1" title="@tag.Name" class="gt-tag-@tag.GroupName"> <i class="fa fa-fw @tag.IconCssClass"></i></a>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li><span class="null-value">&lt;no tags added&gt;</span></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+

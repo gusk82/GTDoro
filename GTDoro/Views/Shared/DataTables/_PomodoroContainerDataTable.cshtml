@@ -1,0 +1,147 @@
+﻿@model GTDoro.ViewModels.PomodoroContainerDateViewModel
+@using GTDoro.ExtensionMethods
+@using GTDoro.Models
+@using Action = GTDoro.Models.Action
+
+<div class="box @(PomodoroContainer.GetBoxCssClass(Model.Type))">
+    <div class="box-header">
+        <!-- tools box -->
+        <i class="fa @Model.IconCssClass"></i>
+        <h3 class="box-title">
+            @Model.HeaderTitle
+        </h3>
+    </div>
+    <div class="box-body no-padding">
+        <div class="table-responsive">
+            <!-- .table -->
+            <table id="@Model.TableId" class="table table-striped gt-datatables">
+                <thead>
+                    <tr>
+                        @if (Model.Items is IEnumerable<Action>)
+                        {
+                            <th>Action</th>
+                            <th class="hidden-3xs">Task</th>
+                            <th class="hidden-3xs">Project</th>
+                        }
+                        @if (Model.Items is IEnumerable<Task>)
+                        {
+                            <th>Task</th>
+                            <th class="hidden-3xs">Project</th>
+                            <th class="hidden-3xs">Progress</th>
+                        }
+                        @if (Model.Items is IEnumerable<Project>)
+                        {
+                            <th>Project</th>
+                            <th class="hidden-3xs">Progress</th>
+                        }
+                        <th><i class="fa fa-clock-o"></i></th>
+                        @*@switch (Model.ReportTypeDate)
+                        {
+                            case GTDoro.ViewModels.ReportTypeDate.LastPomodoro:
+                                <th><i class="fa fa-clock-o"></i> Active</th>
+                                break;
+                            case GTDoro.ViewModels.ReportTypeDate.NextDeadline:
+                                <th><i class="fa fa-clock-o"></i> Deadline</th>
+                                break;
+                            case GTDoro.ViewModels.ReportTypeDate.NextPlanifiedPomodoro:
+                                <th><i class="fa fa-clock-o"></i> Planified</th>
+                                break;
+                            case GTDoro.ViewModels.ReportTypeDate.LastCreationDate:
+                                <th><i class="fa fa-clock-o"></i> Created</th>
+                                break;
+                        }*@
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            @if (item is Action)
+                            {
+                                Action a = (Action)item;
+                                <td>
+                                    <span class="limited-size-column">
+                                        @Html.ActionLink(a.Name, "Details", "Action",
+                                        new { id = a.ID }, new { @class = a.CssClass, @title = a.Name })
+                                    </span>
+                                </td>
+                                <td class="hidden-3xs">
+                                    <span class="small-limited-size-column">
+                                        @Html.ActionLink(a.Task.Code, "Details", "Task",
+                                     new { id = a.TaskID }, new { @class = a.Task.CssClass, @title = a.Task.Name })
+                                    </span>
+                                </td>
+                                <td class="hidden-3xs">
+                                    <span class="small-limited-size-column">
+                                        @Html.ActionLink(a.Task.Project.Code, "Details", "Project",
+                                        new { id = a.Task.ProjectID }, new { @class = a.Task.Project.CssClass, @title = a.Task.Project.Name })
+                                    </span>
+                                </td>
+                            }
+                            @if (item is Task)
+                            {
+                                Task t = (Task)item;
+                                <td>
+                                    @Html.ActionLink(t.Code, "Details", "Task",
+                                    new { id = t.ID }, new { @class = t.CssClass })
+                                </td>
+                                <td class="hidden-3xs">
+                                    @Html.ActionLink(t.Project.Code, "Details", "Project",
+                                                                new { id = t.ProjectID }, new { @class = t.Project.CssClass })
+                                </td>
+                            }
+                            @if (item is Project)
+                            {
+                                <td>
+                                    @Html.ActionLink(item.PathItemName, "Details", item.Type.ToString(),
+                                    new { id = item.Ident }, new { @class = item.CssClass })
+                                </td>
+                            }
+                            @if (item is ActionContainer)
+                            {
+                                ActionContainer ac = (ActionContainer)item;
+                                <td class="hidden-3xs" title="@(ac.ProgressInfo)">
+                                    <span class="badge @(ac.ProgressGroup.GetAttributeIconCssClass())">
+                                        @(String.IsNullOrWhiteSpace(ac.Progress.ToIntegerPercentageString()) ?
+                                            item.CompletedPomodorosCount.ToString() : ac.Progress.ToIntegerPercentageString())
+                                    </span>
+                                </td>
+                            }
+                            <td data-order="@(Model.GetDate(item).ToTicksOrZero())" title="@(Model.GetDate(item).ToStringOrEmpty())">
+                                @( Model.GetDate(item).ToRelativeShortString())
+                            </td>
+                            <td class="operations-cell">
+                                @if (item.Type == PomodoroContainerType.Action && item.IsSelectable && ((Action)item).IsSelectedAction == false)
+                                {
+                                    <a href="@Url.Action("Select", "Action", new { id = ((Action)item).ID })"><i class="fa fa-fw fa-play fa-gr gt-operation" title="Select"></i></a>
+                                    @*<a href="@Url.Action("Planify", "Action", new { id = item.ID })"><i class="fa fa-fw fa-calendar gt-operation" title="Planify"></i></a>*@
+                                }
+                                @if (item.IsActive)
+                                {
+                                    <a href="@Url.Action("ChangeStatus", item.Type.ToString(), new { id = item.Ident, status = Status.Completed })">
+                                        <i class="fa fa-fw fa-check-square-o gt-operation" title="Complete"></i>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table><!-- /.table -->
+        </div>
+    </div><!-- /.box-body-->
+</div><!-- /.box -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#@(Model.TableId)").dataTable({
+            "ordering": false,
+            "info": false,
+            "filter": false,
+            "pagingType": "simple_numbers",
+            "dom": "t<p>",
+            "iDisplayLength": @(Model.RowsPerPage)
+        });
+        $("#@(Model.TableId)").show();
+    });
+</script>

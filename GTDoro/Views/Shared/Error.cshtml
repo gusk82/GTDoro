@@ -1,0 +1,55 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    Layout =  (Request.IsAuthenticated ? "~/Views/Shared/_Layout.cshtml" : "");
+    ViewBag.Title = "Error 500";
+}
+
+<h2>
+    Internal Server Error
+</h2>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="error-page">
+        <h2 class="headline">500</h2>
+        <div class="error-content">
+            <h3><i class="fa fa-warning text-yellow"></i> Oops! Something went wrong.</h3>
+            <p>
+                We will work on fixing that right away.
+                Meanwhile, you may <a href='../../index.html'>return to dashboard</a>.
+            </p>
+        </div>
+    </div><!-- /.error-page -->
+
+</section><!-- /.content -->
+<style>    
+    dd {
+        font-weight: bold;
+    }
+</style>
+<section>
+    <div>
+        <dl>
+            <dd>Action Name</dd>
+            <dt>@Model.ActionName</dt>
+            <dd>URL</dd>
+            <dt>@Request.RawUrl</dt>
+            <dd>User</dd>
+            <dt>@User.Identity.Name</dt>
+            <dd>Controller Name</dd>
+            <dt>@Model.ControllerName</dt>
+            <dd>Error Message</dd>
+            <dt>@Model.Exception.Message</dt>
+            <dd>Exception Name</dd>
+            <dt>@Model.Exception.GetType().Name</dt>
+            <dd>Inner Exception</dd>
+            <dt>@(Model.Exception.InnerException != null ? (Model.Exception.Message + " /// " + Model.Exception.InnerException.GetType().Name) : "Nothing")</dt>
+            <dd>Stack Trace</dd>
+            <dt>@foreach (string line in Model.Exception.StackTrace.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)) { 
+                    @Html.Raw(line + "<br>")
+                }</dt>
+        </dl>
+    </div>
+</section>
