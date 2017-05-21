@@ -1,0 +1,88 @@
+﻿@model GTDoro.Core.Models.Sprint
+@using GTDoro.Core.Extensions;
+@using GTDoro.Core.Models;
+
+<div class="gt-form-data">
+    <div class="gt-form-group">
+        <label class="gt-lbl gt-lbl-title">
+            Name
+        </label>
+        <span>
+            <span class="@(Model.CssClass)">@Html.ActionLink(Model.ItemName, "Details", "Sprint", new { id = Model.ID }, null)</span>
+        </span>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                <label class="gt-lbl">
+                    @Html.DisplayNameFor(model => model.Code)
+                </label>
+                <span class="@(Model.CssClass)">
+                    @Html.ActionLink(Model.Code, "Details", new { id = Model.ID }, null)
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.StartDate, new { @class = "gt-lbl" })
+                <span>
+                    <i class="fa fa-fw fa-clock-o"></i>
+                    @Html.DisplayFor(model => model.StartDate)
+                </span>
+            </div>
+
+        </div>
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                <label class="gt-lbl">
+                    Project (@Html.DisplayNameFor(model => model.Project.Code))
+                </label>
+                <span>
+                    <span class="@(Model.Project.CssClass)">@Html.ActionLink(Model.Project.Code, "Details", "Project", new { id = Model.Project.ID }, null)</span>
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.EndDateLocal, new { @class = "gt-lbl" })
+                <span class="@(!Model.EndDateLocal.HasValue ? "null-value" : "")">
+                    <i class="fa fa-fw fa-clock-o"></i>
+                    @Model.EndDateLocal.ToDateStringOrDefault()
+                </span>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                <label class="gt-lbl">Work units</label>
+                <span>
+                    <i class="fa fa-fw fa-wrench"></i>
+                    @Model.CompletedPomodorosCount
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.CreationDateLocal, new { @class = "gt-lbl" })
+                <span title="@(Model.CreationDateLocal.ToStringOrEmpty())" class="@(!Model.CreationDate.HasValue ? "null-value" : "")">
+                    <i class="fa fa-fw fa-clock-o"></i>
+                    @Model.CreationDateLocal.ToRelativeString()
+                </span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.Progress, new { @class = "gt-lbl" })
+                <span title="@(Model.ProgressInfo)" class="badge @(Model.ProgressGroup.GetAttributeIconCssClass())">
+                    @(String.IsNullOrWhiteSpace(Model.Progress.ToIntegerPercentageString()) ?
+                            Model.CompletedPomodorosCount.ToString() : Model.Progress.ToIntegerPercentageString())
+                </span>
+            </div>
+            <div class="gt-form-group">
+                @Html.LabelFor(model => model.Effort, new { @class = "gt-lbl" })
+                <span title="@(Model.EffortInfo)" class="badge @(Model.EffortGroup.GetAttributeIconCssClass())">
+                    @(String.IsNullOrWhiteSpace(Model.Effort.ToIntegerPercentageString()) ?
+                            Model.CompletedPomodorosCount.ToString() : Model.Effort.ToIntegerPercentageString())
+                </span>
+            </div>
+        </div>
+    </div>    
+</div>
+

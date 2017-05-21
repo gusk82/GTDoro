@@ -1,0 +1,10 @@
+﻿@model GTDoro.Core.Models.Project
+
+@{
+    ViewBag.Operation = GTDoro.Core.Models.Operation.ProjectInfo;
+    Layout = "~/Views/Project/_ProjectLayout.cshtml";
+}
+
+<div>
+    @Html.Partial("_ProjectInfo")
+</div>

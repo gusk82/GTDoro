@@ -1,0 +1,72 @@
+﻿@model GTDoro.Core.ViewModels.ReportViewModel
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string strStart = ViewBag.start;
+    string strEnd = ViewBag.end;
+}
+<link href="/admin-lte/css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css">
+<script src="/admin-lte/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <div class="box box-tools">
+        <div class="box-header">
+            <h3 class="box-title"><i class="fa fa-fw fa-filter"></i> Filter</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <div class="form-group col-md-5">
+                    <label>Report Type</label>
+                    @Html.EditorFor(m => m.ReportType)
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Date range:</label>
+                    <div id="date-range" class="input-group">
+                        <div class="col-xs-5">
+                            @Html.TextBox("start", strStart, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="col-xs-5">
+                            @Html.TextBox("end", strEnd, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <button class="btn btn-default col-xs-2" id="daterange-btn">
+                            <i class="fa fa-calendar"></i>&nbsp;
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group col-md-1">
+                    <button class="btn btn-primary" type="submit" style="margin-top:24px">Submit</button>
+                </div>
+            </div>
+        </div><!-- /.box-body -->
+    </div>
+    @RenderBody()
+}
+<script>
+    $('#daterange-btn').daterangepicker(
+                       {
+                           ranges: {
+                               'Last 7 Days': [moment().subtract('days', 6), moment()],
+                               'Last 30 Days': [moment().subtract('days', 29), moment()],
+                               'This Month': [moment().startOf('month'), moment().endOf('month')],
+                               'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
+                               'This Year': [moment().startOf('year'), moment()],
+                               'From Last Year': [moment().subtract('year', 1).startOf('year'), moment()]
+                           },
+                           startDate: moment().subtract('days', 29),
+                           endDate: moment(),
+                           maxDate: moment(),
+                           opens: 'left',
+                           format: 'DD/MM/YYYY'
+                       },
+               function (start, end) {
+                   $('#date-range #start').val(start.format('DD/MM/YYYY'));
+                   $('#date-range #start').html(start.format('DD/MM/YYYY'));
+                   $('#date-range #end').val(end.format('DD/MM/YYYY'));
+                   $('#date-range #end').html(end.format('DD/MM/YYYY'));
+               }
+               );
+    //start.html(stat.value.substring()
+</script>

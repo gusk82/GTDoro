@@ -1,0 +1,11 @@
+﻿@model GTDoro.Core.Models.Task
+@using GTDoro.Core.Extensions;
+
+@{
+    ViewBag.Operation = GTDoro.Core.Models.Operation.TaskInfo;
+    Layout = "~/Views/Task/_TaskLayout.cshtml";
+}
+
+<div>
+    @Html.Partial("_TaskInfo")
+</div>

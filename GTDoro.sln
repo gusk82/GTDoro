@@ -3,14 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTDoro", "GTDoro\GTDoro.csproj", "{71B5A6B7-EE52-4D6E-9CD8-8BC1AE5147FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTDoro.Web", "GTDoro.Web\GTDoro.Web.csproj", "{71B5A6B7-EE52-4D6E-9CD8-8BC1AE5147FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTDoro.Tests", "GTDoro.Tests\GTDoro.Tests.csproj", "{FBB6F64D-F04A-4423-A4D3-681C89241DB0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTDoro.Core", "GTDoro.Core\GTDoro.Core.csproj", "{BF5B5D94-A807-40A9-82E7-29BBA4C8E69B}"
+EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -24,6 +23,10 @@ Global
 		{FBB6F64D-F04A-4423-A4D3-681C89241DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBB6F64D-F04A-4423-A4D3-681C89241DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBB6F64D-F04A-4423-A4D3-681C89241DB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF5B5D94-A807-40A9-82E7-29BBA4C8E69B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF5B5D94-A807-40A9-82E7-29BBA4C8E69B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF5B5D94-A807-40A9-82E7-29BBA4C8E69B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF5B5D94-A807-40A9-82E7-29BBA4C8E69B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

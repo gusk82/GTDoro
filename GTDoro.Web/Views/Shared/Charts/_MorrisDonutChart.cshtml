@@ -1,0 +1,12 @@
+﻿@model GTDoro.Core.ViewModels.MorrisDonutChartViewModel
+
+<!-- /.box -->
+<div class="box-header">    
+    <div class="box-title"><i class="fa fa-fw fa-adjust"></i> @Model.HeaderTitle</div>
+</div>
+<div class="box-body chart-responsive">
+    <div class="chart" id="@(Model.HtmlElementId)" style="position: relative; height: 300px;"></div>
+</div><!-- /.box-body -->
+@Html.Raw(Model.Script)
+
+

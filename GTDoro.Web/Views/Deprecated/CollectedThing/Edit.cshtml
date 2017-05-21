@@ -1,0 +1,44 @@
+﻿@model GTDoro.Core.Models.CollectedThing
+@{
+    ViewBag.Operation = GTDoro.Core.Models.Operation.Edit;
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+        
+    <div class="form-horizontal">
+        <h4>CollectedThing</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+    
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+        <div class="form-group">            
+            @Html.HiddenFor(model => model.CreationDate)
+            @Html.LabelFor(model => model.CreationDateLocal, "Creation Date", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Model.CreationDateLocal
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+    
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

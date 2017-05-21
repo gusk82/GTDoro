@@ -1,9 +1,9 @@
 ﻿using GTDoro.Controllers;
-using GTDoro.DAL;
-using GTDoro.Models;
-using GTDoro.Models.Identity;
-using Task = GTDoro.Models.Task;
-using Action = GTDoro.Models.Action;
+using GTDoro.Core.DAL;
+using GTDoro.Core.Models;
+using GTDoro.Core.Models.Identity;
+using Task = GTDoro.Core.Models.Task;
+using Action = GTDoro.Core.Models.Action;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Threading;
-using GTDoro.ViewModels;
+using GTDoro.Core.ViewModels;
 
 
 namespace GTDoro.Tests

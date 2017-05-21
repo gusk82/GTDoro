@@ -1,0 +1,48 @@
+﻿@model GTDoro.Core.ViewModels.Reports.WorkHistoryViewModel
+
+@{
+    Layout = "~/Views/Layout/Reports.cshtml";
+    ViewBag.ContainerType = GTDoro.Core.Models.PomodoroContainerType.Unspecified;
+}
+@Styles.Render("~/Content/morris")
+@Scripts.Render("~/Scripts/morris")
+<div class="box box-warning">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-fw fa-wrench"></i> Work History</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <div class="col-xs-6 col-sm-2">
+                    <label for="StatusFilter" class="control-label">Filter by status</label>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                    @Html.DropDownList("StatusFilter", EnumHelper.GetSelectList(typeof(GTDoro.Core.Models.PomodoroStatus)), "(All)", new { @class = "form-control" })
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                    <button class="btn btn-primary" type="submit">Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("Collections/_PomodoroSets", Model.setWorkHistory.ToList())
+
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="box box-warning chart-responsive">
+            @Html.Partial("Charts/_MorrisLineChart", Model.ChartsViewModel.WorkAmount)
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="box box-warning chart-responsive">            
+            @Html.Partial("Charts/_MorrisTabbedDonutChart", Model.ChartsViewModel.MultipleWorkDivision)
+            @*@Html.Partial("Charts/_MorrisDonutChart", Model.ChartsViewModel.WorkDivision)*@
+        </div>
+    </div>
+    <div class="col-lg-4">
+        @Html.Partial("Calendars/_CalendarMini", Model.GetCalendarViewModel(false, 310))        
+    </div>
+</div>

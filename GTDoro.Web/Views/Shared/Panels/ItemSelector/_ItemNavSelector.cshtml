@@ -1,0 +1,77 @@
+﻿@model GTDoro.Core.ViewModels.ItemSelectorViewModel
+@using GTDoro.Core.Models;
+
+@if (Model.IsSelectActionMode && (Model.AvailableWork.Where(p => p.IsSelectable).Count() == 0))
+{
+    <h4>You do not currently have any active action</h4>
+    return;   
+}
+
+<div class="project-nav">
+@if(Model.SelectorType == ItemSelectorType.AccordionNav)
+{
+    @Html.Raw("<nav><div class=\"menu-btn\"><img src=\"/Content/img/btn-hamburger.png\" alt=\"\"></div>")    
+}
+        <ul class="@(Model.ListCssClass)">
+        @foreach (var project in Model.AvailableWork.OrderBy(p => p.Code))
+        {
+            if ((!Model.IsSelectActionMode && (!Model.IsSelectTaskModeForActionMode || project.Tasks.Count > 0)) || project.IsSelectable)
+            {
+                <li>
+                @if(Model.ItemType >= PomodoroContainerType.Project)
+                {
+                    @Html.ActionLink(project.Code, Model.ProjectAction, Model.ProjectController, 
+                        Model.GetRouteValues(project.ID), new { @class = project.CssClass })
+                }
+                else
+                {
+                    <a href="@(Model.Target == ItemSelectorTarget.Navigate ? "/Project/" + project.ID : "javascript:void(0)")" 
+                       id="@(project.ID)" class="@(project.CssClass)">@(project.Code)</a>
+                    if (project.Tasks.Count > 0)
+                    {
+                        <ul>
+                        @foreach (var task in project.Tasks.OrderBy(t => t.Code))
+                        {
+                            if (!Model.IsSelectActionMode || task.IsSelectable)
+                            {
+                                <li>
+                                @if(Model.ItemType >= PomodoroContainerType.Task)
+                                {
+                                    @Html.ActionLink(task.Code, Model.TaskAction, Model.TaskController,
+                                        Model.GetRouteValues(task.ID), new { @class = task.CssClass })
+                                }
+                                else
+                                {
+                                    <a href="@(Model.Target == ItemSelectorTarget.Navigate ? "/Task/" + task.ID : "javascript:void(0)")"
+                                        id="@(task.ID)" class="@(task.CssClass)">@(task.Code)</a>
+                                    if (task.Actions.Count > 0)
+                                    {
+                                        <ul>
+                                        @foreach (var action in task.Actions.OrderBy(a => a.Name))
+                                        {
+                                            if (!Model.IsSelectActionMode || action.IsSelectable)
+                                            {
+                                                <li>
+                                                    @Html.ActionLink(action.Name, Model.ActionAction, Model.ActionController,
+                                                          Model.GetRouteValues(action.ID), new { @class = action.CssClass })
+                                                </li>
+                                            }
+                                        }
+                                        </ul>
+                                    }
+                                }
+                                </li>
+                            }
+                        }
+                        </ul>
+                    }
+                }
+                </li>
+            }
+        }
+            </ul>
+@if(Model.SelectorType == ItemSelectorType.AccordionNav)
+{
+    @Html.Raw("<nav>")
+}
+</div>

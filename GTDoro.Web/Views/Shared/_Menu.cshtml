@@ -1,0 +1,38 @@
+﻿@using GTDoro.Core.ViewModels
+
+<ul class="sidebar-menu">
+    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+{
+    var menus = GTDoro.Core.Models.Settings.MenuSettings;
+    foreach (var link in menus)
+    {
+        if (link.InMainMenu)
+        {
+            if (link.Roles != "Administrator" || HttpContext.Current.User.Identity.Name == GTDoro.Core.Models.Settings.ADMIN_USERNAME)
+            {
+                <li class="@((link.IsActive(ViewBag.Title) ? "active" : string.Empty) +
+                           (link.HasSubNav ? " treeview" : string.Empty))">
+                    <a href="@(link.HasSubNav ? "#" : "/" + link.ActionName)">
+                        <i class="fa @link.IconCssClass"></i> <span>@link.LinkText</span>
+                        @if(link.HasSubNav)
+                        {
+                            <i class="fa fa-angle-left pull-right"></i>
+                        }
+                    </a>
+                    @if(link.HasSubNav)
+                    {
+                        <ul class="treeview-menu">
+                            @foreach (var subNavLink in link.SubNav)
+                            { 
+                            <li @((subNavLink.LinkText == ViewBag.SubNavTitle) ? "class=active" : string.Empty)>
+                                <a href="/@(subNavLink.ControllerName + "/" + subNavLink.ActionName)">
+                                <i class="fa @subNavLink.IconCssClass"></i> @subNavLink.LinkText</a></li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        }
+    }
+}
+</ul>

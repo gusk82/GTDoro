@@ -1,0 +1,14 @@
+﻿@model GTDoro.Core.Models.Action
+
+<div class="box-title pull-right">
+    <a title="Go to Task" href="@Url.Action("Details", "Task", new { id = Model.TaskID })">
+        <i class="gt-task fa fa-fw fa-arrow-up"></i>
+    </a>
+    @if (Model.NextSibling != null)
+    {
+        <a title="Go to Next Action" href="@Url.Action("Details", "Action", new { id = ((GTDoro.Core.Models.Action)Model.NextSibling).ID })">
+            <i class="fa fa-fw fa-arrow-right"></i>
+        </a>
+    }
+</div>
+

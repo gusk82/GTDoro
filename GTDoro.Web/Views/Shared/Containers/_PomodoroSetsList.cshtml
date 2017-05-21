@@ -1,0 +1,26 @@
+﻿@model GTDoro.Core.Models.PomodoroContainer
+@using GTDoro.Core.Models;
+@*@model PagedList.IPagedList<GTDoro.Core.Models.Pomodoro>
+    @using PagedList.Mvc;*@
+@{
+    ViewBag.Title = Model.PathItemName;
+    ViewBag.Operation = GTDoro.Core.Models.Operation.WorkHistory;
+    switch (Model.Type)
+    {
+        case PomodoroContainerType.Project:
+            Layout = "~/Views/Project/_ProjectLayout.cshtml";
+            ViewBag.ContainerType = PomodoroContainerType.Project;
+            break;
+
+        case PomodoroContainerType.Task:
+            Layout = "~/Views/Task/_TaskLayout.cshtml";
+            ViewBag.ContainerType = PomodoroContainerType.Task;
+            break;
+
+        case PomodoroContainerType.Action:
+            Layout = "~/Views/Action/_ActionLayout.cshtml";
+            ViewBag.ContainerType = PomodoroContainerType.Action;
+            break;
+    }
+}
+@Html.Partial("Collections/_PomodoroSets", Model.PomodoroSets)

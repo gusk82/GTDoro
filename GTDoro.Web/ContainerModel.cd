@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GTDoro.Core.Models.Action">
+    <Position X="10.75" Y="3.75" Width="1.75" />
+    <Members>
+      <Property Name="CompletedPomodorosIfEstimate" Hidden="true" />
+      <Property Name="ContainsSelectedAction" Hidden="true" />
+      <Property Name="CreationDate" Hidden="true" />
+      <Property Name="CssClass" Hidden="true" />
+      <Property Name="Effort" Hidden="true" />
+      <Property Name="EndDate" Hidden="true" />
+      <Property Name="EstimateWork" Hidden="true" />
+      <Method Name="GetPomodoros" Hidden="true" />
+      <Property Name="Ident" Hidden="true" />
+      <Property Name="InheritedStatus" Hidden="true" />
+      <Property Name="IsFinished" Hidden="true" />
+      <Property Name="IsSelectable" Hidden="true" />
+      <Property Name="ItemName" Hidden="true" />
+      <Property Name="NextSibling" Hidden="true" />
+      <Property Name="Owner" Hidden="true" />
+      <Property Name="Parent" Hidden="true" />
+      <Property Name="PathItemName" Hidden="true" />
+      <Property Name="Pomodoros" Hidden="true" />
+      <Property Name="Status" Hidden="true" />
+      <Property Name="Task" Hidden="true" />
+      <Property Name="Type" Hidden="true" />
+      <Property Name="TypeColor" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>QAgsAACMAAAogAgEAhAAQBQgBAkAAAQADU0ARACAAAA=</HashCode>
+      <FileName>Models\Core\Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Core.Models.Project">
+    <Position X="15.5" Y="4.75" Width="1.75" />
+    <Members>
+      <Property Name="CreationDate" Hidden="true" />
+      <Property Name="CssClass" Hidden="true" />
+      <Property Name="EndDate" Hidden="true" />
+      <Method Name="GetActions" Hidden="true" />
+      <Method Name="GetPomodoros" Hidden="true" />
+      <Method Name="GetTasks" Hidden="true" />
+      <Property Name="Ident" Hidden="true" />
+      <Property Name="InheritedStatus" Hidden="true" />
+      <Property Name="IsSelectable" Hidden="true" />
+      <Property Name="ItemName" Hidden="true" />
+      <Property Name="NextSibling" Hidden="true" />
+      <Property Name="Owner" Hidden="true" />
+      <Property Name="Parent" Hidden="true" />
+      <Property Name="PathItemName" Hidden="true" />
+      <Property Name="Status" Hidden="true" />
+      <Property Name="Tasks" Hidden="true" />
+      <Property Name="Type" Hidden="true" />
+      <Property Name="TypeColor" Hidden="true" />
+      <Property Name="User" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAglAACEIABogAAEAAAgQAQghAEAAAAACQgIRAAAIAg=</HashCode>
+      <FileName>Models\Core\Project.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Core.Models.Task">
+    <Position X="17.75" Y="3.25" Width="1.75" />
+    <Members>
+      <Property Name="Actions" Hidden="true" />
+      <Property Name="CreationDate" Hidden="true" />
+      <Property Name="CssClass" Hidden="true" />
+      <Property Name="EndDate" Hidden="true" />
+      <Method Name="GetActions" Hidden="true" />
+      <Method Name="GetPomodoros" Hidden="true" />
+      <Property Name="Ident" Hidden="true" />
+      <Property Name="InheritedStatus" Hidden="true" />
+      <Property Name="IsSelectable" Hidden="true" />
+      <Property Name="ItemName" Hidden="true" />
+      <Property Name="NextSibling" Hidden="true" />
+      <Property Name="Owner" Hidden="true" />
+      <Property Name="Parent" Hidden="true" />
+      <Property Name="PathItemName" Hidden="true" />
+      <Property Name="Project" Hidden="true" />
+      <Property Name="Status" Hidden="true" />
+      <Property Name="Type" Hidden="true" />
+      <Property Name="TypeColor" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAgkAACEIAAogAAEAAAgSAQgBAEAAAAACQgARAAAIAg=</HashCode>
+      <FileName>Models\Core\Task.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Core.Models.Workspace">
+    <Position X="13.25" Y="6.25" Width="1.5" />
+    <Members>
+      <Property Name="ContainsSelectedAction" Hidden="true" />
+      <Property Name="CreationDate" Hidden="true" />
+      <Property Name="CssClass" Hidden="true" />
+      <Property Name="EndDate" Hidden="true" />
+      <Method Name="GetActions" Hidden="true" />
+      <Method Name="GetPomodoros" Hidden="true" />
+      <Method Name="GetProjects" Hidden="true" />
+      <Method Name="GetTasks" Hidden="true" />
+      <Property Name="Ident" Hidden="true" />
+      <Property Name="InheritedStatus" Hidden="true" />
+      <Property Name="IsSelectable" Hidden="true" />
+      <Property Name="ItemName" Hidden="true" />
+      <Property Name="NextSibling" Hidden="true" />
+      <Property Name="Owner" Hidden="true" />
+      <Property Name="Parent" Hidden="true" />
+      <Property Name="PathItemName" Hidden="true" />
+      <Property Name="Status" Hidden="true" />
+      <Property Name="Type" Hidden="true" />
+      <Property Name="TypeColor" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>QAgkAACEKAAJACAAABAAQAAghAEAAAgADQgABAAAAQA=</HashCode>
+      <FileName>Models\Core\Workspace.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Core.Models.PomodoroContainer">
+    <Position X="7.75" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAgtBBCEAAAIEAAAExBgQBggBAGAEMQEnQgALQBKBAA=</HashCode>
+      <FileName>Models\AppCode\Containers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Core.Models.ActionContainer" Collapsed="true">
+    <Position X="15.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCIAAAAIAAAAAAAAhAAgBAAAAAAAAQABAAAAACAAAg=</HashCode>
+      <FileName>Models\AppCode\Containers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Core.Models.TaskContainer" Collapsed="true">
+    <Position X="14.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAgAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AppCode\Containers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GTDoro.Core.Models.ProjectContainer" Collapsed="true">
+    <Position X="13.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAEAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Models\AppCode\Containers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

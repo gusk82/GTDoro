@@ -1,0 +1,74 @@
+﻿@model IEnumerable<GTDoro.Core.Models.Action>
+@using GTDoro.Core.Extensions;
+
+<table id="action-results" class="table table-striped gt-datatables">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th class="hidden-xxs">Task</th>
+            <th class="hidden-xxs">Project</th>
+            <th class="hidden-xxs"><i class="fa fa-refresh" title="Is it a Recurrent Action?"></i></th>
+            <th class="hidden-xs hidden-sm hidden-md">Deadline/End</th>
+            <th class="hidden-xs"><i class="fa fa-arrows-v" title="Priority"></i></th>
+            <th><i class="fa fa-spinner" title="Status"></i></th>
+            <th class="hidden-xs hidden-sm hidden-md">Last Work</th>
+            <th><i class="fa fa-wrench" title="Pomodoros"></i></th>
+            <th><i class="fa fa-question" title="Estimate"></i></th>
+            <th class="hidden-xs">Effort</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span class="limited-size-column">@Html.ActionLink(item.Name, "Details", "Action", new { id = item.ID }, new { @class = item.CssClass, @title = item.Name })</span>
+                </td>
+                <td class="hidden-xxs">
+                    @Html.ActionLink(item.Task.Code, "Details", "Task", new { id = item.Task.ID }, new { @class = item.Task.CssClass })
+                </td>
+                <td class="hidden-xxs">
+                    @Html.ActionLink(item.Task.Project.Code, "Details", "Project", new { id = item.Task.Project.ID }, new { @class = item.Task.Project.CssClass })
+                </td>
+                <td class="hidden-xxs">
+                    @Html.DisplayFor(modelItem => item.IsPersistent)
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md" data-order="@(item.DeadlineOrEndDate.ToTicksOrZero())">
+                    @Html.Raw(item.GetDeadlineOrEndDateIconHtmlTag() + " "
+                        + (item.DeadlineOrEndDate.HasValue ? item.DeadlineOrEndDate.ToRelativeString() : string.Empty))
+                </td>
+                <td>
+                    @Html.Raw(item.StatusIconHtml)
+                </td>
+                <td class="hidden-xs" data-order="@((int)item.Priority)">
+                    @Html.Raw(item.Priority.GetIconHtmlTag())
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md" data-order="@(item.LastPomodoro.ToDateTicksOrZero())" title="@(item.LastPomodoro.ToDateStringOrEmpty())">
+                    <i class="fa fa-clock-o"></i> @(item.LastPomodoro.ToDateRelativeString())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedPomodorosCount)
+                </td>
+                <td>
+                    @(item.Estimate >= 0 ? item.Estimate : null)
+                </td>
+                <td class="hidden-xs" title="@(item.EffortInfo)">
+                    <span class="badge @(item.EffortGroup.GetAttributeIconCssClass())">
+                        @(String.IsNullOrWhiteSpace(item.Effort.ToIntegerPercentageString()) ?
+                            item.CompletedPomodorosCount.ToString() : item.Effort.ToIntegerPercentageString())
+                    </span>
+                </td>
+                <td>
+                    <a href="@Url.Action("Edit", "Action", new { id = item.ID })"><i class="fa fa-fw fa-edit gt-operation" title="Edit"></i></a>
+                    <a href="@Url.Action("Delete", "Action", new { id = item.ID })"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                    @if (item.Status == GTDoro.Core.Models.Status.Active)
+                    {
+                        <a href="@Url.Action("Select", "Action", new { id = item.ID })"><i class="fa fa-fw fa-play gt-operation" title="Select"></i></a>
+                        @*<a href="@Url.Action("Planify", "Action", new { id = item.ID })"><i class="fa fa-fw fa-calendar gt-operation" title="Planify"></i></a>*@
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

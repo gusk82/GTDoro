@@ -1,0 +1,11 @@
+﻿@model GTDoro.Core.ViewModels.MorrisLineChartViewModel
+
+<div class="box-header">    
+    <div class="box-title"><i class="fa fa-fw fa-bar-chart-o"></i> @Model.HeaderTitle</div>
+</div>
+<div class="box-body chart-responsive">
+    <div class="chart" id="@Model.HtmlElementId" style="height: 300px;"></div>
+</div><!-- /.box-body -->
+
+@Html.Raw(Model.Script)
+

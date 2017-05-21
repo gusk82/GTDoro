@@ -1,0 +1,204 @@
+﻿@model PagedList.IPagedList<GTDoro.Core.Models.Task>
+@using PagedList.Mvc;
+@using GTDoro.Core.Extensions;
+@using GTDoro.Web.Extensions;
+
+@{
+    ViewBag.Title = "Workspace";
+    ViewBag.SubNavTitle = "Tasks";
+    ViewBag.Operation = GTDoro.Core.Models.Operation.TaskList;
+    bool Isfiltered = (ViewBag.IsFiltered ?? false);
+    RouteValueDictionary dict = ViewBag.RouteFiltersForPagination;
+}
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title"><i class="fa fa-fw fa-dot-circle-o"></i> Task List</h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-default btn-sm" data-toggle="tooltip" title="Toggle Filters" onclick="$('#filter-bars-container').slideToggle()"><i class="fa fa-fw fa-filter"></i> Filters</button>
+        </div>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <div id="filter-bars-container" style="display: @(Isfiltered ? "block" : "none")">
+            @using (Html.BeginForm(null, null, FormMethod.Get, new { @class = "filter" }))
+            {
+                @Html.Hidden("filtering", Isfiltered ? "1" : string.Empty)
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.Partial("Panels/Filters/_StatusFilter")
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.Partial("Panels/Filters/_PriorityFilter")
+                    </div>
+                </div>
+                <div>                    
+                    @{ViewBag.Mode = GTDoro.Core.Models.FilterBarMode.Filter; }
+                    @Html.Partial("Panels/Filters/_TagFilter")
+                </div>
+            }
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+
+        @Html.AntiForgeryToken()
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="checkbox-col">
+                        </th>
+                        <th>
+                            @Html.ActionLink("Code", "Index", new { sortOrder = ViewBag.CodeSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="hidden-xs hidden-sm hidden-md">
+                            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="hidden-xxs">
+                            @Html.ActionLink("Project", "Index", new { sortOrder = ViewBag.ProjectSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        @*<th>
+                    @Html.ActionLink("End Date", "Index", new { sortOrder = ViewBag.EndDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                </th>*@
+                        <th>
+                            <a href="@Url.Action("Index", new { sortOrder = ViewBag.StatusSortParm, currentFilter = ViewBag.CurrentFilter })">
+                                <i class="fa fa-spinner" title="Status"></i>
+                            </a>
+                        </th>
+                        <th class="hidden-3xs">
+                            <a href="@Url.Action("Index", new { sortOrder = ViewBag.PrioritySortParm, currentFilter = ViewBag.CurrentFilter })">
+                                <i class="fa fa-arrows-v" title="Priority"></i>
+                            </a>
+                        </th>
+                        <th class="hidden-xs">
+                            @Html.ActionLink("Last Work", "Index", new { sortOrder = ViewBag.LastPomodoroSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="hidden-xxs">
+                            @Html.ActionLink("Progress", "Index", new { sortOrder = ViewBag.ProgressSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="hidden-3xs">
+                            <a href="@Url.Action("Index", new { sortOrder = ViewBag.ActionsSortParm, currentFilter = ViewBag.CurrentFilter })">
+                                <i class="fa fa-circle" title="Actions"></i>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="@Url.Action("Index", new { sortOrder = ViewBag.PomodorosSortParm, currentFilter = ViewBag.CurrentFilter })">
+                                <i class="fa fa-wrench" title="Work units"></i>
+                            </a>
+                        </th>
+                        <th class="hidden-xs">
+                            @Html.ActionLink("Effort", "Index", new { sortOrder = ViewBag.EffortSortParm, currentFilter = ViewBag.CurrentFilter })
+                        </th>
+                        <th class="hidden-3xs"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="checkbox-col">
+                                <input type="checkbox" name="selectedTasks" value="@item.ID" />
+                            </td>
+                            <td>
+                                @Html.ActionLink(item.Code, "Details", "Task", new { id = item.ID }, new { @class = item.CssClass })
+                            </td>
+                            <td class="hidden-xs hidden-sm hidden-md">
+                                <span class="limited-size-column">@Html.DisplayFor(modelItem => item.Name)</span>
+                            </td>
+                            <td class="hidden-xxs">
+                                @Html.ActionLink(item.Project.Code, "Details", "Project", new { id = item.Project.ID }, new { @class = item.Project.CssClass })
+                            </td>
+                            @*<td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>*@
+                            <td>
+                                @Html.Raw(item.StatusIconHtml)
+                            </td>
+                            <td class="hidden-3xs">
+                                @Html.Raw(item.Priority.GetIconHtmlTag())
+                            </td>
+                            <td class="hidden-xs" title="@(item.LastPomodoro.ToDateStringOrEmpty())">
+                                <i class="fa fa-fw fa-clock-o"></i> @(item.LastPomodoro.ToDateRelativeString())
+                            </td>
+                            <td class="hidden-xxs" title="@(item.ProgressInfo)">
+                                <span class="badge @(item.ProgressGroup.GetAttributeIconCssClass())">
+                                    @(String.IsNullOrWhiteSpace(item.Progress.ToIntegerPercentageString()) ?
+                                item.CompletedPomodorosCount.ToString() : item.Progress.ToIntegerPercentageString())
+                                </span>
+                            </td>
+                            <td class="hidden-3xs">
+                                @Html.DisplayFor(modelItem => item.Actions.Count)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CompletedPomodorosCount)
+                            </td>
+                            <td class="hidden-xs" title="@(item.EffortInfo)">
+                                <span class="badge @(item.EffortGroup.GetAttributeIconCssClass())">
+                                    @(String.IsNullOrWhiteSpace(item.Effort.ToIntegerPercentageString()) ?
+                        item.CompletedPomodorosCount.ToString() : item.Effort.ToIntegerPercentageString())
+                                </span>
+                            </td>
+                            <td class="hidden-3xs operations-cell">
+                                <a href="@Url.Action("Edit", "Task", new { id = item.ID })"><i class="fa fa-fw fa-edit gt-operation" title="Edit"></i></a>
+                                <a href="@Url.Action("Delete", "Task", new { id = item.ID })"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        <div id="multiple-edit-bars-container" class="box-body" style="display:none">
+            <div>
+                @{ViewBag.Mode = GTDoro.Core.Models.FilterBarMode.MultipleEdit; }
+                @Html.Partial("Panels/Filters/_TagFilter")
+            </div>
+            <div class="form-horizontal row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-xs-5 control-label" for="newstatus">Change status to</label>
+                        <span class="col-xs-7">
+                            @Html.DropDownList("NewStatus", EnumHelper.GetSelectList(typeof(GTDoro.Core.Models.Status)), "(No change)", new { @class = "form-control" })
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label class="col-xs-5 control-label" for="NewPriority">Change priority to</label>
+                        <span class="col-xs-7">
+                            @Html.DropDownList("NewPriority", EnumHelper.GetSelectList(typeof(GTDoro.Core.Models.LevelExtended)), "(No change)", new { @class = "form-control" })
+                        </span>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-sm-2">
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-save"></i> Modify Selected</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+    <div class="box-body clear">
+        <span>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</span>        
+        <div class="box-tools pull-right">
+            <button class="btn btn-default btn-sm" data-toggle="tooltip" title="Toggle Multiple Edit" onclick="toggleEditMode()"><i class="fa fa-fw fa-files-o"></i> Multiple edit</button>
+        </div>
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            dict.AddKeyValueToRouteValueDictionary("Page", page.ToString())))
+    
+    </div><!-- /.box-body -->
+
+<script type="text/javascript">
+    $('#filter-bars-container .inline-checkbox input').on('ifToggled', function (event) {
+        $('form.filter').submit();
+    })
+
+    function toggleEditMode() {
+        $('#multiple-edit-bars-container').slideToggle();
+        $('.checkbox-col .icheckbox_minimal').toggle();
+    }
+</script>

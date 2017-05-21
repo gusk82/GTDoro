@@ -1,0 +1,65 @@
+﻿@model GTDoro.Core.Models.Pomodoro
+@using GTDoro.Web.Extensions
+
+@{
+    //ViewBag.Operation = GTDoro.Core.Models.Operation.Delete;
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pomodoro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Project @Html.DisplayNameFor(model => model.Action.Task.Project.Code)
+        </dt>
+
+        <dd>
+            <span class="gt-project">@Html.ActionLink(Model.Action.Task.Project.Code, "Details", "Project", new { id = Model.Action.Task.Project.ID }, null)</span>
+        </dd>
+
+        <dt>
+            Task @Html.DisplayNameFor(model => model.Action.Task.Code)
+        </dt>
+
+        <dd>
+            <span class="gt-task">@Html.ActionLink(Model.Action.Task.Code, "Details", "Task", new { id = Model.Action.Task.ID }, null)</span>
+        </dd>
+
+        <dt>
+            Action @Html.DisplayNameFor(model => model.Action.Name)
+        </dt>
+
+        <dd>
+            <span class="gt-action">@Html.ActionLink(Model.Action.Name, "Details", "Action", new { id = Model.Action.ID }, null)</span>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartLocal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartLocal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDateLocal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDateLocal)
+        </dd>
+        
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("UrlReferrer", Request.GetReferrerUrlOrCurrent())
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" />
+        </div>
+    }
+</div>

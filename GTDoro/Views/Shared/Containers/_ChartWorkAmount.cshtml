@@ -1,9 +1,0 @@
-﻿@model GTDoro.Models.PomodoroContainer
-
-@{
-    ViewBag.Operation = GTDoro.Models.Operation.WorkAmount;
-}
-
-<div class="box box-warning">
-    @Html.Partial("Charts/_MorrisLineChart", Model.ChartsViewModel.WorkAmount)
-</div>

@@ -104,9 +104,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GTDoro\GTDoro.csproj">
-      <Project>{71B5A6B7-EE52-4D6E-9CD8-8BC1AE5147FD}</Project>
-      <Name>GTDoro</Name>
+    <ProjectReference Include="..\GTDoro.Core\GTDoro.Core.csproj">
+      <Project>{bf5b5d94-a807-40a9-82e7-29bba4c8e69b}</Project>
+      <Name>GTDoro.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GTDoro.Web\GTDoro.Web.csproj">
+      <Project>{71b5a6b7-ee52-4d6e-9cd8-8bc1ae5147fd}</Project>
+      <Name>GTDoro.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

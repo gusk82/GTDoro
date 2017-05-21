@@ -1,0 +1,49 @@
+﻿@model GTDoro.Core.Models.Pomodoro
+
+@{
+    ViewBag.Title = "CancelWorking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cancel Working</h2>
+
+<h3>Are you sure you want to cancel this pomodoro?</h3>
+<div>
+    <h4>Pomodoro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Action.Name)
+        </dt>
+
+        <dd>
+            <span class="gt-action">@Html.DisplayFor(model => model.Action.Name)</span>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartLocal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartLocal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Cancel" class="btn btn-default" /> |
+            @Html.ActionLink("Do not Cancel and Keep Working!", "Working")
+        </div>
+    }
+</div>

@@ -1,0 +1,72 @@
+﻿@model CalendarViewModel
+@using GTDoro.Core.ViewModels;
+
+<!-- Calendar -->
+<div class="box box-warning">
+    <div class="box-header">
+        <div class="box-title"><i class="fa fa-fw fa-calendar"></i> Calendar</div>
+    </div><!-- /.box-header -->
+    <div class="box-body no-padding">
+        <!--The calendar -->
+        <div id="calendar-mini"></div>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<!-- fullCalendar -->
+@Styles.Render("~/Content/fullcalendar")
+@Scripts.Render("~/Scripts/fullcalendar")
+<script>
+    //Date for the calendar events (dummy data)
+    var date = new Date();
+    var d = date.getDate(),
+            m = date.getMonth(),
+            y = date.getFullYear();
+
+    //Calendar
+    $('#calendar-mini').fullCalendar({
+        disableDragging: true,
+        disableResizing: true,
+        firstDay: 1,
+        @{  
+            if (Model.Height.HasValue) 
+            {
+                @("height: " + Model.Height.Value.ToString() + ", ");
+            }
+        }
+        @Html.Raw(Model.LastDateParams)
+        events: [
+             @{
+                foreach (PomodoroSet item in Model.DailyWorkHistory)
+                {
+                    string title = "( " + item.Count.ToString() + " )";
+                    if (Model.DisplayX)
+                    {
+                        title = new String('X', item.Count / 5) + new String('x', item.Count % 5) + "\\r\\n" + title;
+                    }
+                    @("{")
+                    @*@Html.Raw("title: '" + HttpUtility.HtmlEncode(item.Action.Name) + "',")*@
+                    @Html.Raw("title: '" + title + "',")
+                    @Html.Raw("start: new Date(" + item.StartLocal.Value.Year + ", " + (item.StartLocal.Value.Month - 1) + ", " + item.StartLocal.Value.Day +  "),")
+                    DateTime endDateTime = item.StartLocal.Value; //item.StartLocal.Value.AddMinutes(GTDoro.Core.Models.Settings.POMOCYCLE);
+                    @Html.Raw("end: new Date(" + endDateTime.Year + ", " + (endDateTime.Month - 1) + ", " + endDateTime.Day + "),");
+                    @Html.Raw("allDay: true,");
+                    @Html.Raw("backgroundColor: \"" + CalendarViewModel.GetIntensityColorRGB(item.Count, Model.ContainerType) + "\", ")                    
+                    @("\r\n},")
+                }
+            }
+        ],
+        buttonText: {//This is to add icons to the visible buttons
+            prev: "<span class='fa fa-caret-left'></span>",
+            next: "<span class='fa fa-caret-right'></span>",
+            today: 'today',
+            month: 'month',
+            week: 'week',
+            day: 'day'
+        },
+        header: {
+            left: 'title',
+            center: '',
+            right: 'prev,next'
+        }
+    });
+</script>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<GTDoro.Core.Models.Project>
+@using GTDoro.Core.Extensions;
+
+<table id="projects" class="table table-striped gt-datatables">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th class="hidden-xs hidden-sm hidden-md">Name</th>
+            <th class="hidden-xxs" title="Last Work"><i class="fa fa-clock-o"></i></th>
+            <th class="hidden-3xs">Progress</th>
+            <th class="hidden-xs"><i class="fa fa-dot-circle-o" title="Tasks"></i></th>
+            <th class="hidden-xs"><i class="fa fa-circle" title="Actions"></i></th>
+            <th><i class="fa fa-wrench" title="Work units"></i></th>
+            <th class="hidden-xxs">Effort</th>
+            <th><i class="fa fa-spinner" title="Status"></i></th>
+            <th class="hidden-xs hidden-sm hidden-md">Creation Date</th>
+            <th class="hidden-3xs"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Code, "Details", "Project", new { id = item.ID }, new { @class = item.CssClass })
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md">
+                    <span class="limited-size-column">@Html.DisplayFor(modelItem => item.Name)</span>
+                </td>
+                <td class="hidden-xxs" title="@(item.LastPomodoro.ToDateStringOrEmpty())">
+                    <i class="fa fa-clock-o"></i> @(item.LastPomodoro.ToDateRelativeString())
+                </td>
+                <td class="hidden-3xs" title="@(item.ProgressInfo)">
+                    <span class="badge @(item.ProgressGroup.GetAttributeIconCssClass())">
+                        @(String.IsNullOrWhiteSpace(item.Progress.ToIntegerPercentageString()) ?
+                                    item.CompletedPomodorosCount.ToString() : item.Progress.ToIntegerPercentageString())
+                    </span>
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.Tasks.Count)
+                </td>
+                <td class="hidden-xs">
+                    @Html.DisplayFor(modelItem => item.GetActions().Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompletedPomodorosCount)
+                </td>
+                <td class="hidden-xxs" title="@(item.EffortInfo)">
+                    <span class="badge @(item.EffortGroup.GetAttributeIconCssClass())">
+                        @(String.IsNullOrWhiteSpace(item.Effort.ToIntegerPercentageString()) ?
+                            item.CompletedPomodorosCount.ToString() : item.Effort.ToIntegerPercentageString())
+                    </span>
+                </td>
+                <td data-order="@((int)item.CalculatedStatus)">
+                    @Html.Raw(item.StatusIconHtml)
+                </td>
+                <td class="hidden-xs hidden-sm hidden-md">
+                    @Html.DisplayFor(modelItem => item.CreationDateLocal)
+                </td>
+                <td class="hidden-3xs operations-cell">
+                    <a href="@Url.Action("Edit", "Project", new { id = item.ID })"><i class="fa fa-fw fa-edit gt-operation" title="Edit"></i></a>
+                    <a href="@Url.Action("Delete", "Project", new { id = item.ID })"><i class="fa fa-fw fa-times gt-operation" title="Delete"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Styles.Render("~/Content/dataTables")
+@Scripts.Render("~/Scripts/dataTables")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#projects").dataTable({
+            "iDisplayLength": 10,
+            "dom": '<"dti"if>t<"dti"p>',
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [$("#projects th").length - 1] }
+            ],
+            "order": [[1, "desc"]]
+        });
+        $("#projects").show();
+    });
+</script>

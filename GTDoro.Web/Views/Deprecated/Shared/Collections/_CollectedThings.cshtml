@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GTDoro.Core.Models.CollectedThing>
+
+<table class="table table-striped gt-datatables">
+    <tr>
+        <th>
+            Name@*@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })*@
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "CollectedThing", new { id = item.ID }, null) |
+                @Html.ActionLink("Delete", "Delete", "CollectedThing", new { id = item.ID }, null) |
+                @Html.ActionLink("Create Action", "Create", "Action", new { collectedThingId = item.ID, name = item.Name }, null) |
+                @Html.ActionLink("Create Task", "Create", "Task", new { collectedThingId = item.ID, name = item.Name }, null) |
+                @Html.ActionLink("Create Project", "Create", "Project", new { collectedThingId = item.ID, name = item.Name }, null)
+            </td>
+        </tr>
+    }
+
+</table>

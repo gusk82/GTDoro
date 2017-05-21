@@ -1,0 +1,10 @@
+﻿@model GTDoro.Core.Models.Action
+
+@{
+    ViewBag.Operation = GTDoro.Core.Models.Operation.ActionInfo;
+    Layout = "~/Views/Action/_ActionLayout.cshtml";
+}
+
+<div>
+    @Html.Partial("_ActionInfo")
+</div>

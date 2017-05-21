@@ -1,0 +1,20 @@
+﻿@{
+    const string PREFIX = "tag-";
+    Tag[] allTags = ViewBag.AllTags;
+    IEnumerable<string> tagFilterCodes = ViewBag.TagFilter;
+    FilterBarMode mode = ViewBag.Mode;
+    string modePrefix = (mode == FilterBarMode.Filter ? "filter-" : "edit-");
+}
+@using GTDoro.Core.Models
+<div id="@(modePrefix)tag-bar" class="box box-body filter-bar form-horizontal">
+    <h5><i class="fa fa-fw fa-tags"></i> @(mode == FilterBarMode.Filter ? "Tag filter" : "Add Tags")</h5>
+    <hr class="small" />
+        @foreach (Tag tag in allTags)
+        {
+            <span class="inline-checkbox gt-tag-@tag.GroupName" title="@tag.Name">
+                <input type="checkbox" id="@(modePrefix + PREFIX + tag.Code)" name="@(PREFIX + tag.Code)" value="1" 
+                       @((mode == FilterBarMode.Filter && tagFilterCodes.Contains(tag.Code)) ? "checked " : "")/>
+                <label for="@(modePrefix + PREFIX + tag.Code)"><i class="fa fa-fw @tag.IconCssClass"></i><span class="filter-name"> @tag.Name</span></label>
+            </span>
+        }
+</div>

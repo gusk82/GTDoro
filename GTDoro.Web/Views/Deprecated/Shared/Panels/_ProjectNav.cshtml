@@ -1,0 +1,54 @@
+﻿@model IEnumerable<GTDoro.Core.Models.Project>
+@{
+    bool onlySelectable = false;
+    onlySelectable = Boolean.TryParse(ViewBag.OnlySelectable, out onlySelectable);
+    String projectTitle = string.Empty;
+    String taskTitle = string.Empty;
+    String actionTitle = string.Empty;
+}
+
+<div class="project-nav">
+    <ul class="nav-dropdown menu">
+        @foreach (var project in Model.OrderBy(p => p.Code))
+        {
+            if (!onlySelectable || project.IsSelectable) 
+            {
+            <li>                
+                @Html.ActionLink(project.Code, onlySelectable ? "TaskList" : "Details",
+                    "Project", new { id = project.ID }, new { @class = project.CssClass })
+                @if (project.Tasks.Count > 0)
+                {
+                    <ul>
+                        @foreach (var task in project.Tasks.OrderBy(t => t.Code))
+                        {
+                            if (!onlySelectable || task.IsSelectable)
+                            {
+                            <li>                                
+                                @Html.ActionLink(task.Code, onlySelectable ? "ActionList" : "Details",
+                                    "Task", new { id = task.ID }, new { @class = task.CssClass })
+                                @if (task.Actions.Count > 0)
+                                {
+                                    <ul>
+                                        @foreach (var action in task.Actions.OrderBy(a => a.Name))
+                                        {
+                                            if (!onlySelectable || action.IsSelectable)
+                                            {
+                                            actionTitle = action.Name;
+                                            <li>                                                
+                                                @Html.ActionLink(actionTitle, onlySelectable ? "Select" : "Details",
+                                                    "Action", new { id = action.ID }, new { @class = action.CssClass })
+                                            </li>
+                                            }
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                            }
+                        }
+                    </ul>
+                }
+            </li>
+            }
+        }
+    </ul>
+</div>

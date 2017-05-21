@@ -1,0 +1,35 @@
+﻿@model GTDoro.Core.Models.PomodoroContainer
+
+@{
+    ViewBag.Operation = GTDoro.Core.Models.Operation.WorkDivision;
+    ViewBag.Operation = GTDoro.Core.Models.Operation.WorkAmount;
+    //switch (Model.Type)
+    //{
+    //    case GTDoro.Core.Models.PomodoroContainerType.Project:
+    //        Layout = "~/Views/Project/_ProjectLayout.cshtml";
+    //        break;
+
+    //    case GTDoro.Core.Models.PomodoroContainerType.Task:
+    //        Layout = "~/Views/Task/_TaskLayout.cshtml";
+    //        break;
+
+    //    case GTDoro.Core.Models.PomodoroContainerType.Action:
+    //        Layout = "~/Views/Action/_ActionLayout.cshtml";
+    //        break;
+    //}
+}
+@Styles.Render("~/Content/morris")
+@Scripts.Render("~/Scripts/morris")
+
+<!-- Map box -->
+<!-- LINE CHART -->
+<div class="box @(Model.BoxCssClass)">
+    @Html.Partial("Charts/_MorrisLineChart", Model.ChartsViewModel.WorkAmount)
+</div>
+@if(Model is GTDoro.Core.Models.TaskContainer || Model is GTDoro.Core.Models.ActionContainer)
+{
+    <!-- Map box -->
+    <div class="box @(Model.BoxCssClass)">
+        @Html.Partial("Charts/_MorrisDonutChart", Model.ChartsViewModel.WorkDivision)
+    </div>
+}

@@ -1,0 +1,24 @@
+﻿@{
+    const string PREFIX = "priority-";
+    LevelExtended[] allLevels = (LevelExtended[])Enum.GetValues(typeof(LevelExtended));
+    if (allLevels == null || allLevels.Length == 0)
+    {
+        return;
+    }    
+    IEnumerable<string> levelFilters = ViewBag.PriorityFilter;
+    string levelStr = "";
+}
+@using GTDoro.Core.Extensions;
+@using GTDoro.Core.Models;
+<div id="priority-filter" class="box box-body filter-bar form-horizontal">
+    <h5><i class="fa fa-fw fa-arrows-v"></i> Priority filter</h5>
+    <hr class="small" />
+    @foreach (LevelExtended level in allLevels.OrderBy(l => (int)l))
+    {
+        levelStr = level.ToString().ToLower();
+        <span class="inline-checkbox" title="@level.ToString()">
+            <input type="checkbox" id="@(PREFIX + levelStr)" name="@(PREFIX + levelStr)" value="1" @(levelFilters.Contains(levelStr) ? "checked " : "") />
+            <label for="@(PREFIX + levelStr)"><i class="fa fa-fw @(level.GetAttributeIconCssClass())"></i> <span class="filter-name"> @(level.ToString())</span></label>
+        </span>
+    }
+</div>
