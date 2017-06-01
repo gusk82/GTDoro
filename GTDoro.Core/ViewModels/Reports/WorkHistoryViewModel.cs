@@ -34,7 +34,7 @@ namespace GTDoro.Core.ViewModels.Reports
                 {
                     HeaderTitle = "Work Amount",
                     Dates = WorkHistory.ToList()
-                        .Where(p => p.Start.HasValue && p.CalculatedStatus == PomodoroCalculatedStatus.Completed)
+                        .Where(p => p.Start.HasValue && p.CalculatedStatus == LoggableItemCalculatedStatus.Completed)
                         .Select(p => p.StartLocal.Value).AsEnumerable(),
                     Interval = DateInterval.Monthly,
                     Label = "Work units",

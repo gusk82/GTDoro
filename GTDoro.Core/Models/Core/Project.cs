@@ -88,6 +88,16 @@ namespace GTDoro.Core.Models
             return lstActions;
         }
 
+        public override ICollection<Activity> GetActivities()
+        {
+            List<Activity> lstActivities = new List<Activity>();
+            foreach (Task t in Tasks)
+            {
+                lstActivities.AddRange(t.Activities);
+            }
+            return lstActivities;
+        }
+
         public override ICollection<Task> GetTasks()
         {
             return Tasks;
@@ -172,7 +182,7 @@ namespace GTDoro.Core.Models
 
         public Workspace Workspace { get { return new Workspace(User); } }
 
-        public override PomodoroContainer Parent { get { return Workspace; } }
+        public override LoggableItemContainer Parent { get { return Workspace; } }
 
         public override PomodoroContainer NextSibling
         {

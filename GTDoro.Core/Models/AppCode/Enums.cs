@@ -127,7 +127,7 @@ namespace GTDoro.Core.Models
     /// <summary>
     /// Enumeration for setting manually the pomodoro status, not including calculated states
     /// </summary>
-    public enum PomodoroCalculatedStatus
+    public enum LoggableItemCalculatedStatus
     {
         [IconCssClass("fa-calendar")]       Planified = PomodoroStatus.Planified, //default
         [IconCssClass("fa-play")]           Working = PomodoroStatus.Working,

@@ -141,7 +141,7 @@ namespace GTDoro.Controllers
             {
                 HeaderTitle = "Work Amount",
                 Dates = db.GetMyPomodoros(User).ToList()
-                    .Where(p => p.Start.HasValue && p.CalculatedStatus == PomodoroCalculatedStatus.Completed)
+                    .Where(p => p.Start.HasValue && p.CalculatedStatus == LoggableItemCalculatedStatus.Completed)
                     .Select(p => p.StartLocal.Value).AsEnumerable(),
                 Interval = DateInterval.Monthly,
                 Label = "Work units",

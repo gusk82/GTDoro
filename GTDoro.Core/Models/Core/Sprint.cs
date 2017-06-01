@@ -150,7 +150,7 @@ namespace GTDoro.Core.Models
             }
         }
 
-        public override PomodoroContainer Parent { get { return Project; } }
+        public override LoggableItemContainer Parent { get { return Project; } }
 
         public override PomodoroContainer NextSibling
         {

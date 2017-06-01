@@ -49,6 +49,10 @@ namespace GTDoro.Core.Models.Identity
         [NotMapped]
         public ICollection<Action> Actions { get { return Workspace.GetActions(); } }
         [NotMapped]
+        public ICollection<Activity> Activities { get { return Workspace.GetActivities(); } }
+        [NotMapped]
+        public ICollection<TimePeriod> TimePeriods { get { return Workspace.GetTimePeriods(); } }
+        [NotMapped]
         public ICollection<Pomodoro> Pomodoros { get { return Workspace.GetPomodoros(); } }
 
         [Display(Name = "Creation Date")]

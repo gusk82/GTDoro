@@ -10,13 +10,14 @@ using System.Drawing;
 
 namespace GTDoro.Core.Models
 {
-    public class Task : ActionContainer
+    public class Task : WorkableItemContainer
     {
         public const int CODE_MAX_LENGTH = 24;
 
         public Task()
         {
             Actions = new HashSet<Action>();
+            Activities = new HashSet<Activity>();
         }
 
         public int ID { get; set; }
@@ -53,7 +54,9 @@ namespace GTDoro.Core.Models
         public virtual Project Project { get; set; }
 
         public virtual ICollection<Action> Actions { get; set; }
-        
+
+        public virtual ICollection<Activity> Activities { get; set; }
+
         public void SetCode(string Code) 
         {
             Code = Code ?? string.Empty;
@@ -71,6 +74,11 @@ namespace GTDoro.Core.Models
             return Actions;
         }
 
+        public override ICollection<Activity> GetActivities()
+        {
+            return Activities;
+        }
+
         public override ICollection<Pomodoro> GetPomodoros()
         {
             List<Pomodoro> lstPomodoros = new List<Pomodoro>();
@@ -83,7 +91,7 @@ namespace GTDoro.Core.Models
             }
             return lstPomodoros;
         }
-                
+
         [NotMapped]
         [Display(Name = "Ext. Status")]
         public TaskExtendedStatus ExtendedStatus
@@ -187,7 +195,7 @@ namespace GTDoro.Core.Models
             }
         }
 
-        public override PomodoroContainer Parent { get { return Project; } }
+        public override LoggableItemContainer Parent { get { return Project; } }
 
         public override PomodoroContainer NextSibling
         {

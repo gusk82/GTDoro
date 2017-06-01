@@ -1,15 +1,16 @@
-﻿using System;
+﻿using GTDoro.Core.Extensions;
+using GTDoro.Core.Models.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Web;
-using GTDoro.Core.Extensions;
-using GTDoro.Core.Models.Identity;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GTDoro.Core.Models
 {
-    public class Pomodoro
+    public class TimePeriod
     {
         public int ID { get; set; }
 
@@ -22,8 +23,8 @@ namespace GTDoro.Core.Models
         public DateTime? CreationDate { get; set; }
 
         [Required]
-        public int ActionID { get; set; }
-        public virtual Action Action { get; set; }
+        public int ActivityID { get; set; }
+        public virtual Activity Activity { get; set; }
 
         [NotMapped]
         [Display(Name = "Status")]
@@ -59,6 +60,6 @@ namespace GTDoro.Core.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreationDateLocal { get { return CreationDate.ToUserLocalTime(Owner.TimeZoneId); } }
 
-        public ApplicationUser Owner { get { return Action.Owner;  } }
+        public ApplicationUser Owner { get { return Activity.Owner; } }
     }
 }

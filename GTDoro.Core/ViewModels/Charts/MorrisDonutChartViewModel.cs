@@ -26,7 +26,7 @@ namespace GTDoro.Core.ViewModels
             int counter = 0;
             foreach (PomodoroContainer item in Items)
             {
-                count = item.GetPomodoros(PomodoroCalculatedStatus.Completed, From, To).Count();
+                count = item.GetPomodoros(LoggableItemCalculatedStatus.Completed, From, To).Count();
                 if (count > 0)
                 {
                     _dataRows.Add("{ label: '" + (UseFullPathItemName ? item.PathItemName : item.ItemName) + "', value: " + count.ToString() + " }");

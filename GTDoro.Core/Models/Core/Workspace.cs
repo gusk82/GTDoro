@@ -14,6 +14,7 @@ namespace GTDoro.Core.Models
         private ApplicationUser user;
         private List<Task> tasks;
         private List<Action> actions;
+        private List<Activity> activities;
         private List<Pomodoro> pomodoros;
 
         public Workspace(ApplicationUser user)
@@ -25,11 +26,13 @@ namespace GTDoro.Core.Models
         {
             tasks = new List<Task>();
             actions = new List<Action>();
+            activities = new List<Activity>();
             pomodoros = new List<Pomodoro>();
             foreach (Project p in GetProjects())
             {
                 tasks.AddRange(p.GetTasks());
                 actions.AddRange(p.GetActions());
+                activities.AddRange(p.GetActivities());
                 pomodoros.AddRange(p.GetPomodoros());
             }
         }
@@ -55,6 +58,15 @@ namespace GTDoro.Core.Models
                 LoadUserWork();
             }
             return actions;
+        }
+
+        public override ICollection<Activity> GetActivities()
+        {
+            if (activities == null)
+            {
+                LoadUserWork();
+            }
+            return activities;
         }
 
         public override string PathItemName
@@ -114,7 +126,7 @@ namespace GTDoro.Core.Models
             get { return user; }
         }
 
-        public override PomodoroContainer Parent { get { return null; } }
+        public override LoggableItemContainer Parent { get { return null; } }
         public override PomodoroContainer NextSibling { get { return null; } }
 
         public override Status Status { get; set; }

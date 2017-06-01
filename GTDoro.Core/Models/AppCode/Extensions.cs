@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Net.Http;
 using System.Collections.Generic;
 using System.Linq;
+using GTDoro.Core.ViewModels;
 
 namespace GTDoro.Core.Extensions
 {

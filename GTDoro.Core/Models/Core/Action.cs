@@ -270,7 +270,7 @@ namespace GTDoro.Core.Models
             }
         }
 
-        public override PomodoroContainer Parent { get { return Task; } }
+        public override LoggableItemContainer Parent { get { return Task; } }
 
         public override PomodoroContainer NextSibling
         {

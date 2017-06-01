@@ -32,6 +32,7 @@ namespace GTDoro.Core.Models
         public virtual ICollection<Project> Projects { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
         public virtual ICollection<Action> Actions { get; set; }
+        public virtual ICollection<Activity> Activities { get; set; }
         public virtual ICollection<Sprint> Sprints { get; set; }
 
         public virtual ApplicationUser User { get; set; }

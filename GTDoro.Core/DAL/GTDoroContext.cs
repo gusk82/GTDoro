@@ -36,8 +36,10 @@ namespace GTDoro.Core.DAL
         }
 
         public DbSet<Sprint> Sprints { get; set; }
+        public DbSet<TimePeriod> TimePeriods { get; set; }
         public DbSet<Pomodoro> Pomodoros { get; set; }
         public DbSet<Action> Actions { get; set; }
+        public DbSet<Activity> Activitys { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -79,6 +81,17 @@ namespace GTDoro.Core.DAL
                        m.MapLeftKey("ActionID");
                        m.MapRightKey("TagID");
                        m.ToTable("ActionTags");
+                   });
+
+            modelBuilder.Entity<Activity>().
+                  HasMany(t => t.Tags).
+                  WithMany(c => c.Activities).
+                  Map(
+                   m =>
+                   {
+                       m.MapLeftKey("ActivityID");
+                       m.MapRightKey("TagID");
+                       m.ToTable("ActivityTags");
                    });
 
             modelBuilder.Entity<Sprint>().
@@ -152,6 +165,21 @@ namespace GTDoro.Core.DAL
             return GetMyActions(User).SingleOrDefault(a => a.ID == Id);
         }
 
+        public IQueryable<Activity> GetMyActivities(IPrincipal User)
+        {
+            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            if (currentUser == null)
+            {
+                return Enumerable.Empty<Activity>().AsQueryable();
+            }
+            return Activitys.Where(a => a.Task.Project.User.Id == currentUser.Id);
+        }
+
+        public Activity GetActivityById(IPrincipal User, int Id)
+        {
+            return GetMyActivities(User).SingleOrDefault(a => a.ID == Id);
+        }
+
         public IQueryable<Pomodoro> GetMyPomodoros(IPrincipal User)
         {
             ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
@@ -165,6 +193,16 @@ namespace GTDoro.Core.DAL
         public Pomodoro GetPomodoroById(IPrincipal User, int Id)
         {
             return GetMyPomodoros(User).SingleOrDefault(p => p.ID == Id);
+        }
+
+        public IQueryable<TimePeriod> GetMyTimePeriods(IPrincipal User)
+        {
+            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            if (currentUser == null)
+            {
+                return Enumerable.Empty<TimePeriod>().AsQueryable();
+            }
+            return TimePeriods.Where(tp => tp.Activity.Task.Project.User.Id == currentUser.Id);
         }
 
         public IQueryable<Tag> GetMyTags(IPrincipal User)

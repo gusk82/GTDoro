@@ -161,15 +161,30 @@
     <Compile Include="Migrations\201503011807038_SprintsChanges7.Designer.cs">
       <DependentUpon>201503011807038_SprintsChanges7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705310605210_ActivityTimePeriod.cs" />
+    <Compile Include="Migrations\201705310605210_ActivityTimePeriod.Designer.cs">
+      <DependentUpon>201705310605210_ActivityTimePeriod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706010545255_ActivityTags.cs" />
+    <Compile Include="Migrations\201706010545255_ActivityTags.Designer.cs">
+      <DependentUpon>201706010545255_ActivityTags.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppCode\Attributes.cs" />
-    <Compile Include="Models\AppCode\Containers.cs" />
+    <Compile Include="Models\AppCode\Containers\ActionContainer.cs" />
+    <Compile Include="Models\AppCode\Containers\IContainers.cs" />
+    <Compile Include="Models\AppCode\Containers\LoggableItemContainer.cs" />
+    <Compile Include="Models\AppCode\Containers\PomodoroContainer.cs" />
+    <Compile Include="Models\AppCode\Containers\ProjectContainer.cs" />
+    <Compile Include="Models\AppCode\Containers\TaskContainer.cs" />
+    <Compile Include="Models\AppCode\Containers\WorkableItemContainer.cs" />
     <Compile Include="Models\AppCode\Enums.cs" />
     <Compile Include="Models\AppCode\Exceptions.cs" />
     <Compile Include="Models\AppCode\Extensions.cs" />
     <Compile Include="Models\AppCode\SearchResults.cs" />
     <Compile Include="Models\AppCode\Settings.cs" />
     <Compile Include="Models\Core\Action.cs" />
+    <Compile Include="Models\Core\Activity.cs" />
     <Compile Include="Models\Core\CollectedThing.cs" />
     <Compile Include="Models\Core\KeyValueParameter.cs" />
     <Compile Include="Models\Core\Pomodoro.cs" />
@@ -177,6 +192,7 @@
     <Compile Include="Models\Core\Sprint.cs" />
     <Compile Include="Models\Core\Tag.cs" />
     <Compile Include="Models\Core\Task.cs" />
+    <Compile Include="Models\Core\TimePeriod.cs" />
     <Compile Include="Models\Core\Workspace.cs" />
     <Compile Include="Models\Identity\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -257,6 +273,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503011807038_SprintsChanges7.resx">
       <DependentUpon>201503011807038_SprintsChanges7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705310605210_ActivityTimePeriod.resx">
+      <DependentUpon>201705310605210_ActivityTimePeriod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706010545255_ActivityTags.resx">
+      <DependentUpon>201706010545255_ActivityTags.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
