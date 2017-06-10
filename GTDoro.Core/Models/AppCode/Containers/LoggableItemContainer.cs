@@ -15,7 +15,7 @@ namespace GTDoro.Core.Models
     /// <summary>
     /// Work Container
     /// </summary>
-    public abstract class LoggableItemContainer
+    public abstract class LoggableItemContainer : ILoggableItemContainer
     {
         public abstract decimal? Effort { get; }
         public abstract string PathItemName { get; }

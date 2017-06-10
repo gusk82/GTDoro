@@ -68,7 +68,6 @@ D:\repo\git\GTDoro\GTDoro.Core\bin\Debug\Microsoft.Owin.Security.xml
 D:\repo\git\GTDoro\GTDoro.Core\bin\Debug\Microsoft.Owin.Security.Cookies.xml
 D:\repo\git\GTDoro\GTDoro.Core\bin\Debug\Microsoft.Owin.Security.OAuth.xml
 D:\repo\git\GTDoro\GTDoro.Core\bin\Debug\Newtonsoft.Json.xml
-D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Core.csprojResolveAssemblyReference.cache
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.InitialCreate.resources
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.InitialCreate1.resources
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.AddedActionPriorityandProjectEndDate.resources
@@ -92,3 +91,5 @@ D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Core.dll
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Core.pdb
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.ActivityTimePeriod.resources
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.ActivityTags.resources
+D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Core.csprojResolveAssemblyReference.cache
+D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.ActivityTimePeriod2.resources

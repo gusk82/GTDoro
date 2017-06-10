@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="DAL\GTDoroContext.cs" />
     <Compile Include="DAL\GTDoroInitializer.cs" />
+    <Compile Include="DAL\IGTDoroContext.cs" />
     <Compile Include="Migrations\201409092004240_InitialCreate.cs" />
     <Compile Include="Migrations\201409092004240_InitialCreate.Designer.cs">
       <DependentUpon>201409092004240_InitialCreate.cs</DependentUpon>
@@ -168,6 +169,10 @@
     <Compile Include="Migrations\201706010545255_ActivityTags.cs" />
     <Compile Include="Migrations\201706010545255_ActivityTags.Designer.cs">
       <DependentUpon>201706010545255_ActivityTags.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706061935084_ActivityTimePeriod2.cs" />
+    <Compile Include="Migrations\201706061935084_ActivityTimePeriod2.Designer.cs">
+      <DependentUpon>201706061935084_ActivityTimePeriod2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppCode\Attributes.cs" />
@@ -279,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706010545255_ActivityTags.resx">
       <DependentUpon>201706010545255_ActivityTags.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061935084_ActivityTimePeriod2.resx">
+      <DependentUpon>201706061935084_ActivityTimePeriod2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

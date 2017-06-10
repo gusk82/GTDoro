@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 namespace GTDoro.Core.Models
 {
+    public interface ILoggableItemContainer
+    {
+        int Ident { get; }
+        string PathItemName { get; }
+        string ItemName { get; }
+        DateTime? CreationDate { get; }
+    }
 
     public interface IActivityContainer : ITimePeriodContainer
     {

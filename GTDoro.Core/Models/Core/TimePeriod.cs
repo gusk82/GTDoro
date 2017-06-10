@@ -16,6 +16,13 @@ namespace GTDoro.Core.Models
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy - HH:mm}")]
         public DateTime? Start { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy - HH:mm}")]
+        public DateTime? End { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:HH:mm}")]
+        public TimeSpan Break { get; set; }
+
         public PomodoroStatus Status { get; set; }
 
         [Display(Name = "Creation Date")]
@@ -56,10 +63,40 @@ namespace GTDoro.Core.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy - HH:mm}")]
         public DateTime? StartLocal { get { return Start.ToUserLocalTime(Owner.TimeZoneId); } }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy - HH:mm}")]
+        public DateTime? EndLocal { get { return End.ToUserLocalTime(Owner.TimeZoneId); } }
+
         [Display(Name = "Creation Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? CreationDateLocal { get { return CreationDate.ToUserLocalTime(Owner.TimeZoneId); } }
 
         public ApplicationUser Owner { get { return Activity.Owner; } }
+
+        public TimeSpan TimeLogged
+        {
+            get
+            {
+                DateTime end = (End.HasValue ? End.Value : DateTime.UtcNow);
+                if (!Start.HasValue || Start.Value >= end)
+                {
+                    return TimeSpan.Zero;
+                }
+                return (end - Start.Value) - Break;
+            }
+        }
+
+        public decimal MonetaryValue
+        {
+            get
+            {
+                if(!Activity.HourlyRate.HasValue)
+                {
+                    return decimal.Zero;
+                }
+                double dbValue = TimeLogged.TotalHours * (double)Activity.HourlyRate.Value;
+                decimal dcValue = (decimal)Math.Round(dbValue, 2);
+                return Math.Max(dcValue, decimal.Zero);
+            }
+        }
     }
 }

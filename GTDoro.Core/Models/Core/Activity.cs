@@ -31,7 +31,7 @@ namespace GTDoro.Core.Models
         public override DateTime? CreationDate { get; set; }
 
         /// <summary>
-        /// Date when the action was completed
+        /// Date when the activity was completed
         /// </summary>
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [UIHint("Date")]
@@ -41,8 +41,10 @@ namespace GTDoro.Core.Models
 
         public decimal? Estimate { get; set; }
 
+        public decimal? HourlyRate { get; set; }
+
         /// <summary>
-        /// Date when the action is supposed to be completed
+        /// Date when the activity is supposed to be completed
         /// </summary>
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [UIHint("Date")]

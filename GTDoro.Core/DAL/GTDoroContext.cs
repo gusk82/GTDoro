@@ -4,19 +4,21 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using GTDoro.Core.Models;
+using Task = GTDoro.Core.Models.Task;
 using Action = GTDoro.Core.Models.Action;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using Microsoft.AspNet.Identity.EntityFramework;
 using GTDoro.Core.Models.Identity;
 using Microsoft.AspNet.Identity;
 using System.Security.Principal;
-using GTDoro.Migrations;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace GTDoro.Core.DAL
 {
-    public class GTDoroContext : IdentityDbContext<ApplicationUser>
+    public class GTDoroContext : IdentityDbContext<ApplicationUser>, IGTDoroContext
     {
-        UserManager<ApplicationUser> manager;
+        public UserManager<ApplicationUser> manager { get; private set; }
 
         public GTDoroContext()
             : base("GTDoroContext", throwIfV1Schema: false)
@@ -39,7 +41,7 @@ namespace GTDoro.Core.DAL
         public DbSet<TimePeriod> TimePeriods { get; set; }
         public DbSet<Pomodoro> Pomodoros { get; set; }
         public DbSet<Action> Actions { get; set; }
-        public DbSet<Activity> Activitys { get; set; }
+        public DbSet<Activity> Activities { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Tag> Tags { get; set; }
@@ -112,7 +114,7 @@ namespace GTDoro.Core.DAL
 
         public Workspace GetMyWorkspace(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return null;
@@ -122,7 +124,7 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<Project> GetMyProjects(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<Project>().AsQueryable();
@@ -137,7 +139,7 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<Task> GetMyTasks(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<Task>().AsQueryable();
@@ -152,7 +154,7 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<Action> GetMyActions(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<Action>().AsQueryable();
@@ -167,12 +169,12 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<Activity> GetMyActivities(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<Activity>().AsQueryable();
             }
-            return Activitys.Where(a => a.Task.Project.User.Id == currentUser.Id);
+            return Activities.Where(a => a.Task.Project.User.Id == currentUser.Id);
         }
 
         public Activity GetActivityById(IPrincipal User, int Id)
@@ -182,7 +184,7 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<Pomodoro> GetMyPomodoros(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<Pomodoro>().AsQueryable();
@@ -197,7 +199,7 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<TimePeriod> GetMyTimePeriods(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<TimePeriod>().AsQueryable();
@@ -205,9 +207,14 @@ namespace GTDoro.Core.DAL
             return TimePeriods.Where(tp => tp.Activity.Task.Project.User.Id == currentUser.Id);
         }
 
+        public TimePeriod GetTimePeriodById(IPrincipal User, int Id)
+        {
+            return GetMyTimePeriods(User).SingleOrDefault(tp => tp.ID == Id);
+        }
+
         public IQueryable<Tag> GetMyTags(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<Tag>().AsQueryable();
@@ -222,7 +229,7 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<CollectedThing> GetMyCollectedThings(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<CollectedThing>().AsQueryable();
@@ -237,7 +244,7 @@ namespace GTDoro.Core.DAL
 
         public IQueryable<Sprint> GetMySprints(IPrincipal User)
         {
-            ApplicationUser currentUser = manager.FindById(User.Identity.GetUserId());
+            ApplicationUser currentUser = GetUser(User.Identity);
             if (currentUser == null)
             {
                 return Enumerable.Empty<Sprint>().AsQueryable();
@@ -250,6 +257,22 @@ namespace GTDoro.Core.DAL
             return GetMySprints(User).SingleOrDefault(s => s.ID == Id);
         }
 
+        private ApplicationUser GetUser(IIdentity identity)
+        {
+            var user = manager.FindById(identity.GetUserId());
+
+            if(user == null)
+            {
+                var claimsIdentity = identity as ClaimsIdentity;
+                Claim identityClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type == "sub");
+                if(identityClaim != null)
+                {
+                    user = Users.FirstOrDefault(u => u.Email == identityClaim.Value);
+                }
+            }
+            return user;
+        }
+
         #region Key Value Parameters Get/Set
 
         public KeyValueParameter GetParameterById(int Id)
@@ -260,7 +283,7 @@ namespace GTDoro.Core.DAL
         public string GetParameterValueById(int Id)
         {
             KeyValueParameter kvp = GetParameterById(Id);
-            if(kvp != null)
+            if (kvp != null)
             {
                 return kvp.Value;
             }
@@ -312,7 +335,35 @@ namespace GTDoro.Core.DAL
         {
             SetParameterValue(Parameter.ToString(), Value);
         }
-
         #endregion
+
+        public async Task<IdentityResult> RegisterUser(ApplicationUser userModel, string password)
+        {
+            var result = await manager.CreateAsync(userModel, password);
+
+            return result;
+        }
+
+        public async Task<IdentityUser> FindUser(string userName, string password)
+        {
+            IdentityUser user = await manager.FindAsync(userName, password);
+
+            return user;
+        }
+
+        private void ChangeState(object entity, EntityState state)
+        {
+            Entry(entity).State = state;
+        }
+
+        public void SetModified(object entity)
+        {
+            ChangeState(entity, EntityState.Modified);
+        }
+
+        public void SetDeleted(object entity)
+        {
+            ChangeState(entity, EntityState.Deleted);
+        }
     }
 }
