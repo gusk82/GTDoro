@@ -80,9 +80,11 @@ namespace GTDoro.Controllers
                     //);
                     dict.AddFilterArrayToRouteValueDictionary(tagFilter, TAG_PREFIX);
                 }
-
+                                
                 ViewBag.IsFiltered = string.IsNullOrEmpty(Request.QueryString["filtering"]) == false ||
                     (statusFilter.Length > 0) || (tagFilter.Length > 0);
+                ViewBag.RouteFiltersForPagination = dict;
+
                 ViewBag.StatusFilter = statusFilter;
                 ViewBag.TagFilter = tagFilter;
             }

@@ -1,5 +1,5 @@
 ﻿@model GTDoro.Core.ViewModels.AdminViewModel
-
+@using GTDoro.Core.Extensions;
     @{
         ViewBag.Title = "Admin";
         Layout = "~/Views/Shared/_Layout.cshtml";
@@ -60,7 +60,7 @@
                             @*<td>
                                 @Html.DisplayFor(modelItem => item.EmailAddress)
                             </td>*@
-                            <td>
+                            <td data-order="@(item.CreationDateLocal.ToTicksOrZero())">
                                 @Html.DisplayFor(modelItem => item.CreationDateLocal)
                             </td>
                             <td>
