@@ -251,11 +251,13 @@
             $(document).ready(function () {
                 var intervalID = -1;
                 refreshAlertMode();
+                debugger;
                 @{
                     DateTime date = (Model.Status == WorkingStatus.Working ? 
                         Model.TargetTime.Value : Model.BreakTargetTime.Value);
                     string statement = ("startCountdown(Date.parse(\"" + (date.ToString("yyyy-MM-ddTHH:mm:ssZ")) + "\")," +
-                        "2000 - " + (DateTime.UtcNow.AddYears(-1969).AddDays(1).Ticks / TimeSpan.TicksPerMillisecond) + " +  new Date().valueOf());");
+                        "2000 - " + (DateTime.UtcNow.AddYears(-1969).Ticks / TimeSpan.TicksPerMillisecond) + " +  new Date().valueOf());");
+                    
                 
                 }
                 @Html.Raw(statement);
