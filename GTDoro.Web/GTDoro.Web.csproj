@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -179,6 +180,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\Identity\AccountController.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\Identity\UserAdminController.cs" />
+    <Compile Include="Controllers\TimePeriodController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
     <Compile Include="Controllers\WorkspaceController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1111,8 +1114,10 @@
   <ItemGroup>
     <Folder Include="admin-lte\css\fullcalendar\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Activity\" />
     <Folder Include="Views\Deprecated\Home\" />
     <Folder Include="Views\Deprecated\Work\" />
+    <Folder Include="Views\TimePeriod\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

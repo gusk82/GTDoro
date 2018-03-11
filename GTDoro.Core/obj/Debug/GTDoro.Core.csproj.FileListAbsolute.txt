@@ -93,3 +93,4 @@ D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.ActivityTimePeriod.re
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.ActivityTags.resources
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Core.csprojResolveAssemblyReference.cache
 D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Migrations.ActivityTimePeriod2.resources
+D:\repo\git\GTDoro\GTDoro.Core\obj\Debug\GTDoro.Core.csproj.CoreCompileInputs.cache

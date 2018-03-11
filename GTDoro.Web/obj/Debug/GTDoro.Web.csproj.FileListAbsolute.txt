@@ -121,3 +121,4 @@ D:\repo\git\GTDoro\GTDoro.Web\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\repo\git\GTDoro\GTDoro.Web\obj\Debug\GTDoro.Web.csprojResolveAssemblyReference.cache
 D:\repo\git\GTDoro\GTDoro.Web\obj\Debug\GTDoro.Web.dll
 D:\repo\git\GTDoro\GTDoro.Web\obj\Debug\GTDoro.Web.pdb
+D:\repo\git\GTDoro\GTDoro.Web\obj\Debug\GTDoro.Web.csproj.CoreCompileInputs.cache

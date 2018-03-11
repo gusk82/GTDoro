@@ -186,6 +186,7 @@
     <Compile Include="Models\AppCode\Enums.cs" />
     <Compile Include="Models\AppCode\Exceptions.cs" />
     <Compile Include="Models\AppCode\Extensions.cs" />
+    <Compile Include="Models\AppCode\Interfaces.cs" />
     <Compile Include="Models\AppCode\SearchResults.cs" />
     <Compile Include="Models\AppCode\Settings.cs" />
     <Compile Include="Models\Core\Action.cs" />

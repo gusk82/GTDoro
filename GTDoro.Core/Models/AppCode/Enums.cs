@@ -147,6 +147,17 @@ namespace GTDoro.Core.Models
         Completed = 3,
         Unconfirmed = 4
     }
+    
+    /// <summary>
+    /// Enumeration for the status of a TimePeriod
+    /// </summary>
+    public enum TimePeriodStatus
+    {
+        Planified = 0, //default
+        Working = 1,
+        Cancelled = 2,
+        Completed = 3
+    }
 
     /// <summary>
     /// Enumeration for the status of the user current work
@@ -258,6 +269,10 @@ namespace GTDoro.Core.Models
         [IconCssClass("fa-circle")]
         ActionInfo,
 
+        [Display(Name = "Activity Info")]
+        [IconCssClass("fa-circle")]
+        ActivityInfo,
+
         [Display(Name = "Sprint Info")]
         [IconCssClass("fa-calendar-o")]
         SprintInfo,
@@ -278,6 +293,10 @@ namespace GTDoro.Core.Models
         [IconCssClass("fa-edit")]
         EditAction,
 
+        [Display(Name = "Edit Activity")]
+        [IconCssClass("fa-edit")]
+        EditActivity,
+
         [Display(Name = "Edit Sprint")]
         [IconCssClass("fa-edit")]
         EditSprint,
@@ -293,6 +312,10 @@ namespace GTDoro.Core.Models
         [Display(Name = "Delete Action")]
         [IconCssClass("fa-trash-o")]
         DeleteAction,
+
+        [Display(Name = "Delete Activity")]
+        [IconCssClass("fa-trash-o")]
+        DeleteActivity,
 
         [Display(Name = "Delete Sprint")]
         [IconCssClass("fa-trash-o")]
@@ -315,6 +338,11 @@ namespace GTDoro.Core.Models
         //[IconCssClass("fa-circle")]
         [IconCssClass("fa-plus-circle")]
         CreateAction,
+
+        [Display(Name = "Create Activity")]
+        //[IconCssClass("fa-circle")]
+        [IconCssClass("fa-plus-circle")]
+        CreateActivity,
 
         [Display(Name = "Create Sprint")]
         [IconCssClass("fa-plus-circle")]

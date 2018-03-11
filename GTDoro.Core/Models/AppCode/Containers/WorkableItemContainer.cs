@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GTDoro.Core.Models
 {
+    /// <summary>
+    /// Container of Actions and Activities (Task)
+    /// </summary>
     public abstract class WorkableItemContainer : ActionContainer, IActivityContainer
     {
         public TimePeriod FirstTimePeriod
@@ -60,6 +63,18 @@ namespace GTDoro.Core.Models
                 }
             }
             return lstTimePeriods;
+        }
+
+        public virtual bool ContainsSelectedActivity
+        {
+            get
+            {
+                if (Owner != null)
+                {
+                    return GetActivities().Where(a => a.ID == Owner.ActivityID).Count() > 0;
+                }
+                return false;
+            }
         }
     }
 }

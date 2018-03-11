@@ -32,6 +32,8 @@ namespace GTDoro.Core.Models
 
         TimePeriod LastTimePeriod { get; }
 
+        bool ContainsSelectedActivity { get; }
+
         //PomodoroContainerChartsViewModel ChartsViewModel { get; }
 
     }

@@ -9,7 +9,7 @@ using GTDoro.Core.Models.Identity;
 
 namespace GTDoro.Core.Models
 {
-    public class Pomodoro
+    public class Pomodoro : ILoggable
     {
         public int ID { get; set; }
 

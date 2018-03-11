@@ -28,7 +28,7 @@ namespace GTDoro.Core.Extensions
             return (d.HasValue) ? d.Value : 0;
         }
 
-        public static long ToDateTicksOrZero(this Pomodoro p)
+        public static long ToDateTicksOrZero(this ILoggable p)
         {
             return (p != null) ? p.StartLocal.ToTicksOrZero() : 0;
         }
@@ -38,12 +38,12 @@ namespace GTDoro.Core.Extensions
             return dt.HasValue ? dt.Value.Ticks : 0;
         }
         
-        public static string ToDateStringOrEmpty(this Pomodoro p)
+        public static string ToDateStringOrEmpty(this ILoggable p)
         {
             return (p != null) ? p.StartLocal.ToStringOrEmpty() : string.Empty;
         }
 
-        public static string ToDateStringOrDefault(this Pomodoro p)
+        public static string ToDateStringOrDefault(this ILoggable p)
         {
             return (p != null) ? p.StartLocal.ToStringOrEmpty() : Settings.DEFAULT_NULL_STRING_VALUE;
         }
@@ -88,12 +88,12 @@ namespace GTDoro.Core.Extensions
             return dt.HasValue ? dt.Value.ToString("dd/MM/yyyy") : Settings.DEFAULT_NULL_STRING_VALUE;
         }
 
-        public static string ToDateRelativeString(this Pomodoro p)
+        public static string ToDateRelativeString(this ILoggable p)
         {
             return (p != null) ? p.Start.ToRelativeString() : "never";
         }
 
-        public static string ToDateRelativeShortString(this Pomodoro p)
+        public static string ToDateRelativeShortString(this ILoggable p)
         {
             return (p != null) ? p.Start.ToRelativeShortString() : "never";
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GTDoro.Core.Models
 {
-    public class TimePeriod
+    public class TimePeriod : ILoggable
     {
         public int ID { get; set; }
 
@@ -23,7 +23,7 @@ namespace GTDoro.Core.Models
         [DisplayFormat(DataFormatString = "{0:HH:mm}")]
         public TimeSpan Break { get; set; }
 
-        public PomodoroStatus Status { get; set; }
+        public TimePeriodStatus Status { get; set; }
 
         [Display(Name = "Creation Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
@@ -41,15 +41,13 @@ namespace GTDoro.Core.Models
             {
                 switch (Status)
                 {
-                    case PomodoroStatus.Working:
+                    case TimePeriodStatus.Working:
                         return LoggableItemCalculatedStatus.Working;
-                    case PomodoroStatus.Cancelled:
+                    case TimePeriodStatus.Cancelled:
                         return LoggableItemCalculatedStatus.Cancelled;
-                    case PomodoroStatus.Completed:
+                    case TimePeriodStatus.Completed:
                         return LoggableItemCalculatedStatus.Completed;
-                    case PomodoroStatus.Unconfirmed:
-                        return LoggableItemCalculatedStatus.Unconfirmed;
-                    case PomodoroStatus.Planified:
+                    case TimePeriodStatus.Planified:
                         if (Start.HasValue && Start.Value < DateTime.UtcNow.ToUserLocalTime(Owner.TimeZoneId))
                         {
                             return LoggableItemCalculatedStatus.Expired;

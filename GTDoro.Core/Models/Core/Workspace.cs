@@ -121,6 +121,11 @@ namespace GTDoro.Core.Models
             get { return true; }
         }
 
+        public override bool ContainsSelectedActivity
+        {
+            get { return true; }
+        }
+
         public override ApplicationUser Owner
         {
             get { return user; }

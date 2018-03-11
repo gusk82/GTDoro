@@ -29,7 +29,11 @@ namespace GTDoro.Core.Models.Identity
         [Display(Name = "Selected Action")]
         public int? ActionID { get; set; }
         public virtual Action Action { get; set; }
-        
+
+        [Display(Name = "Selected Activity")]
+        public int? ActivityID { get; set; }
+        public virtual Action Activity { get; set; }
+
         public virtual ICollection<Project> Projects { get; set; }
 
         private Workspace workspace;

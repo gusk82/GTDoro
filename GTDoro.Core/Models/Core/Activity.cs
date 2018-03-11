@@ -290,17 +290,17 @@ namespace GTDoro.Core.Models
            }
         }
 
-        //public override bool ContainsSelectedAction
-        //{
-        //    get
-        //    {
-        //        if (Owner != null)
-        //        {
-        //            return Owner.ActionID == ID;
-        //        }
-        //        return false;
-        //    }
-        //}
+        public bool ContainsSelectedActivity
+        {
+            get
+            {
+                if (Owner != null)
+                {
+                    return Owner.ActivityID == ID;
+                }
+                return false;
+            }
+        }
 
         public override Identity.ApplicationUser Owner
         {
