@@ -1,4 +1,4 @@
-﻿/*******    container       *******/
+/*******    container       *******/
 
 #item-search-selector button[type="submit"]{
     margin-bottom: 5px;
@@ -68,7 +68,8 @@
 }
 .project-nav .more{
      background: rgba(0, 0, 0, 0.38);
-     float: right;
+     position: absolute;
+	 right: 0;
      min-width: 10%;
      cursor: move;
 }
@@ -94,6 +95,7 @@
 {
     width: 210px;
     z-index: 99;
+	position: relative;
 }
 .project-nav .nav-dropdown li > ul > li {
     width: 260px;
@@ -111,6 +113,7 @@
 }
 .project-nav .nav-dropdown > li ul{
     top: 0;
+	z-index: -1;
 }
 .project-nav .nav-dropdown li:hover > ul{
     left:100%; 
